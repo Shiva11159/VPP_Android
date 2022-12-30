@@ -1,0 +1,563 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageButton
+                android:layout_width="30.0dip"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/ic_vpp_profile_22"
+                app:tint="@color/white">
+
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/toolbartextviewfrom_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Profile"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <ScrollView
+        android:id="@+id/NestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:orientation="vertical"
+                android:background="@color/gray300"
+                android:layout_height="wrap_content">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/toolbar_profile_width"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_gravity="center">
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/uplaodimage"
+                        android:layout_width="@dimen/toolbar_profile_width"
+                        android:layout_height="@dimen/toolbar_profile_width"
+                        android:layout_marginBottom="@dimen/activity_padding"
+                        android:background="@drawable/baseline_account_circle_black_48"
+                        android:scaleType="centerInside"
+                        app:civ_border_color="@android:color/white"
+                        app:civ_border_width="2dp" />
+
+                    <com.mikhaellopez.circularimageview.CircularImageView
+                        android:id="@+id/img_plus"
+                        android:layout_width="@dimen/dimen_40dp"
+                        android:layout_height="@dimen/dimen_40dp"
+                        android:layout_alignBottom="@id/uplaodimage"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/pluss"
+
+                        app:civ_shadow="true"
+                        app:civ_shadow_radius="1" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="@string/vpp_id"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtProfileVPPId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="Profile Name"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtProfileName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+
+                        android:text="Contact Number"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:id="@+id/txtProfileContact"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/img_edt_mob"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_edit_18" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="City"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:id="@+id/txtProfileCity"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="Pan Number"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:id="@+id/txtProfilePan"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="Email Id "
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtProfileEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/img_edt_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/ic_edit_18" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+
+               <LinearLayout
+                   android:layout_width="match_parent"
+                   android:orientation="vertical"
+                   android:visibility="gone"
+                   android:id="@+id/linearPaynDoc"
+                   android:layout_height="wrap_content">
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:padding="10dp"
+                       tools:context=".Activity">
+
+                       <View
+                           android:layout_width="1dp"
+                           android:layout_height="match_parent"
+                           android:background="@color/black" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="left"
+                           android:text="Payment Status"
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                       <TextView
+                           android:id="@+id/txt_update_payment"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentTop="true"
+                           android:layout_alignParentEnd="true"
+                           android:layout_marginRight="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="right"
+                           android:text=""
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                   </LinearLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_marginTop="5dp"
+                       android:padding="5dp"
+                       android:id="@+id/paynowbutton"
+                       android:background="@drawable/roundrectangle"
+                       android:layout_marginRight="@dimen/dimen_20dp"
+                       android:layout_gravity="right"
+                       android:layout_marginLeft="@dimen/dimen_20dp"
+                       android:text="Pay Now" />
+
+                   <View
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="5dp"
+                       android:background="@color/graph_indicator" />
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:padding="10dp"
+                       tools:context=".Activity">
+
+                       <View
+                           android:layout_width="1dp"
+                           android:layout_height="match_parent"
+                           android:background="@color/black" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="left"
+                           android:text="Document Status"
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                       <TextView
+                           android:id="@+id/txt_update_doc"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentTop="true"
+                           android:layout_alignParentEnd="true"
+                           android:layout_marginRight="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="right"
+                           android:text=""
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                   </LinearLayout>
+
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_marginTop="5dp"
+                       android:padding="5dp"
+                       android:id="@+id/uploaddocbutton"
+                       android:background="@drawable/roundrectangle"
+                       android:layout_marginRight="@dimen/dimen_20dp"
+                       android:layout_gravity="right"
+                       android:layout_marginLeft="@dimen/dimen_20dp"
+                       android:layout_marginBottom="10dp"
+                       android:text="Upload" />
+                   <View
+                       android:layout_width="match_parent"
+                       android:layout_height="1dp"
+                       android:layout_marginTop="5dp"
+                       android:background="@color/graph_indicator" />
+
+
+                   <LinearLayout
+                       android:layout_width="match_parent"
+                       android:layout_height="wrap_content"
+                       android:orientation="horizontal"
+                       android:padding="10dp"
+                       tools:context=".Activity">
+
+                       <View
+                           android:layout_width="1dp"
+                           android:layout_height="match_parent"
+                           android:background="@color/black" />
+
+                       <TextView
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_marginLeft="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="left"
+                           android:text="Esign Status"
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                       <TextView
+                           android:id="@+id/txt_update_esign"
+                           android:layout_width="wrap_content"
+                           android:layout_height="wrap_content"
+                           android:layout_alignParentTop="true"
+                           android:layout_alignParentEnd="true"
+                           android:layout_marginRight="10dp"
+                           android:layout_weight="1"
+                           android:fontFamily="@font/opensans_light"
+                           android:gravity="right"
+                           android:text=""
+                           android:textColor="@color/black"
+                           android:textSize="12dp" />
+
+                   </LinearLayout>
+                   <TextView
+                       android:layout_width="wrap_content"
+                       android:layout_height="wrap_content"
+                       android:layout_weight="1"
+                       android:layout_marginTop="5dp"
+                       android:padding="5dp"
+                       android:id="@+id/uploadesignbutton"
+                       android:background="@drawable/roundrectangle"
+                       android:layout_marginRight="@dimen/dimen_20dp"
+                       android:layout_gravity="right"
+                       android:layout_marginLeft="@dimen/dimen_20dp"
+                       android:layout_marginBottom="10dp"
+                       android:text="Upload" />
+
+               </LinearLayout>
+
+
+
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
+

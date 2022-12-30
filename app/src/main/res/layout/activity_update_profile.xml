@@ -1,0 +1,169 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:id="@+id/coordinatorlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    app:expandedTitleMarginStart="70dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        android:layout_width="fill_parent"
+        android:layout_height="230dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/CollapsingToolbarLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+            <ImageView
+                android:layout_gravity="center"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:background="@drawable/icon" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="@string/vpp_id"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:layout_weight="2"
+                    android:id="@+id/txtProfileVPPId"
+                    android:text="@string/vpp_id"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="@string/contact"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/appcolor" />
+
+                <EditText
+                    android:textAllCaps="true"
+                    android:layout_weight="2"
+                    android:id="@+id/txtProfileContact"
+                    android:hint="Mobile No."
+                    android:maxLength="10"
+                    android:inputType="phone"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="3">
+
+                <TextView
+                    android:layout_weight="1"
+                    android:text="@string/email"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/appcolor" />
+
+                <EditText
+                    android:textAllCaps="true"
+                    android:layout_weight="2"
+                    android:id="@+id/txtProfileEmail"
+                    android:hint="Email Address"
+                    style="@style/txtProfleDetails"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btnSaveProfile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:clickable="true"
+                    android:padding="10dp"
+                    android:radius="10dp"
+                    android:background="@color/appcolor"
+                    android:textColor="@color/white"
+                    android:text="Save Profile" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/imgerror"
+                android:layout_below="@+id/btn_register"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/ic_round_error_symbol_18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:visibility="gone"
+                android:textStyle="bold"
+                android:text="   Clear fields with showing error icon" />
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

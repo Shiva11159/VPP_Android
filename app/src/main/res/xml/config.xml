@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<platform name="android">
+    <resource-file src="build-extras.gradle" target="app/build-extras.gradle" />
+</platform>
+

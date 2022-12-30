@@ -1,0 +1,229 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme1" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:focusable">true</item>
+
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TextLabelDummy" parent="Widget.MaterialComponents.TextInputLayout.FilledBox.Dense">
+        <item name="colorAccent">@color/black</item>  // Text Color
+        <item name="android:textColorHint">@color/blue</item>    // Hint Color
+        <item name="colorControlActivated">@color/white</item>    //Floating label color
+    </style>
+
+
+    <style name="TextLabel">
+    <item name="android:textColorHint">@color/gray800</item>
+    <item name="colorControlActivated">@color/black</item>
+    <item name="android:focusable">false</item>
+    <item name="android:focusableInTouchMode">true</item>
+</style>
+
+
+    <style name="Cut" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="AppThemeToggle" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="android:textColorPrimary">#26a69a</item>
+        <item name="colorAccent">#26a69a</item>
+    </style>
+
+    <style name="textviewheading" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_height">wrap_content</item>
+
+
+    </style>
+
+    <style name="tab">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">50dp</item>
+        <item name="android:background">@color/appcolor</item>
+        <item name="android:theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
+    </style>
+    <style name="viewpager">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+
+    <style name="textview" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+
+
+    </style>
+
+    <style name="txtProfleDetails" parent="@android:style/TextAppearance.Medium">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+
+    <style name="backArrowTheme" parent="AppTheme">
+        <item name="android:textColorSecondary">@color/white</item>
+        <item name="actionMenuTextColor">@android:color/white</item>
+
+    </style>
+
+    <style name="lightGrayLine">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">@android:color/darker_gray</item>
+    </style>
+    <style name="lumpsumLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/appcolor</item>
+        <item name="android:gravity">left</item>
+    </style>
+
+    <style name="lumpsumRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:gravity">left</item>
+        <item name="android:layout_alignParentTop">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+    </style>
+    <style name="SettingsButton" parent="RoundBorderButton">
+        <item name="android:src">@drawable/settings</item>
+    </style>
+
+    <style name="CameraChangeButton" parent="RoundBorderButton">
+        <item name="android:src">@drawable/change_camera</item>
+    </style>
+
+    <style name="BrowseButton" parent="RoundBorderButton">
+        <item name="android:src">@drawable/ic_open</item>
+    </style>
+
+    <style name="RecordActiveButton" parent="RoundButton">
+        <item name="android:src">@drawable/rec_act</item>
+    </style>
+
+    <style name="RecordInactive" parent="RoundButton">
+        <item name="android:src">@drawable/rec_inact</item>
+    </style>
+    <style name="RoundBorderButton">
+        <item name="android:background">@drawable/round_border_button</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
+    <style name="RoundButton">
+        <item name="android:background">@drawable/round_button</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
+    <style name="RoundFocusRect">
+        <item name="android:background">@drawable/round_focus_rect</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">72dp</item>
+        <item name="android:layout_height">72dp</item>
+    </style>
+
+    <style name="PreviewButton">
+        <item name="android:background">@drawable/round_rect</item>
+        <item name="android:layout_width">128dp</item>
+        <item name="android:layout_height">96dp</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="EffectsList">
+        <item name="android:layout_width">128dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@drawable/bar_background</item>
+        <item name="android:orientation">vertical</item>
+    </style>
+    <style name="EffectButton">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:layout_marginLeft">4dp</item>
+        <item name="android:background">@drawable/timeline_item_button_background</item>
+    </style>
+
+    <style name="TimelineItemBar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:orientation">horizontal</item>
+        <item name="android:paddingLeft">4dp</item>
+        <item name="android:background">@drawable/timeline_item_bar_background</item>
+    </style>
+    <style name="TimelineItemDeleteButton" parent="TimelineItemButton">
+        <item name="android:src">@drawable/ic_delete</item>
+        <item name="android:background">@drawable/timeline_item_button_background</item>
+    </style>
+    <style name="TimelineItemButton">
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginLeft">12dp</item>
+    </style>
+    <style name="TimelineItemOpenButton" parent="TimelineItemButton">
+        <item name="android:src">@drawable/ic_open</item>
+        <item name="android:background">@drawable/timeline_item_button_background</item>
+    </style>
+    <style name="TimelineItemTitle" parent="TimelineItemButton">
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- Used for the buttons -->
+        <!-- Used for the buttons -->
+        <item name="colorAccent">#000</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">#000</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@null</item>
+        <item name="android:textSize">@null</item>
+    </style>
+
+    <style name="DialogTheme">
+        <item name="android:windowEnterAnimation">@anim/bottom_top</item>
+        <item name="android:windowExitAnimation">@anim/top_bottom</item>
+    </style>
+    <style name="CustomDialog" parent="android:Theme.Dialog">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+
+</resources>

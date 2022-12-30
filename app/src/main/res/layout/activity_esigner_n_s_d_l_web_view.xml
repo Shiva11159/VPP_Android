@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="15dp"
+        android:text="Sign document"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:id="@+id/title" />
+
+    <WebView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/webview"
+        android:layout_below="@+id/title"></WebView>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="match_parent"
+        android:layout_gravity="center"
+        android:layout_centerInParent="true"
+
+        android:layout_height="wrap_content" />
+
+</RelativeLayout>

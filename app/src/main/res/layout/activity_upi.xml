@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/relative1"
+    android:layout_height="match_parent"
+    tools:context="com.application.vpp.activity.Dashboard">
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:orientation="horizontal"
+            android:visibility="visible">
+
+            <ImageButton
+                android:layout_width="30.0dip"
+                android:layout_height="30dp"
+                android:layout_marginRight="10dp"
+                android:background="@null"
+                android:backgroundTint="@color/white"
+                android:src="@drawable/rupee"
+                android:tint="@color/white">
+
+            </ImageButton>
+
+            <TextView
+                android:id="@+id/toolbartextviewfrom_to"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Registration Fees"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimen_20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
+
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+
+            <LinearLayout
+                android:id="@+id/linearvisiblestatus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                android:orientation="vertical"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"></LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:backgroundTint="@color/black"
+                                android:padding="10dp"
+                                android:src="@drawable/paynow"
+                                android:tint="@color/black" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@color/gray50" />
+
+                            <TextView
+                                android:id="@+id/txt_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:fontFamily="sans-serif-condensed"
+                                android:gravity="center"
+                                android:text=""
+                                android:textColor="@color/black"
+                                android:textSize="15dp" />
+
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="3dp"
+                        android:layout_marginRight="3dp"
+                        android:background="@color/gray50"
+                        android:gravity="center" />
+                </LinearLayout>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/toolbar"
+                    android:background="@color/white"
+                    app:cardElevation="5dp">
+
+                    <LinearLayout
+                        android:id="@+id/lin1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="5dp"
+                        android:background="@color/white"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:orientation="vertical">
+
+                            <EditText android:textAllCaps="true"
+                                android:id="@+id/editText_Vppid"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/white"
+                                android:hint="Enter VPPID"
+                                android:padding="10dp"
+                                android:visibility="gone">
+
+                            </EditText>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="horizontal"
+                                android:padding="5dp"
+                                tools:context=".Activity">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/mobileNo"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="left"
+                                    android:text="UPI ID :"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txtupiid"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentTop="true"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="VENTURA72924@ICICI"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/graph_indicator" />
+
+                            <LinearLayout
+                                android:id="@+id/R4"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+
+                                android:padding="5dp">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="7dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:text="BENEFICIARY NAME:"
+                                    android:textColor="@color/black"
+
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_ben_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="right"
+                                    android:layout_marginRight="7dp"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="VENTURA SECURITIES LTD"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/graph_indicator" />
+
+                            <LinearLayout
+                                android:id="@+id/R5"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="5dp"
+                                android:padding="5dp">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/bank"
+                                    style="@style/lumpsumLeft"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:text="BANK ACC NO :"
+                                    android:textColor="@color/black"
+
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_bankacc"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="2.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="000405072924"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/graph_indicator" />
+
+                            <LinearLayout
+                                android:id="@+id/R6"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:padding="5dp">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/ifsc"
+                                    style="@style/lumpsumLeft"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:text="IFSC CODE :"
+                                    android:textColor="@color/black"
+
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txt_ifsc_Val"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="2.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="ICIC0000004"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/graph_indicator" />
+
+                            <LinearLayout
+                                android:id="@+id/R7"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="5dp"
+                                android:padding="5dp"
+                                android:weightSum="3">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/bank_name"
+                                    style="@style/lumpsumLeft"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:text="BANK NAME :"
+                                    android:textColor="@color/black"
+
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txtbank_name_Val"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="2.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="ICICI BANK LTD"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/graph_indicator" />
+
+                            <LinearLayout
+                                android:id="@+id/R8"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_marginTop="5dp"
+                                android:padding="5dp">
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/black" />
+
+                                <TextView
+                                    android:id="@+id/barnch_name"
+                                    style="@style/lumpsumLeft"
+                                    android:layout_weight="0.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:text="BRANCH :"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txtbranch_name_Val"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="10dp"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="2.5"
+                                    android:fontFamily="@font/opensans_light"
+                                    android:gravity="right"
+                                    android:text="NARIMAN POINT"
+                                    android:textColor="@color/black"
+                                    android:textSize="12dp" />
+
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:orientation="vertical">
+
+                    <Button
+                        android:id="@+id/buttondone"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorPrimary"
+                        android:text="Cancel Booking"
+                        android:textColor="@color/white"
+                        android:visibility="gone" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/progressbarcancel"
+                style="@android:style/Widget.ProgressBar.Large.Inverse"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:indeterminate="true"
+                android:padding="30dp"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/imagebuscancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:visibility="gone" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/linearlayout_upipayment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbar"
+        android:background="#F8F6F6"
+        android:orientation="vertical"
+        android:visibility="visible"
+        tools:context=".Activity">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/txt_title1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="One time Registration fees \n to become Partner Rs.2124/-"
+                android:textColor="@color/black"
+                android:textSize="15dp" />
+
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:id="@+id/checkbox_gst"
+            android:layout_marginLeft="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_20"
+            android:text="would you like to claim GST ?"
+            android:fontFamily="@font/opensans_light"
+            android:layout_height="wrap_content"></CheckBox>
+
+        <Button
+            android:id="@+id/buttonRazorpay1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_20dp"
+            android:layout_weight="1"
+            android:background="@drawable/buttonback1"
+            android:fontFamily="@font/opensans_light"
+            android:text="Pay Now"
+            android:textColor="@color/white"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/btnTechprocess"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_20dp"
+            android:layout_marginRight="@dimen/dimen_20dp"
+            android:layout_weight="0"
+            android:background="@drawable/buttonback1"
+            android:fontFamily="@font/opensans_light"
+            android:text="Pay Now"
+            android:textColor="@color/white"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/pay_later"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="15dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/opensans_light"
+            android:gravity="center"
+            android:text="Pay Later"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+
+            />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

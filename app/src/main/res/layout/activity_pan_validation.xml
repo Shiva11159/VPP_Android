@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colour_new_toolbar"
+    android:id="@+id/mainlayout"
+    tools:context="com.application.vpp.activity.Dashboard">
+    <LinearLayout
+        android:id="@+id/linearText"
+        android:layout_width="match_parent"
+        android:layout_height="72dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pan Verification"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom"
+            android:paddingLeft="10dp"
+            android:layout_marginBottom="5dp"
+            android:fontFamily="@font/opensans_semibold"
+            android:textSize="22sp"/>
+
+654534
+    </LinearLayout>
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/layout_pan_validation"
+    android:layout_marginTop="80dp"
+    android:background="@color/white"
+    tools:context=".activity.PanValidation">
+
+
+    <EditText android:textAllCaps="true"
+        android:id="@+id/editPanNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="69dp"
+        android:ems="10"
+        android:hint="Enter PAN"
+        android:maxLength="10"
+        android:inputType="textCapCharacters"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btnSubmitPAN"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="31dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="visible"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/colour_new_button"
+        app:fb_focusColor="@android:color/holo_orange_dark"
+        app:fb_iconPosition="left"
+        app:fb_radius="30dp"
+        app:fb_text="Submit "
+        app:fb_textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/txtName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:gravity="center_horizontal"
+        android:lines="4"
+        android:maxLines="4"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtWarning"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="31dp"
+        android:gravity="center_horizontal"
+        android:lines="4"
+        android:maxLines="4"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/btnProceedPAN"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btn_Login"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/colour_new_button"
+        app:fb_focusColor="@android:color/holo_orange_dark"
+        app:fb_iconPosition="left"
+        app:fb_radius="30dp"
+        app:fb_text="Login"
+        app:fb_textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnEditName" />
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btnEditName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/colour_new_button"
+        app:fb_focusColor="@android:color/holo_orange_dark"
+        app:fb_iconPosition="left"
+        app:fb_radius="30dp"
+        app:fb_text="Edit Name"
+        app:fb_textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnProceedPAN"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btnProceedPAN"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:visibility="gone"
+        app:fb_borderColor="#FFFFFF"
+        app:fb_borderWidth="1dp"
+        app:fb_defaultColor="@color/colour_new_button"
+        app:fb_focusColor="@android:color/holo_orange_dark"
+        app:fb_iconPosition="left"
+        app:fb_radius="30dp"
+        app:fb_text="Proceed"
+        app:fb_textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/btnEditName" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

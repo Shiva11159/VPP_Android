@@ -1,0 +1,62 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    xmlns:card_view="http://schemas.android.com/apk/res-auto">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/roundrectangle"
+        android:layout_height="wrap_content"
+        >
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:weightSum="4"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/txtPayoutMonth"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Month"
+                android:gravity="center"
+               />
+            <TextView
+                android:id="@+id/txtPayoutAmount"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Payout"
+                android:gravity="center" />
+            <TextView
+                android:id="@+id/txtPayoutProduct"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Product"
+                android:gravity="center"
+                />
+
+
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider">
+
+        </View>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

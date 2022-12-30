@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
+        android:background="@color/colour_new_toolbar"
+        android:visibility="visible"
+        tools:context="com.application.vpp.activity.Dashboard">
+
+        <LinearLayout
+            android:id="@+id/linearText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingLeft="10dp"
+                android:text="KYC Verification"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearText"
+            android:background="@drawable/top_rounded">
+
+            <LinearLayout
+                android:id="@+id/linearFirst"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="30dp"
+                android:orientation="vertical"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:visibility="visible"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <ImageView
+                            android:id="@+id/imgCorrectAdd"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/right"
+                            android:visibility="gone" />
+
+
+                        <TextView
+                            android:id="@+id/textview_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/imgCorrectAdd"
+                            android:text="Upload Selfie"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textColor="@color/colour_new_text"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:id="@+id/linearpic"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/imgCameraAdd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/ic_camera_32_4" />
+
+                            <View
+                                android:id="@+id/viewAdd"
+                                android:layout_width="1dp"
+                                android:layout_height="25dp"
+                                android:layout_below="@+id/titleAddProof"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="12dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_toRightOf="@+id/imgCameraAdd"
+                                android:background="@color/colour_new_text" />
+
+                            <ImageView
+                                android:id="@+id/imgGalleryAdd"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@+id/viewAdd"
+                                android:background="@drawable/ic_gallery_32_4_temp" />
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/linearpic"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:background="@drawable/dotted_dark_line"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textviewPhoto_Uploaded"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:background="@color/colour_new_toolbar"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Front Photo"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp"
+                                    android:visibility="gone"></TextView>
+
+                                <ImageView
+                                    android:id="@+id/UploadImage"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="250dp"
+                                    android:layout_below="@+id/titleAddProof"
+                                    android:layout_toLeftOf="@+id/imgAdd"
+                                    android:layout_weight="1"
+                                    android:padding="10dp"
+                                    android:scaleType="center"
+                                    android:src="@drawable/hold_id_selfie" />
+
+                                <Button
+                                    android:id="@+id/buttonPhoto_Upload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_below="@+id/UploadVideo"
+                                    android:layout_margin="5dp"
+                                    android:layout_toLeftOf="@+id/imgAdd"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/roundrectangle"
+                                    android:padding="10dp"
+                                    android:scaleType="center"
+                                    android:text="Upload Video"
+                                    android:textColor="@color/gray800"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="10dp"
+                                android:background="@drawable/dotted_dark_line"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/txt_adharback"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/colour_new_toolbar"
+                                    android:gravity="center"
+                                    android:padding="5dp"
+                                    android:text="Back Photo"
+                                    android:textColor="@color/white"
+                                    android:textSize="15dp"
+                                    android:visibility="gone"></TextView>
+
+                                <ImageView
+                                    android:id="@+id/imgAdd1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:layout_below="@+id/titleAddProof"
+                                    android:layout_toLeftOf="@+id/imgAdd"
+                                    android:layout_weight="1"
+                                    android:padding="10dp"
+                                    android:scaleType="center"
+                                    android:src="@drawable/iconimageadd"
+                                    android:visibility="gone" />
+
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif-condensed"
+                                android:text="Take picture holding your Aadhaar Card"
+                                android:textColor="@color/colorPrimary" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardviewVideo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    app:cardElevation="3dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+
+                        <TextView
+                            android:id="@+id/VideoUpload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/imgCorrectPAN"
+                            android:text="Upload Video"
+                            android:textColor="@color/colour_new_text"
+                            android:textSize="16sp" />
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/dotted_dark_line"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textviewVideo_Uploaded"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colour_new_toolbar"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="PanCard Photo"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"
+                                android:visibility="gone"></TextView>
+
+                            <TextView
+                                android:id="@+id/tttt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colour_new_toolbar"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text=""
+                                android:textColor="@color/white"
+                                android:textSize="15dp"
+                                android:visibility="gone"></TextView>
+
+                            <ImageView
+                                android:id="@+id/UploadVideo"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_below="@+id/titleAddProof"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@+id/imgAdd"
+                                android:layout_weight="1"
+                                android:padding="10dp"
+                                android:scaleType="center"
+
+                                android:src="@drawable/video_selfie" />
+
+                            <LinearLayout
+                                android:id="@+id/linearlayoutPlay"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="right"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <Button
+                                    android:id="@+id/btnPlay"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/roundrectangle"
+                                    android:drawableLeft="@android:drawable/ic_media_play"
+                                    android:text="Play Video">
+
+                                </Button>
+
+                                <Button
+                                    android:id="@+id/btnUpload"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/roundrectangle"
+                                    android:drawableLeft="@android:drawable/ic_menu_send"
+                                    android:text="Upload Video">
+
+                                </Button>
+
+
+                            </LinearLayout>
+
+
+                            <ImageView
+                                android:id="@+id/imgPreview"
+                                android:layout_width="fill_parent"
+                                android:layout_height="200dp"
+                                android:layout_marginTop="15dp"
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                        <VideoView
+                            android:id="@+id/videoPreview"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="15dp"
+                            android:visibility="gone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen_10"
+                            android:text="Take a video for 3 - 5 seconds"
+                            android:textColor="@color/colorPrimary" />
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardviewSignature"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:visibility="gone"
+                    app:cardElevation="3dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="10dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/SignatureUpload"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_toRightOf="@+id/imgCorrectPAN"
+                            android:text="Upload Signature"
+                            android:fontFamily="sans-serif-condensed-medium"
+                            android:textColor="@color/colour_new_text"
+                            android:textSize="20dp"
+                            android:textStyle="bold" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/dotted_dark_line"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textviewSignature_Uploaded"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colour_new_toolbar"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="Signature"
+                                android:textColor="@color/white"
+                                android:textSize="15dp"
+                                android:visibility="visible"></TextView>
+
+                            <ImageView
+                                android:id="@+id/UploadSignature"
+                                android:layout_width="match_parent"
+                                android:layout_height="200dp"
+                                android:layout_below="@+id/titleAddProof"
+                                android:layout_margin="5dp"
+                                android:layout_toLeftOf="@+id/imgAdd"
+                                android:layout_weight="1"
+                                android:padding="10dp"
+                                android:scaleType="center"
+                                android:src="@drawable/iconimageadd"
+
+                                android:visibility="gone" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <Button
+                    android:id="@+id/buttonContinue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/UploadVideo"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="25dp"
+                    android:layout_toLeftOf="@+id/imgAdd"
+                    android:layout_weight="1"
+                    android:background="@drawable/roundrectangle"
+                    android:padding="10dp"
+                    android:scaleType="center"
+                    android:text="Continue"
+                    android:textColor="@color/gray800"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linear_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <CheckBox
+                android:id="@+id/TermsNCond_CheckBx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="" />
+
+            <TextView
+                android:id="@+id/TermsNCond_Textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Rules and responsibilities"
+                android:textColor="@color/blue" />
+        </LinearLayout>
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_upload_document"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear_checkbox"
+            android:layout_margin="@dimen/dimen_10"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:fb_borderWidth="1dp"
+            app:fb_iconPosition="left"
+            app:fb_radius="30dp"
+            app:fb_text="Continue"
+            app:fb_textSize="20sp" />
+        <!--    app:fb_textFont="@font/opensans_semibold"-->
+    </LinearLayout>
+
+
+</RelativeLayout>

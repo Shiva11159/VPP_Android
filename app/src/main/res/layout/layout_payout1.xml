@@ -1,0 +1,195 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/linearAttendanceAdapter"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:background="@drawable/roundrectangle"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <LinearLayout
+                android:id="@+id/roundedLinear"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:background="@drawable/dotted_dark_line"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/month"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/opensans_light"
+                    android:gravity="center"
+                    android:text="Month"
+                    android:textColor="@color/gray800"
+                    android:textSize="@dimen/dimen_20dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+
+                    android:fontFamily="sans-serif-condensed-light"
+                    android:gravity="center"
+                    android:text="Year"
+                    android:textColor="@color/gray600" />
+
+
+                <ImageView
+                    android:id="@+id/iv_cover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY" />
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="1dp"
+                    android:background="@color/gray_shade"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <TextView
+                style="@style/textview"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="2dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="@string/dashboard"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/txtPayoutMonth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="left"
+                        android:text=""
+                        android:textSize="@dimen/material_size_12"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="left"
+                        android:text="Product"
+                        android:textSize="@dimen/material_size_12" />
+
+                    <TextView
+                        android:id="@+id/txtPayoutProduct"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="2dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="left"
+                        android:text=""
+                        android:textColor="@color/gray800"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:gravity="left"
+                        android:text="PayOut  "
+                        android:textSize="@dimen/material_size_12" />
+
+                    <TextView
+                        android:id="@+id/txtPayoutAmount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_bold"
+                        android:gravity="left"
+                        android:text=""
+                        android:textColor="@color/gray800"
+                        android:textSize="10dp" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="5dp"
+                    android:background="@color/gray200"
+                    android:gravity="right"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:visibility="visible">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_marginTop="2dp"
+                        android:layout_marginBottom="2dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text=" "
+                        android:textSize="@dimen/material_size_12"
+                        android:visibility="gone" />
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divider">
+
+        </View>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

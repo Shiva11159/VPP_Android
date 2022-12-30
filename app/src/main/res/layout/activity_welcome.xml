@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainlayout">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/mainLayout"
+        android:background="@color/colour_new_toolbar"
+        tools:context="com.application.vpp.activity.Dashboard">
+
+        <LinearLayout
+            android:id="@+id/linearText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:paddingLeft="10dp"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/linearText"
+            android:id="@+id/linearFirst"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:background="@drawable/top_rounded"
+            android:orientation="vertical">
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/vpplogo_new"/>
+            <ImageView
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:background="@drawable/congrats_new"/>
+            <TextView
+                android:id="@+id/txtProfileName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/colour_new_text"
+                android:text=" Tumma shivakumar Laxmirajam"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/colour_new_text"
+                android:textSize="16sp"
+
+                android:text="You have been provisionally registered as Ventura Partner as per the following details :"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_margin="2dp"
+                android:padding="2dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp">
+                <RelativeLayout
+                    android:layout_gravity="center_horizontal"
+                    android:gravity="center_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/txtVPPIDTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:gravity="center_horizontal"
+                        android:text="VPP ID - "
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:id="@+id/txtVppId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="0dp"
+                        android:layout_marginTop="@dimen/dimen_10"
+
+                        android:layout_toRightOf="@+id/txtVPPIDTitle"
+                        android:gravity="center_horizontal"
+                        android:text="11159"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="20sp" />
+
+                    <ImageView
+                        android:id="@+id/imgPhNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVPPIDTitle"
+
+                        android:background="@drawable/ic_phone_24_4" />
+                    <TextView
+                        android:id="@+id/txtPhnTitle"
+                        android:layout_below="@+id/txtVPPIDTitle"
+                        android:layout_toRightOf="@+id/imgPhNum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/colour_new_text"
+                        android:text=" : "/>
+
+                    <TextView
+                        android:id="@+id/txtMobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtVppId"
+                        android:layout_margin="5dp"
+
+                        android:layout_toRightOf="@+id/txtPhnTitle"
+                        android:gravity="center_horizontal"
+                        android:text="9867328538"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:id="@+id/imgEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtPhnTitle"
+
+                        android:background="@drawable/ic_email_new" />
+
+                    <TextView
+                        android:id="@+id/txtEmailTitle"
+                        android:layout_below="@+id/txtPhnTitle"
+                        android:layout_toRightOf="@+id/imgEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="16sp"
+                        android:textColor="@color/colour_new_text"
+                        android:text=" : "/>
+                    <TextView
+                        android:id="@+id/txtProfileEmail"
+                        android:layout_toRightOf="@+id/txtEmailTitle"
+                        android:layout_below="@+id/txtPhnTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:layout_margin="5dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colour_new_text"
+                        android:text="tumma9867328538@gmail.com"/>
+
+                    <!--                    <ImageView-->
+                    <!--                        android:id="@+id/imgDOB"-->
+                    <!--                        android:layout_below="@+id/txtProfileEmail"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:layout_margin="5dp"-->
+                    <!--                        android:background="@drawable/ic_dob_24_4"/>-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/txtDOBTitle"-->
+                    <!--                        android:layout_below="@+id/txtProfileEmail"-->
+                    <!--                        android:layout_toRightOf="@+id/imgDOB"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:fontFamily="@font/opensans_regular"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:layout_margin="10dp"-->
+                    <!--                        android:gravity="center_horizontal"-->
+                    <!--                        android:textColor="@color/colour_new_text"-->
+                    <!--                        android:text="Date of birth : "/>-->
+                    <!--                    <TextView-->
+                    <!--                        android:id="@+id/txt_Dob"-->
+                    <!--                        android:layout_toRightOf="@+id/txtDOBTitle"-->
+                    <!--                        android:layout_below="@+id/txtProfileEmail"-->
+                    <!--                        android:layout_width="wrap_content"-->
+                    <!--                        android:layout_height="wrap_content"-->
+                    <!--                        android:textSize="16sp"-->
+                    <!--                        android:layout_margin="5dp"-->
+                    <!--                        android:gravity="center_horizontal"-->
+                    <!--                        android:textColor="@color/colour_new_text"-->
+                    <!--                        android:fontFamily="@font/opensans_semibold"-->
+                    <!--                        android:text="20/06/1991"/>-->
+
+                    <ImageView
+                        android:id="@+id/imgPAN"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtEmailTitle"
+                        android:background="@drawable/ic_pancard_24_4" />
+
+                    <TextView
+                        android:id="@+id/txtPANTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/txtEmailTitle"
+                        android:layout_toRightOf="@+id/imgPAN"
+                        android:text=" : "
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/txtProfilePan"
+                        android:layout_below="@+id/txtEmailTitle"
+                        android:layout_toRightOf="@+id/txtPANTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="13sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_margin="5dp"
+                        android:gravity="center_horizontal"
+                        android:textColor="@color/colour_new_text"
+                        android:text="AZTPT4416B"/>
+
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <CheckBox
+                    android:id="@+id/imgCheckTerms"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/txtIagree"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_toRightOf="@+id/imgCheckTerms"
+                    android:text="@string/i_agree_terms"
+                    android:textColor="@color/colour_new_text" />
+
+            </RelativeLayout>
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btnStartReferring"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="10dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_centerInParent="true"
+                android:clickable="false"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:layout_below="@+id/chkIagree"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/colour_new_button"
+
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="Start Referring "
+                fancy:fb_textColor="#FFFFFF" />
+
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</ScrollView>

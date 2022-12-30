@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colour_new_toolbar"
+        tools:context="com.application.vpp.activity.Dashboard">
+
+        <LinearLayout
+            android:id="@+id/linearText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingLeft="10dp"
+                android:text="Tell us more about yourself"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linear1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearText"
+            android:background="@drawable/top_rounded"
+            android:orientation="horizontal"
+
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/ic_house_24_4" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_first_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/opensans_regular">
+
+                <EditText
+                    android:id="@+id/edt_houseno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="House No. / Building Name *"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/linear1"
+            android:background="@color/white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="horizontal"
+
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:tint="@color/black"
+                    android:background="@drawable/ic_location_24_4" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular">
+
+                    <EditText
+                        android:id="@+id/edtArea"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="Area / Locality *"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="horizontal"
+
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_landmark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular">
+
+                    <EditText
+                        android:id="@+id/edtlandmark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="28dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="Landmark"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/linear5"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:background="@drawable/ic_state_24_4" />
+                <!--                <com.google.android.material.textfield.TextInputLayout-->
+                <!--                    android:id="@+id/text_input_state"-->
+                <!--                    android:layout_below="@+id/linearFirstName"-->
+                <!--                    android:layout_width="match_parent"-->
+                <!--                    android:layout_marginTop="10dp"-->
+                <!--                    android:fontFamily="@font/opensans_regular"-->
+                <!--                    android:layout_height="wrap_content">-->
+
+                <!--                    <EditText android:textAllCaps="true"-->
+                <!--                        android:id="@+id/edtState"-->
+                <!--                        android:layout_width="match_parent"-->
+                <!--                        android:layout_height="wrap_content"-->
+                <!--                        android:inputType="text"-->
+                <!--                        android:maxLength="30"-->
+                <!--                        android:fontFamily="@font/opensans_regular"-->
+                <!--                        android:textColor="@color/colour_new_text"-->
+                <!--                        android:textSize="16sp"-->
+                <!--                        android:layout_marginLeft="5dp"-->
+                <!--                        android:hint="State *"/>-->
+                <!--                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="State"
+                    android:textSize="12dp"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:layout_height="wrap_content"></TextView>
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnerstate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:padding="5dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:visibility="gone">
+
+                    <AutoCompleteTextView
+                        android:id="@+id/edtState"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="State*"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:visibility="gone"
+                    android:background="@drawable/ic_city_24_4" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_city"
+                    android:layout_width="match_parent"
+                    android:visibility="gone"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular">
+
+                    <EditText
+                        android:id="@+id/edtCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="City *"
+                        android:inputType="text"
+                        android:maxLength="30"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:text="City"
+                    android:textSize="12dp"
+                    android:layout_marginLeft="25dp"
+                    android:paddingLeft="10dp"
+
+                    android:layout_marginTop="@dimen/dimen_10"
+
+                    android:layout_height="wrap_content"></TextView>
+
+                <com.toptoche.searchablespinnerlibrary.SearchableSpinner
+                    android:id="@+id/spinnercity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:padding="5dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/ic_pincode_24_4" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_pincode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular">
+
+                    <EditText
+                        android:id="@+id/edtPincode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="Pin Code *"
+                        android:inputType="number"
+                        android:maxLength="6"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/ic_dob_24_4" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/text_input_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/linearFirstName"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular">
+
+                    <EditText
+                        android:id="@+id/edtDob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:fontFamily="@font/opensans_regular"
+                        android:hint="Date of birth *"
+                        android:inputType="date"
+                        android:textAllCaps="true"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linear8"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:background="@drawable/top_rounded"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:text="Current Profession"
+                        android:textSize="12dp"
+                        android:paddingLeft="10dp"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:layout_height="wrap_content"></TextView>
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/linearText"
+                    android:background="@drawable/top_rounded"
+                    android:orientation="horizontal"
+                    android:paddingRight="10dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/ic_cp_24_4" />
+
+                    <Spinner
+                        android:id="@+id/spinnerprofession"
+                        android:layout_width="match_parent"
+                        android:padding="5dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_below="@+id/linearFirstName"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_profession"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_below="@+id/linearFirstName"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="25dp"
+                android:fontFamily="@font/opensans_regular">
+
+                <EditText
+                    android:id="@+id/edtCurrProf"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:hint="Enter Profession*"
+                    android:visibility="visible"
+                    android:inputType="text"
+                    android:maxLength="30"
+                    android:textAllCaps="true"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_signup_submit2"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="25dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="10dp"
+                android:visibility="visible"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/colour_new_button"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="Submit"
+                fancy:fb_textColor="#FFFFFF"
+                fancy:fb_textFont="@font/opensans_semibold" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/imgerror"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_round_error_symbol_18"
+            android:gravity="center"
+            android:text=" Please enter the fields with proper data showing error icon"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</ScrollView>

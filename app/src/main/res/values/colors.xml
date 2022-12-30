@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/appcolor</color>
+    <color name="colorPrimaryDark">@color/appcolor</color>
+    <color name="colorAccent">#1957be</color>
+    <color name="red">#ff0000</color>
+    <color name="green">#00ff00</color>
+    <color name="card1">#59bbae</color>
+    <color name="cardtext1">#00BCD4</color>
+    <color name="card2">#4dd0e1</color>
+    <color name="cardtext2">#9575CD</color>
+    <color name="card3">#7986cb</color>
+    <color name="cardtext3">#00B0FF</color>
+    <color name="card4">#d4e157</color>
+    <color name="cardtext4">#C0CA33</color>
+    <color name="card5">#B0BEC5</color>
+    <color name="cardtext5">#78909C</color>
+    <color name="card6">#BA68C8</color>
+    <color name="cardtext6">#9C27B0</color>
+    <color name="white">#fff</color>
+    <color name="graph_indicator">#C1DDB0</color>
+    <color name="borderColor">#d8d8d8</color>
+    <color name="bordercolordark">#8c8c8c</color>
+    <color name="blue">#2772fd</color>
+    <color name="black">#000</color>
+    <color name="textColor">#414140</color>
+    <color name="divider">#eeebeb</color>
+    <color name="disable">#F2F2F2</color>
+    <color name="button">#139e8c</color>
+   <!-- <color name="appcolor">#4190da</color>-->
+    <color name="appcolor">#fb9109</color>
+    <color name="slider_background">#1d2838</color>
+   <!-- <color name="card_textColor">#4d4d4d</color>-->
+    <color name="card_textColor">#666666</color>
+
+    <color name="btn_active">#7ab800</color>
+    <color name="btn_inactive">#ddff99</color>
+    <color name="colorRipple">#A9A9F5</color>
+
+    <color name="icon_color">#666666</color>
+
+    <color name="palette1">#fdaf17</color>
+    <color name="palette2">#f26c60</color>
+    <color name="palette3">#3a99c9</color>
+    <color name="palette4">#56b847</color>
+
+    <color name="cardred">#D68279</color>
+    <color name="cardblue">#5EB3CA</color>
+    <color name="cardgreen">#97E1BE</color>
+
+    <color name="colour_new_button">#2a3747</color>
+    <color name="colour_new_text">#2a3747</color>
+    <color name="colour_new_toolbar">#FFA65C</color>
+
+    <color name="textLight">#DFDDDD</color>
+    <color name="transperent">#b9000000</color>
+    <color name="ventura_color">#F2651F</color>
+    <color name="ventura_colorlight">#F8ECE7</color>
+
+    <color name="searchBackground">#e0e0e0</color>
+    <color name="searchHint">#616161</color>
+    <color name="searchText">#212121</color>
+    //new added
+    <color name="gray_shade">#ff9b9b9b</color>
+
+    <color name="text_secondary">#78787d</color>
+    <color name="text_primary">#f5f5ff</color>
+
+
+</resources>

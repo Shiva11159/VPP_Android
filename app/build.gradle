@@ -1,0 +1,277 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 31
+    defaultConfig {
+        applicationId "com.application.vpp"
+        minSdkVersion 21
+        targetSdkVersion 31
+        versionCode 84    //--- 83 play given live
+        //versionName "2.1"
+        versionName "5.40"  //-- 5.39-- play given live
+        multiDexEnabled true
+        testInstrumentationRunner "andro idx.test.runner.AndroidJUnitRunner"
+        ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+    }
+
+    buildTypes {
+        release {
+            /*firebaseCrashlytics {
+                nativeSymbolUploadEnabled true
+            }*/
+
+            // Enables code shrinking, obfuscation, and optimization for only
+            // your project's release build type.
+
+            minifyEnabled false
+
+            // Enables resource shrinking, which is performed by the
+            // Android Gradle plugin.
+//            shrinkResources true
+            //useProguard true
+            // Includes the default ProGuard rules files that are packaged with
+            // the Android Gradle plugin. To learn more, go to the section about
+            // R8 configuration files.
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'),
+                    'proguard-rules.pro'
+
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+    dexOptions {
+        javaMaxHeapSize "4G"
+    }
+
+    useLibrary 'org.apache.http.legacy'
+    buildToolsVersion '31.0.0'
+
+//
+//    lintOptions {
+//            //checkReleaseBuilds false
+//            // Or, if you prefer, you can continue to check for errors in release builds,
+//            // but continue the build even when errors are found:
+//            abortOnError false
+//        }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+    }
+}
+
+ext {
+    versions = [
+            'javacv': '1.4.2',
+            'ffmpeg': '4.0.1'
+
+    ]
+}
+
+dependencies {
+//    implementation 'com.aminography:primedatepicker:1.0.5'
+
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+
+    implementation 'androidx.legacy:legacy-support-v13:1.0.0'
+    implementation 'androidx.media:media:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.github.medyo:fancybuttons:1.8.4'
+    implementation 'com.wdullaer:materialdatetimepicker:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation 'com.android.volley:volley:1.1.0'
+
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    // debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation 'com.github.faruktoptas:FancyShowCaseView:1.1.2'
+    implementation files('libs/XtremTCPLib.jar')
+    runtimeOnly 'org.slf4j:slf4j-simple:1.7.12'
+    implementation files('libs/base64-2.3.7.jar')
+
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
+    /*implementation 'com.jakewharton:butterknife:8.8.0'*/
+
+    implementation 'com.jakewharton:butterknife:10.0.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:10.0.0'
+
+    debugImplementation 'com.amitshekhar.android:debug-db:1.0.4'
+    implementation 'com.google.firebase:firebase-core:16.0.6'
+    implementation 'com.google.firebase:firebase-messaging:17.3.4'
+
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+
+    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:converter-scalars:2.3.0'
+    // butter knife
+
+    implementation 'com.chaos.view:pinview:1.3.2'
+    implementation 'com.razorpay:checkout:1.5.13'
+
+    //  tasty Toast
+    implementation 'com.sdsmdg.tastytoast:tastytoast:0.1.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
+    /* implementation 'androidx.multidex:multidex:2.0.0'*/
+
+    //dexter permissions
+    implementation "com.karumi:dexter:5.0.0"
+
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    implementation 'com.github.bumptech.glide:annotations:4.7.1'
+    implementation('com.github.bumptech.glide:okhttp3-integration:4.0.0') {
+        exclude group: 'glide-parent'
+    }
+
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    implementation 'com.github.yalantis:ucrop:2.2.2'
+    implementation 'com.github.deano2390:MaterialShowcaseView:1.3.4'
+    implementation 'com.github.f0ris.sweetalert:library:1.5.6'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.wang.avi:library:1.0.3'
+    implementation 'com.nineoldandroids:library:2.4.0'
+    implementation 'com.aminography:primedatepicker:3.2.0'
+    implementation 'com.aminography:primecalendar:1.3.0'
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'com.daasuu:CountAnimationTextView:0.1.2'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    // circular imageview
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    // circular imageview
+    implementation 'com.mikhaellopez:circularimageview:3.2.0'
+    implementation 'com.github.dewinjm:monthyear-picker:1.0.2'
+
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.okio:okio:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.12.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    implementation 'de.greenrobot:eventbus:3.0.0-beta1'
+    implementation 'com.github.d-max:spots-dialog:0.7@aar'
+
+    implementation files('libs/paynimo_v4.4.3_live.jar')
+    implementation files('libs/mail.jar')
+    implementation files('libs/activation.jar')
+
+    implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.12-b140109.1041'
+    implementation group: 'xerces', name: 'xercesImpl', version: '2.12.0'
+
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.+'
+    implementation 'com.eyalbira.loadingdots:loading-dots:1.0.2'
+    //new lines added
+    implementation 'com.github.vipulasri:timelineview:1.0.5'
+
+    //inapp update ..
+
+    implementation 'com.google.android.play:core:1.8.0'
+//    implementation 'com.github.SanojPunchihewa:InAppUpdater:1.0.5'
+    implementation 'com.google.android.play:core:1.6.1'//for new version updater
+    implementation 'org.jsoup:jsoup:1.8.3'
+
+    implementation 'eu.dkaratzas:android-inapp-update:1.0.5'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.github.javiersantos:AppUpdater:2.7'
+//    implementation 'com.github.SanojPunchihewa:InAppUpdater:1.0.5'   ///new
+    implementation 'com.toptoche.searchablespinner:searchablespinnerlibrary:1.3.1'
+
+
+    //ADDING LINES FOR INAPP UPDATE ...
+    implementation 'eu.dkaratzas:android-inapp-update:1.0.5'
+
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.0.0')
+
+    // Declare the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+   // implementation 'com.google.firebase:firebase-crashlytics'
+    //implementation 'com.google.firebase:firebase-analytics'
+
+    // Add the Firebase Crashlytics NDK dependency.
+    implementation 'com.google.firebase:firebase-crashlytics-ndk:17.2.2'
+
+
+    // Add the Firebase Crashlytics SDK.
+    implementation 'com.google.firebase:firebase-crashlytics:17.2.2'
+
+    // Recommended: Add the Google Analytics SDK.
+    implementation 'com.google.firebase:firebase-analytics:18.0.0'
+    //implementation 'com.github.indexOS.media-for-mobile:android:master-SNAPSHOT'
+    implementation 'commons-io:commons-io:2.5'
+
+    //--------------------background service----------
+    //implementation "android.arch.work:work-runtime:1.0.0-alpha11"
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    implementation 'com.github.GoodieBag:Pinview:v1.4'
+
+//    implementation "android.arch.work:work-runtime:1.0.0-alpha11"
+
+    //--------------------------video---------------------------
+
+    implementation 'com.jraska:falcon:2.1.1'
+    implementation 'com.github.MasayukiSuda:GPUVideo-android:v0.1.1'
+    // if apply video filter on ExoPlayer video
+    implementation 'com.google.android.exoplayer:exoplayer-core:2.9.3'
+
+    implementation 'com.github.florent37:camerafragment:1.0.9'
+    implementation 'com.jakewharton:butterknife:7.0.1'
+    implementation 'com.squareup.picasso:picasso:2.5.2'
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+
+
+    implementation 'org.jsoup:jsoup:1.8.3'
+
+    // android 11 video recording...
+
+    implementation(group: 'org.bytedeco', name: 'javacv-platform', version: versions.javacv) {
+        exclude group: 'org.bytedeco.javacpp-presets'
+    }
+    implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}"
+    implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm'
+    implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm64'
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:appcompat-v7:28.0.0-alpha3'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0-alpha3'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'com.google.android.material:material:1.1.0-alpha06'
+
+}
+
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
+
+

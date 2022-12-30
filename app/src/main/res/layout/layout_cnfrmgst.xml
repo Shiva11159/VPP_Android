@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:background="@drawable/roundrectangle"
+    android:padding="10dp"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/Close_Popup_Share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:drawableTint="@color/black"
+        android:layout_gravity="right"
+        android:drawableLeft="@drawable/cancel_"
+        android:textStyle="bold"
+        android:text=""/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:drawableTint="@color/black"
+                android:layout_gravity="right"
+                android:drawableLeft="@drawable/gst"
+                android:textStyle="bold"
+                android:text=""/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="@dimen/dimen_20"
+                android:text="would you like to claim GST ?"/>
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonback11"
+                android:text="No"
+                android:fontFamily="@font/opensans_light"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+            <Button
+                android:id="@+id/Share_UpBtn"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonback1"
+                android:text="Yes"
+                android:fontFamily="@font/opensans_light"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
+
+        </LinearLayout>
+    </LinearLayout>>
+
+</RelativeLayout>

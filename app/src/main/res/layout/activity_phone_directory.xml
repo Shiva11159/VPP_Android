@@ -1,0 +1,71 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Irrelevant stuff -->
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="20dp"
+        xmlns:fancy="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        android:scrollbars="vertical"
+        android:scrollbarAlwaysDrawVerticalTrack="true"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="@android:color/white">
+
+        <!--<LinearLayout-->
+        <!--android:id="@+id/row_TITLE"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:background="#953163"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:gravity="center"-->
+        <!--android:layout_height="50dp">-->
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:textSize="20dp"-->
+        <!--android:layout_weight="0.8"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@android:color/white"-->
+        <!--android:text="Contact Number"/>-->
+
+        <!--</LinearLayout>-->
+
+
+
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_marginTop="10dp"
+            android:id="@+id/readContacts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
+    </RelativeLayout>
+
+
+    <!-- Must be last for right layering display -->
+    <FrameLayout
+        android:id="@+id/toolbar_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/row_TITLE"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/appcolor" />
+
+        <com.miguelcatalan.materialsearchview.MaterialSearchView
+            android:id="@+id/search_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+
+</FrameLayout>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="?android:attr/selectableItemBackground"
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_height="wrap_content"
+        android:id="@+id/contact_directory_list">
+
+        <TextView
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:textSize="18sp"
+            android:id="@+id/contactName"
+            android:text="Natrajan Swamy"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:id="@+id/contactNumber"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="#808080"
+            android:text="80808080808"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borderColor"/>
+
+    </LinearLayout>
+</RelativeLayout>

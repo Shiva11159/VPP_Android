@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+
+    tools:context="com.application.vpp.activity.LoginScreen">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtOTP"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:gravity="center"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_below="@+id/linearOtp"-->
+        <!--            android:text="OTP is sent on registered Mobile No."/>-->
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtRegistered"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:gravity="center"-->
+        <!--            android:visibility="visible"-->
+        <!--            android:layout_below="@+id/txtOTP"-->
+        <!--            android:text="You are already registered."/>-->
+        <ImageView
+            android:id="@+id/imgLogoIcon"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_above="@+id/text_input_pan_no"
+            android:layout_centerInParent="true"
+            android:background="@drawable/vpp_logo" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_pan_no"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:visibility="visible">
+
+            <EditText
+                android:id="@+id/edt_pan_no"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="PAN No."
+                android:inputType="textCapCharacters"
+                android:textAllCaps="true" />
+        </com.google.android.material.textfield.TextInputLayout>
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/linearOtp"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            android:layout_above="@+id/btn_login"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:weightSum="4"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            android:layout_marginStart="10dp"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:orientation="horizontal">-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp1"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp2"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp3"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp4"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+
+        <!--        </LinearLayout>-->
+
+
+        <mehdi.sakout.fancybuttons.FancyButton
+            android:id="@+id/btn_login"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/text_input_pan_no"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:visibility="visible"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="#7ab800"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Login "
+            fancy:fb_textColor="#FFFFFF" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_login"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_SignUp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn_login"
+                android:layout_marginTop="70dp"
+                android:fontFamily="@font/opensans_semibolditalic"
+                android:gravity="center"
+                android:linksClickable="true"
+                android:text="Click here to Register"
+                android:textSize="18sp"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/txtNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+
+                android:text="Already a partner? Please Login"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="90dp"
+
+                android:textSize="15sp"
+                android:fontFamily="@font/opensans_semibold"
+                android:textColor="@color/white"
+                android:layout_marginLeft="28dp"/>
+
+
+        </LinearLayout>
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtResend"-->
+        <!--            android:visibility="visible"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_below="@+id/txtRegistered"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:textSize="16sp"-->
+        <!--            android:clickable="true"-->
+        <!--            android:focusable="true"-->
+        <!--            android:background="?attr/selectableItemBackground"-->
+        <!--            android:textColor="@color/blue"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:text="Resend mobile OTP"/>-->
+
+
+        <!--        <LinearLayout-->
+        <!--            android:id="@+id/linearOtp2"-->
+        <!--            android:layout_marginBottom="10dp"-->
+        <!--            android:layout_below="@+id/txtResend"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:weightSum="4"-->
+        <!--            android:layout_marginEnd="10dp"-->
+        <!--            android:layout_marginStart="10dp"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:orientation="horizontal">-->
+
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp5"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp6"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp7"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+        <!--            <EditText android:textAllCaps="true"-->
+        <!--                android:id="@+id/edtOtp8"-->
+        <!--                android:layout_weight="1"-->
+        <!--                android:layout_width="0dp"-->
+        <!--                android:gravity="center"-->
+        <!--                android:textSize="20dp"-->
+        <!--                android:inputType="number"-->
+        <!--                android:maxLength="1"-->
+        <!--                android:layout_height="wrap_content" />-->
+
+        <!--        </LinearLayout>-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtEmailOTP"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginTop="50dp"-->
+        <!--            android:textStyle="bold"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:gravity="center"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_below="@+id/txtResend"-->
+        <!--            android:text="OTP is sent on registered Email ID."/>-->
+
+        <!--        <TextView-->
+        <!--            android:id="@+id/txtEmailResend"-->
+        <!--            android:visibility="gone"-->
+        <!--            android:layout_centerHorizontal="true"-->
+        <!--            android:layout_below="@+id/linearOtp2"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_marginTop="20dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:textSize="12sp"-->
+        <!--            android:clickable="true"-->
+        <!--            android:focusable="true"-->
+        <!--            android:background="?attr/selectableItemBackground"-->
+        <!--            android:textColor="@color/red"-->
+        <!--            android:padding="10dp"-->
+        <!--            android:text="@string/resend"/>-->
+    </RelativeLayout>
+
+</ScrollView>

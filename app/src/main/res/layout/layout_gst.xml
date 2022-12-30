@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:minHeight="350dp"
+    android:id="@+id/relative1"
+    android:minWidth="320dp"
+    android:background="@drawable/roundrectangle"
+    android:padding="10dp"
+    android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/Close_Popup_Share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:drawableTint="@color/black"
+        android:layout_gravity="right"
+        android:drawableLeft="@drawable/cancel_"
+        android:textStyle="bold"
+        android:text=""/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:drawableTint="@color/black"
+                android:layout_gravity="right"
+                android:drawableLeft="@drawable/gst"
+                android:textStyle="bold"
+                android:text=""/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="@dimen/dimen_22"
+                android:text="Enter GST Details"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/et_gstNo"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="15dp"
+            android:maxLength="15"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/opensans_light"
+            android:hint="Enter GST number *"
+            android:inputType="text"
+            android:textColor="@color/black" />
+
+
+        <EditText
+            android:textSize="15dp"
+            android:id="@+id/et_gstName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:paddingLeft="10dp"
+            android:maxLength="100"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/opensans_light"
+            android:hint="Company name *"
+            android:inputType="text"
+            android:textColor="@color/black" />
+
+
+        <EditText
+            android:textSize="15dp"
+            android:id="@+id/et_gstAddress"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:layout_marginTop="20dp"
+            android:paddingLeft="10dp"
+            android:fontFamily="@font/opensans_light"
+            android:textColorHint="@color/black"
+            android:hint="Company address * "
+            android:maxLength="250"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btn_proceed"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonback1"
+            android:text="Proceed"
+            android:fontFamily="@font/opensans_light"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>>
+
+</RelativeLayout>

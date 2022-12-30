@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto">
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        style="@style/PreviewButton"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="18dp"
+        android:layout_marginBottom="8dp"
+        android:scaleType="centerCrop"
+        android:visibility="visible" />
+
+    <!--<VideoView-->
+    <!--android:layout_margin="15dp"-->
+    <!--android:id="@+id/videoView"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="300dp"-->
+    <!--/>-->
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btnUpload_"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        android:layout_centerInParent="true"
+        android:layout_below="@+id/imageButton"
+        fancy:fb_borderColor="@color/appcolor"
+        fancy:fb_borderWidth="1dp"
+        fancy:fb_defaultColor="@color/appcolor"
+        fancy:fb_focusColor="#da8bb3"
+        fancy:fb_textSize="18dp"
+        fancy:fb_radius="5dp"
+        fancy:fb_text="Upload Video"
+        fancy:fb_textColor="#FFFFFF" />
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:id="@+id/txtFileCount"
+        android:layout_below="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp" />
+
+    <TextView
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/txtFileCount"
+        android:id="@+id/txtPercentage_"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/txtUploaded"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txtPercentage_"
+        android:textColor="@color/colorAccent"
+        android:textSize="14sp"/>
+
+    <ProgressBar
+        android:layout_below="@+id/txtPercentage_"
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="20dp"
+        android:layout_marginBottom="35dp"
+        android:visibility="gone"/>
+</RelativeLayout>

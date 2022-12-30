@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="40dp"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <RelativeLayout
+        android:id="@+id/layoutNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/noti_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="13dp"
+            android:background="@drawable/ic__25_bell_icon" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/noti_icon"
+            android:paddingRight="10dp"
+            android:text=""
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_msg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/noti_icon"
+            android:text=""
+            android:textSize="15sp" />
+
+        <ImageView
+            android:id="@+id/imgview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_msg"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="5dp"
+            android:visibility="gone"/>
+
+
+    </RelativeLayout>
+    <View
+        android:id="@+id/view1"
+        android:layout_marginTop="5dp"
+        style="@style/lightGrayLine"
+        />
+
+    <!--<LinearLayout-->
+    <!--android:id="@+id/heading"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="horizontal"-->
+    <!--android:paddingBottom="1dp">-->
+
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/noti_icon"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="13dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginLeft="5dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@drawable/ic_notifications_25" />&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;<View&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/view"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="2dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@color/gray_color"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginLeft="1dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="10dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginBottom="@dimen/common_margine"/>&ndash;&gt;-->
+    <!--<LinearLayout-->
+
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="10dp"-->
+
+    <!--android:orientation="vertical">-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:paddingRight="10dp"-->
+    <!--android:text=""-->
+    <!--android:textSize="18sp"-->
+    <!--android:textStyle="bold" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/txt_msg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/notification_body"-->
+    <!--android:layout_alignParentRight="true"-->
+    <!--android:layout_marginLeft="20dp"-->
+    <!--android:layout_marginTop="5dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:text=""-->
+    <!--android:textSize="15sp" />-->
+
+    <!--<View-->
+    <!--android:id="@+id/view1"-->
+    <!--style="@style/lightGrayLine"-->
+    <!--android:layout_marginTop="2dp"/>-->
+
+    <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/lay1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:paddingRight="10dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="10dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
+    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/txt_msg"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textColor="@color/black"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginLeft="20dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_alignParentRight="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_below="@+id/notification_body"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:text=""&ndash;&gt;-->
+    <!--&lt;!&ndash;android:textSize="15sp"/>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
+
+
+    <!--&lt;!&ndash;<View&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="0.7dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@drawable/dash_line"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginTop="@dimen/common_margine"/>&ndash;&gt;-->
+    <!--</LinearLayout>-->
+
+
+    <!--</LinearLayout>-->
+
+</LinearLayout>

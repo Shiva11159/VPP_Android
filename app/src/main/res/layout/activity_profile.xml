@@ -1,0 +1,336 @@
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorlayout"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    app:expandedTitleMarginStart="70dp">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="fill_parent"
+        android:layout_height="230dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/CollapsingToolbarLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar1"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:minHeight="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+            <RelativeLayout
+                android:layout_width="@dimen/toolbar_profile_width"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/uplaodimage"
+                    android:layout_width="@dimen/toolbar_profile_width"
+                    android:layout_height="@dimen/toolbar_profile_width"
+                    android:layout_marginTop="@dimen/activity_padding"
+                    android:layout_marginBottom="@dimen/activity_padding"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/baseline_account_circle_black_48"
+                    app:civ_border_color="@android:color/white"
+                    app:civ_border_width="2dp" />
+
+                <com.mikhaellopez.circularimageview.CircularImageView
+                    android:id="@+id/img_plus"
+                    android:src="@drawable/ic_add_22"
+                    android:layout_width="@dimen/ic_plus_width"
+                    android:layout_height="@dimen/ic_plus_width"
+                    android:layout_alignBottom="@id/uplaodimage"
+                    android:layout_alignParentRight="true"
+
+                    app:civ_shadow="true"
+                    app:civ_shadow_radius="1" />
+            </RelativeLayout>
+            <ImageView
+                android:layout_margin="40dp"
+                android:visibility="gone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:layout_gravity="center"
+                android:src="@drawable/icon" />
+
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/txtProfleDetails"
+                    android:text="@string/vpp_id"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfileVPPId"
+                    style="@style/txtProfleDetails"
+                    android:text="@string/vpp_id"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+
+                    style="@style/txtProfleDetails"
+                    android:text="@string/vpp_name"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfileName"
+                    style="@style/txtProfleDetails"
+                    android:text="@string/vpp_name"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:id="@+id/listDepartment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+
+                    style="@style/txtProfleDetails"
+                    android:text="@string/city"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfileCity"
+                    style="@style/txtProfleDetails"
+                    android:text="@string/pan_no"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+
+                    style="@style/txtProfleDetails"
+                    android:text="@string/contact"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfileContact"
+                    style="@style/txtProfleDetails"
+
+                    android:text="@string/contact"
+                    android:textColor="@color/textColor" />
+
+                <ImageView
+                    android:id="@+id/img_edt_mob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_edit_18" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+
+                    style="@style/txtProfleDetails"
+                    android:text="@string/email"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfileEmail"
+                    style="@style/txtProfleDetails"
+                    android:text="@string/contact"
+                    android:textColor="@color/textColor" />
+
+                <ImageView
+                    android:id="@+id/img_edt_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:background="@drawable/ic_edit_18" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+
+                    style="@style/txtProfleDetails"
+                    android:text="@string/pan"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txtProfilePan"
+                    style="@style/txtProfleDetails"
+                    android:text="@string/pan"
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2"
+                android:visibility="visible">
+
+                <TextView
+                    style="@style/txtProfleDetails"
+                    android:text="Documents Status"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txt_update_doc"
+                    style="@style/txtProfleDetails"
+                    android:text=""
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="15dp"
+                android:weightSum="2">
+
+                <TextView
+                    style="@style/txtProfleDetails"
+                    android:text="Payment Status"
+                    android:textColor="@color/appcolor" />
+
+                <TextView
+                    android:id="@+id/txt_update_payment"
+                    style="@style/txtProfleDetails"
+                    android:text=""
+                    android:textColor="@color/textColor" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_updateprofile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="41dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="15dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:visibility="gone"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/colour_new_button"
+                    fancy:fb_focusColor="#9bd823"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="30dp"
+
+                    fancy:fb_text="Update Profile"
+                    fancy:fb_textColor="#FFFFFF"
+                    fancy:fb_textFont="@font/opensans_semibold"
+                    tools:ignore="DuplicateIds" />
+
+                <!--                <Button-->
+                <!--                    android:id="@+id/btn_updateprofile"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:layout_marginTop="10dp"-->
+                <!--                    android:clickable="true"-->
+                <!--                    android:padding="10dp"-->
+                <!--                    android:radius="10dp"-->
+                <!--                    android:background="@color/black"-->
+                <!--                    android:textColor="@color/white"-->
+                <!--                    android:text="Update Profile"/>-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+

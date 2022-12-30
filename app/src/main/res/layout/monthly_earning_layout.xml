@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="80dp"
+
+    android:orientation="vertical"
+    tools:context=".activity.MonthlyEarrning">
+    <TextView
+        android:id="@+id/title"
+        android:layout_below="@+id/imgClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monthly EARNING"
+        android:layout_alignParentStart="false"
+        android:layout_marginLeft="60dp"
+        android:fontFamily="@font/opensans_regular"
+        android:textColor="@color/black"
+        android:textSize="30sp"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        >
+
+
+        <TextView
+            android:id="@+id/txtMonth"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Month"/>
+
+
+        <Spinner
+            android:id="@+id/spMonth"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+
+
+
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        >
+
+
+        <TextView
+            android:id="@+id/txtYear"
+
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Year"/>
+
+
+        <Spinner
+            android:id="@+id/spYear"
+
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"/>
+
+
+
+
+    </LinearLayout>
+
+    <mehdi.sakout.fancybuttons.FancyButton
+        android:id="@+id/btnEarning"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        />
+
+    <TextView
+        android:id="@+id/txt_earn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:visibility="gone"
+        android:text=""
+        android:textColor="@color/colorPrimary"
+
+        android:layout_below="@+id/text2"
+        android:textSize="27sp" />
+
+
+</LinearLayout>

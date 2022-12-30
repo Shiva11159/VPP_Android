@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lytMain"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize">
+
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/relative1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            tools:context="com.application.vpp.activity.Dashboard">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edt_p_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Name"
+                    android:inputType="textCapCharacters"
+                    android:textAllCaps="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <TextView
+                android:id="@+id/txtNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input_name"
+                android:text="Note : Select Checkbox for Yes"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNote"
+                android:layout_marginTop="5dp"
+                android:text="I have explained the Ventura Products to the Client ?" />
+
+            <CheckBox
+                android:id="@+id/chk2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chk1"
+                android:layout_marginTop="5dp"
+                android:text="I have informed the Client about Ventura officials calling him/her for account opening ?" />
+
+            <RelativeLayout
+                android:id="@+id/text_input_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chk2"
+                android:layout_marginTop="6dp">
+
+                <EditText
+                    android:id="@+id/edt_p_number"
+                    android:layout_width="330dp"
+                    android:layout_height="match_parent"
+                    android:maxLength="10"
+                    android:hint="Mobile"
+                    android:inputType="number"
+                    android:textAllCaps="true" />
+
+                <ImageView
+                    android:id="@+id/imgContactFetchIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/edt_p_number"
+                    android:background="@drawable/ic_phone_book_22" />
+            </RelativeLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input_number"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edt_p_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Email"
+                    android:inputType="textCapCharacters"
+                    android:textAllCaps="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_city"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input_email"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edt_p_city"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="City"
+                    android:inputType="textCapCharacters"
+                    android:textAllCaps="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!--            <Spinner-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:layout_below="@id/text_input_city"-->
+            <!--                android:id="@+id/spnr_product"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content" />-->
+
+            <Button
+                android:id="@+id/btn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input_city"
+                android:layout_marginLeft="120dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/white"
+                android:paddingRight="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_10"
+                android:background="@color/colour_new_button"
+                android:gravity="center"
+                android:text="Select Products"
+                />
+
+            <TextView
+                android:id="@+id/list_prod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/btn1"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="7dp"
+                android:textSize="15sp"
+                android:textStyle="normal">
+
+            </TextView>
+
+            <View
+                android:id="@+id/viewLine1"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/list_prod"
+                android:layout_marginStart="5dp"
+                android:layout_marginTop="1dp"
+                android:layout_marginEnd="5dp"
+                android:background="@color/bordercolordark" />
+
+
+            <!--        <Spinner-->
+            <!--            android:layout_marginTop="10dp"-->
+            <!--            android:layout_below="@id/viewLine1"-->
+            <!--            android:id="@+id/spnr_schedule"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content" />-->
+
+            <!--        <View-->
+            <!--            android:id="@+id/viewLine2"-->
+            <!--            android:layout_below="@+id/spnr_schedule"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="1dp"-->
+            <!--            android:layout_marginStart="5dp"-->
+            <!--            android:layout_marginTop="1dp"-->
+            <!--            android:layout_marginEnd="5dp"-->
+            <!--            android:background="@color/bordercolordark"/>-->
+
+
+            <!--        <LinearLayout-->
+            <!--            android:id="@+id/linearDateTime"-->
+            <!--            android:layout_below="@id/viewLine1"-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:orientation="horizontal"-->
+            <!--            android:weightSum="1"-->
+            <!--            android:layout_marginTop="10dp"-->
+            <!--            android:layout_height="wrap_content">-->
+
+
+            <!--                <EditText android:textAllCaps="true"-->
+            <!--                    android:id="@+id/edtDate"-->
+            <!--                    android:layout_weight="0.5"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:focusableInTouchMode="false"-->
+            <!--                    android:visibility="gone"-->
+            <!--                    android:hint="Date"/>-->
+
+
+            <!--                <EditText android:textAllCaps="true"-->
+            <!--                    android:id="@+id/edtTime"-->
+            <!--                    android:layout_weight="0.5"-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:focusableInTouchMode="false"-->
+            <!--                    android:visibility="gone"-->
+            <!--                    android:hint="Time"/>
+
+
+                    </LinearLayout>-->
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/edtComments1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/viewLine1"
+                android:layout_marginTop="10dp"
+                android:visibility="visible">
+
+                <EditText
+                    android:id="@+id/edtComments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Comments If Any"
+                    android:inputType="textCapCharacters"
+                    android:textAllCaps="true" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <!-- <CheckBox
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/chk2"
+                 android:id="@+id/chk3"
+                 android:layout_marginTop="5dp"
+                 android:text="Is ClientListient informed about Ventura officials calling him/her for account opening ?"
+                 />-->
+
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btn_submit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="10dp"
+                android:paddingRight="20dp"
+                android:layout_alignParentBottom="true"
+                android:paddingBottom="10dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/colour_new_button"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="Submit"
+                fancy:fb_textColor="#FFFFFF" />
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

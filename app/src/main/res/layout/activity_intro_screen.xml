@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.application.vpp.activity.IntroScreen">
+
+    <ImageView
+
+        android:id="@+id/imgLogo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/introimage" />
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+           android:orientation="vertical"
+            android:layout_marginBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <CheckBox
+                android:id="@+id/chkAgree"
+                android:layout_marginBottom="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I agree to be a Ventura Partner"
+                android:textColor="@color/black"
+                android:buttonTint="@color/appcolor"
+                android:layout_marginStart="10dp"/>
+
+            <mehdi.sakout.fancybuttons.FancyButton
+                android:id="@+id/btnAgree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingBottom="10dp"
+                android:paddingLeft="20dp"
+                android:paddingTop="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:paddingRight="20dp"
+                fancy:fb_borderColor="#FFFFFF"
+                fancy:fb_borderWidth="1dp"
+                fancy:fb_defaultColor="@color/button"
+                fancy:fb_focusColor="#9bd823"
+                fancy:fb_iconPosition="left"
+                fancy:fb_radius="30dp"
+                fancy:fb_text="I Agree"
+                fancy:fb_textColor="#FFFFFF" />
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "378142335724",
+    "firebase_url": "https://ventura-partner-program.firebaseio.com",
+    "project_id": "ventura-partner-program",
+    "storage_bucket": "ventura-partner-program.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:378142335724:android:f9bf42df18395770",
+        "android_client_info": {
+          "package_name": "com.application.vpp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "378142335724-k2e1b6pajgahitkph9mmv6alcsl1f6t9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCC-_hpX5NYINBwIdZSmqvugXlKvyO785g"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
