@@ -109,7 +109,6 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-
         TextView txtTitle, txtMsg;
         ImageView image;
         RelativeLayout layoutNotification;

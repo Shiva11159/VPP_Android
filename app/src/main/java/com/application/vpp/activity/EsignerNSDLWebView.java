@@ -264,7 +264,7 @@ public class EsignerNSDLWebView extends AppCompatActivity {
 //        appStartIntent.setAction(ACTION_ESIGNRESPONSE);
 //        //Intent appStartIntent = new Intent(GlobalClass.mainContext, NsdlEsignActivity.class);
 //        appStartIntent.putExtra("msg", esignXML); // msg contains esign request xml from ASP.
-//        appStartIntent.putExtra("env", biometricenv); //Possible values PREPROD or PROD (case sensitive).
+//        appStartIntent.putExtra("env", biometricenv); //signPossible values PREPROD or PROD (case sensitive).
 //        appStartIntent.putExtra("returnUrl", getPackageName(getApplicationContext())); // your package name where esign response failure/success will be sent.
 //        startActivityForResult(appStartIntent, REQUEST_CODE);
 //

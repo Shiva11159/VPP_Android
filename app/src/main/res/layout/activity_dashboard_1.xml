@@ -45,6 +45,8 @@
 
                     <TextView
                         android:id="@+id/txtAddReference"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
@@ -70,6 +72,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
+                android:visibility="gone"
+
                 app:cardBackgroundColor="@color/white">
 
                 <RelativeLayout
@@ -137,12 +141,15 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_references"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:textColor="@color/card_textColor"
                         android:textSize="16sp" />
 
                     <com.daasuu.cat.CountAnimationTextView
                         android:id="@+id/txtMyLeadsCount"
                         android:layout_width="wrap_content"
+                        android:fontFamily="@font/opensans_semibold"
 
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -198,6 +205,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/rejected"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:textColor="@color/card_textColor"
                         android:textSize="16sp" />
 
@@ -240,6 +249,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="Not Interested"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:textColor="@color/card_textColor"
                         android:textSize="16sp" />
 
@@ -282,6 +293,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_clients"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:textColor="@color/card_textColor"
                         android:textSize="16sp" />
 
@@ -294,6 +307,8 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="10dp"
                         android:layout_marginEnd="80dp"
+                        android:fontFamily="@font/opensans_semibold"
+
                         android:layout_marginRight="56dp"
                         android:gravity="right"
                         android:text="0"
@@ -338,8 +353,53 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_earnings"
+                        android:fontFamily="@font/opensans_semibold"
                         android:textColor="@color/card_textColor"
+                        android:textSize="16sp" />
 
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="30dp"
+                        android:background="@drawable/ic_right_arrow_black_14" />
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:visibility="gone"
+                android:id="@+id/cardReferral"
+                app:cardBackgroundColor="@color/white">
+
+                <RelativeLayout
+                    android:visibility="visible"
+                    android:id="@+id/cardReferral1"
+
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <View
+                        android:layout_width="5dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/tealA700" />
+
+                    <TextView
+                        android:id="@+id/txtReferral"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginStart="40dp"
+                        android:text="Your referral link"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:textColor="@color/card_textColor"
                         android:textSize="16sp" />
 
                     <ImageView

@@ -106,16 +106,16 @@ public class Views {
     }
 
 
-    public static void ProgressDlgPaymentDone(final Activity context, ConfirmPayment confirmPayment,String amount) {
+    public static void ProgressDlgPaymentDone(final Activity context, ConfirmPayment confirmPayment, String amount) {
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog =
-        new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
-        sweetAlertDialog .setTitleText("Thank You !");
+                new SweetAlertDialog(context, SweetAlertDialog.SUCCESS_TYPE);
+        sweetAlertDialog.setTitleText("Thank You !");
         sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog .setContentText("We acknowledge the payment of Rs. "+amount+"/-");
-        sweetAlertDialog         .setConfirmText("Continue");
-        sweetAlertDialog        .setCustomImage(R.drawable.vpp_logo);
-        sweetAlertDialog     .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+        sweetAlertDialog.setContentText("We acknowledge the payment of Rs. " + amount + "/-");
+        sweetAlertDialog.setConfirmText("Continue");
+        sweetAlertDialog.setCustomImage(R.drawable.vpp_logo);
+        sweetAlertDialog.setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
@@ -136,12 +136,12 @@ public class Views {
     }
 
 
-    public static void ProgressDlgPaymentFail(final Activity context, ConfirmPayment confirmPayment,String msg) {
+    public static void ProgressDlgPaymentFail(final Activity context, ConfirmPayment confirmPayment, String msg) {
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog =
-        new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
+                new SweetAlertDialog(context, SweetAlertDialog.ERROR_TYPE);
         sweetAlertDialog.setCancelable(false);
-        sweetAlertDialog.        setTitleText("Error!!");
+        sweetAlertDialog.setTitleText("Error!!");
         sweetAlertDialog.setContentText(msg);
         sweetAlertDialog.setConfirmText("OK");
         sweetAlertDialog.setCustomImage(R.drawable.vpp_logo);

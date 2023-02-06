@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:layout_margin="15dp"
@@ -55,9 +56,9 @@
         android:background="@drawable/round_button_background"
         android:gravity="center_vertical|center_horizontal"
         android:src="@drawable/cancel_"
-        android:tint="@color/white"
         android:padding="5dp"
         android:textColor="#FFF"
         android:textSize="12sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:tint="@color/white" />
 </RelativeLayout>

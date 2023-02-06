@@ -690,6 +690,22 @@ public class Logics {
         return val;
     }
 
+    public static void setDescrStatus(Context context, String value) {
+
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("DESC", MODE_PRIVATE).edit();
+        sharedPreferences.putString("DESC", value);
+        sharedPreferences.apply();
+
+
+    }
+
+    public static String getDescrStatus(Context context) {
+
+        SharedPreferences sharedPreferences = context.getSharedPreferences("DESC", MODE_PRIVATE);
+        String val = sharedPreferences.getString("DESC", null);
+        return val;
+    }
+
     public static void setDocStatus(Context context, String value) {
         SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("docStatus", MODE_PRIVATE).edit();
         sharedPreferences.putString("isFirst", value);
@@ -728,7 +744,6 @@ public class Logics {
     }
     public static void storeSharedPref(String tagName, boolean tagValue,Context context) {
         try {
-
             SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("permission", MODE_PRIVATE).edit();
             sharedPreferences.putBoolean(tagName, tagValue);
             sharedPreferences.apply();
@@ -738,21 +753,47 @@ public class Logics {
     }
 
     public static void setPLFOA(Context context,String link){
-
         SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE).edit();
         sharedPreferences.putString(Const.Psn_lnk_acct_opn,link);
         sharedPreferences.apply();
-
     }
 
     public static String getPLFOA(Context context){
-
         String clientCode = "";
         SharedPreferences sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE);
         clientCode =   sharedPreferences.getString(Const.Psn_lnk_acct_opn,"");
 
         return clientCode;
 
+    }
+
+
+    public static void setDocumentStatus(Context context, String status) {
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("DOC", MODE_PRIVATE).edit();
+        sharedPreferences.putString("DOC", status);
+        sharedPreferences.apply();
+
+    }
+
+    public static String getDocumentStatus(Context context) {
+        String mobile;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("DOC", MODE_PRIVATE);
+        mobile = sharedPreferences.getString("DOC", null);
+        return mobile;
+    }
+
+    public static void setEsignStatus(Context context, String status) {
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("esign", MODE_PRIVATE).edit();
+        sharedPreferences.putString("esign", status);
+        sharedPreferences.apply();
+
+    }
+
+    public static String getEsignStatus(Context context) {
+        String mobile;
+        SharedPreferences sharedPreferences = context.getSharedPreferences("esign", MODE_PRIVATE);
+        mobile = sharedPreferences.getString("esign", null);
+        return mobile;
     }
 
 }

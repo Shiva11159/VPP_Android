@@ -64,7 +64,7 @@ public class Notifications extends NavigationDrawer {
         notificationDetails.setAdapter(notificationAdapter);
         notificationDetails.setItemAnimator(new DefaultItemAnimator());
         notificationDetails.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-b
+
     }
     @Override
     public void onBackPressed() {

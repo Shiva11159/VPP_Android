@@ -518,7 +518,7 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
                                     }
 
                                     String popup_udpated_date = jsonObject.getString("popup_udpated_date");
-                                    SharedPref.savePreferences(SplashScreen.this, "popup_udpated_date", popup_udpated_date);
+                                    SharedPref.savePreferences(SplashScreen.this, "popup_udpated_date1", popup_udpated_date);
                                     SharedPref.savePreferences(SplashScreen.this, "linkPopup", linkPopup);
 
                                 }
@@ -630,7 +630,7 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
 
 
                                     SharedPref.savePreferences(SplashScreen.this, "state", state);
-                                    Logics.setPaymentStatus(SplashScreen.this, vppdata.getString("is_pay_p"));
+                                   // Logics.setPaymentStatus(SplashScreen.this, vppdata.getString("is_pay_p"));
                                     SharedPref.savePreferences(SplashScreen.this, "bankAccNo", bankAccNo);
                                     Logics.setVppDetails(SplashScreen.this, name, mobile, email, city, vppid, pan_no);
 

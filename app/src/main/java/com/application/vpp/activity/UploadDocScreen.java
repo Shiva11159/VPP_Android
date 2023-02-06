@@ -418,7 +418,8 @@ public class UploadDocScreen extends AppCompatActivity implements View.OnClickLi
             isDocument = getIntent().getExtras().getInt("isDocument", 0);
         }
         if (isDocument == 0) {
-            alert();
+           // alert();
+
         }
 
         btn_upload_document.setOnClickListener(this);
@@ -784,13 +785,18 @@ public class UploadDocScreen extends AppCompatActivity implements View.OnClickLi
                 if (status == 1) {
                     if (isDocument == 0) {
                         TastyToast.makeText(getApplicationContext(), "Images Uploaded Succesfully", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-                        if (SharedPref.getPreferences(getApplicationContext(), SharedPref.UPIPayment).equalsIgnoreCase(SharedPref.UPIPaymentDONE)) {
-                            Intent intent = new Intent(UploadDocScreen.this, Dashboard.class);
-                            intent.putExtra("isDocument", 0);
-                            startActivity(intent);
-                        } else {
+
+                        if (Logics.getEsignStatus(UploadDocScreen.this).equalsIgnoreCase("0")) {
                             Intent intent = new Intent(UploadDocScreen.this, UpiPayment.class);
                             intent.putExtra("isDocument", 0);
+                            startActivity(intent);
+                        } else if(Logics.getEsignStatus(UploadDocScreen.this).equalsIgnoreCase("0")){
+                            Intent intent = new Intent(UploadDocScreen.this, PhotoVideoSignatureActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }else {
+                            Intent intent = new Intent(UploadDocScreen.this, Dashboard.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                             startActivity(intent);
                         }
 
@@ -1334,6 +1340,12 @@ public class UploadDocScreen extends AppCompatActivity implements View.OnClickLi
     public void onFinish() {
         progressDialog.setProgress(100);
 
+    }
+
+
+    @Override
+    public void onBackPressed() {
+       // super.onBackPressed();
     }
 }
 

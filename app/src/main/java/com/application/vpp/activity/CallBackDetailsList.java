@@ -47,7 +47,6 @@ import java.util.ArrayList;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class CallBackDetailsList extends NavigationDrawer implements RequestSent, ConnectionProcess {
-
     public static Handler handlerCallback;
     static Gson gson;
 //    ProgressDialog ringProgressDialog;

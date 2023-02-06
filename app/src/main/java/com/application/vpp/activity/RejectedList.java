@@ -118,7 +118,7 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            Log.e("RejectedList", "handleMessage: " + msg.obj);
+            Log.e("RejectedList", String.valueOf(msg.obj));
 
             data = "";
             data = (String) msg.obj;
@@ -190,10 +190,7 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
 //        if (!RejectedList.this.isFinishing()){
 //            ringProgressDialog.show();
 //        }
-
-
         AlertDialogClass.PopupWindowShow(RejectedList.this, mainlayout);
-
         try {
 
 //            String imei;

@@ -161,7 +161,6 @@ public class UpdateProfile extends NavigationDrawer implements TextWatcher, Requ
                 } else if (!existingEmail.equals(newEmail)) {
                     updateEmail = 1;
                 }
-
             }
 
             try {

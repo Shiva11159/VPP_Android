@@ -16,12 +16,21 @@
     <uses-permission android:name="android.permission.READ_INTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.CAMERA" />
-    />
 
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="true" />
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
 
+    <queries>
+        <intent>
+            <action
+                android:name="android.media.action.IMAGE_CAPTURE"
+                android:exported="true" />
+        </intent>
+    </queries>
 
     <application
         android:name=".Utility.MyApplication"
@@ -36,6 +45,15 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
+<!--        <activity-->
+<!--            android:name=".ShareLinkDlg"-->
+<!--            android:exported="false"-->
+<!--            android:label="@string/title_activity_share_link_dlg"-->
+<!--            android:theme="@style/AppTheme.NoActionBar">-->
+<!--            <meta-data-->
+<!--                android:name="android.app.lib_name"-->
+<!--                android:value="" />-->
+<!--        </activity>-->
         <activity
             android:name=".activity.PrivacyPolicy"
             android:label="Privacy Policy" />
@@ -86,13 +104,12 @@
             android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="unspecified">
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
-
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginScreen"
@@ -126,9 +143,7 @@
             android:label="@string/my_clients"
             android:screenOrientation="unspecified"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.NavigationDrawer"
-             />
+        <activity android:name=".activity.NavigationDrawer" />
         <activity
             android:name=".activity.RejectedList"
             android:label="@string/rejected"
@@ -173,15 +188,13 @@
             android:screenOrientation="unspecified" />
         <activity
             android:name=".activity.Welcome"
-            android:screenOrientation="unspecified"
-            android:exported="true">
+            android:screenOrientation="unspecified">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" /> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
 
@@ -202,40 +215,26 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activity.OtpVerfication"
-            ></activity>
-        <activity
-            android:name=".activity.PanValidation"
-          />
-        <activity
-            android:name=".activity.BankValidation"
-           />
-        <activity
-            android:name=".activity.SignupScreen2"
-           >
+        <activity android:name=".activity.OtpVerfication" />
+        <activity android:name=".activity.PanValidation" />
+        <activity android:name=".activity.BankValidation" />
+        <activity android:name=".activity.SignupScreen2">
 
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN" /> -->
+            <!-- <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" /> -->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+
+            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+            <!-- </intent-filter> -->
 
         </activity>
-        <activity
-            android:name=".activity.UploadDocScreen"
-            />
-        <activity
-            android:name=".activity.UpiPayment"
-           />
+        <activity android:name=".activity.UploadDocScreen" />
+        <activity android:name=".activity.UpiPayment" />
         <activity
             android:name=".activity.ContactUs"
-            android:label="Contact Us"
-            android:noHistory="true" />
-        <activity
-            android:name=".activity.UpdateOtpVerify"
-            />
+            android:label="Contact Us" />
+        <activity android:name=".activity.UpdateOtpVerify" />
         <activity
             android:name=".ReusableLogics.ImagePickerActivity"
             android:exported="true" />
@@ -269,7 +268,6 @@
         <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:exported="true"
-
             android:screenOrientation="unspecified" />
 
         <provider
@@ -354,12 +352,7 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
-        </receiver>
-
-
-        <!--new-->
-
-
+        </receiver> <!-- new -->
         <receiver
             android:name="com.razorpay.RzpTokenReceiver"
             android:exported="true">
@@ -382,21 +375,9 @@
                     android:scheme="io.rzp" />
             </intent-filter>
         </activity>
-
         <activity
             android:name="com.karumi.dexter.DexterActivity"
             android:theme="@style/Dexter.Internal.Theme.Transparent" />
-
     </application>
-
-    <queries>
-
-        <intent>
-            <action
-                android:name="android.media.action.IMAGE_CAPTURE"
-                android:exported="true" />
-        </intent>
-    </queries>
-
 
 </manifest>

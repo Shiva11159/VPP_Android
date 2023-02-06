@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lytMain"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -12,12 +11,11 @@
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize">
 
-
         <LinearLayout
-            android:orientation="vertical"
             android:id="@+id/relative1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:orientation="vertical"
             android:padding="10dp"
             tools:context="com.application.vpp.activity.Dashboard">
 
@@ -33,6 +31,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Enter Name"
+                    android:fontFamily="sans-serif-medium"
                     android:inputType="textCapCharacters"
                     android:textAllCaps="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -40,10 +39,13 @@
 
             <TextView
                 android:id="@+id/txtNote"
+                android:fontFamily="@font/opensans_semibold"
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/ventura_color"
                 android:layout_below="@id/text_input_name"
-                android:text="Note : Select Checkbox for Yes"
+                android:text="Select Checkbox for Yes"
                 android:textStyle="bold" />
 
             <CheckBox
@@ -52,6 +54,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtNote"
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"
+
                 android:text="I have explained the Ventura Products to the Client ?" />
 
             <CheckBox
@@ -60,6 +65,9 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/chk1"
                 android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"
+
                 android:text="I have informed the Client about Ventura officials calling him/her for account opening ?" />
 
             <RelativeLayout
@@ -71,17 +79,21 @@
 
                 <EditText
                     android:id="@+id/edt_p_number"
-                    android:layout_width="330dp"
+                    android:layout_width="340dp"
                     android:layout_height="match_parent"
-                    android:maxLength="10"
                     android:hint="Mobile"
+
+                    android:textColor="@color/gray800"
                     android:inputType="number"
+                    android:fontFamily="sans-serif-medium"
+
+                    android:maxLength="10"
                     android:textAllCaps="true" />
 
                 <ImageView
                     android:id="@+id/imgContactFetchIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
                     android:layout_marginTop="10dp"
                     android:layout_toRightOf="@id/edt_p_number"
                     android:background="@drawable/ic_phone_book_22" />
@@ -100,6 +112,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Email"
+                    android:textColor="@color/gray800"
+                    android:fontFamily="sans-serif-medium"
+
                     android:inputType="textCapCharacters"
                     android:textAllCaps="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -117,6 +132,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="City"
+                    android:textColor="@color/gray800"
+                    android:fontFamily="sans-serif-medium"
+
                     android:inputType="textCapCharacters"
                     android:textAllCaps="true" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -129,6 +147,36 @@
             <!--                android:layout_width="match_parent"-->
             <!--                android:layout_height="wrap_content" />-->
 
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/text_input_name"
+                android:text="Select Product"
+                android:fontFamily="@font/opensans_semibold"
+                android:textColor="@color/ventura_color"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/chk3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtNote"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"
+                android:text="Demat and trading account" />
+
+            <CheckBox
+                android:id="@+id/chk4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/chk1"
+                android:layout_marginTop="5dp"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="@color/black"
+                android:text="Sub partner" />
+
             <Button
                 android:id="@+id/btn1"
                 android:layout_width="wrap_content"
@@ -136,13 +184,14 @@
                 android:layout_below="@id/text_input_city"
                 android:layout_marginLeft="120dp"
                 android:layout_marginTop="5dp"
-                android:textColor="@color/white"
-                android:paddingRight="@dimen/dimen_10"
-                android:paddingLeft="@dimen/dimen_10"
+
+                android:visibility="gone"
                 android:background="@color/colour_new_button"
                 android:gravity="center"
+                android:paddingLeft="@dimen/dimen_10"
+                android:paddingRight="@dimen/dimen_10"
                 android:text="Select Products"
-                />
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/list_prod"
@@ -222,7 +271,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/viewLine1"
                 android:layout_marginTop="10dp"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <EditText
                     android:id="@+id/edtComments"
@@ -248,11 +297,13 @@
                 android:id="@+id/btn_submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="25dp"
                 android:paddingLeft="20dp"
                 android:paddingTop="10dp"
                 android:paddingRight="20dp"
-                android:layout_alignParentBottom="true"
                 android:paddingBottom="10dp"
                 fancy:fb_borderColor="#FFFFFF"
                 fancy:fb_borderWidth="1dp"
@@ -264,9 +315,9 @@
                 fancy:fb_textColor="#FFFFFF" />
 
 
-
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+
+</RelativeLayout>

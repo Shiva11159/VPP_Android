@@ -54,6 +54,7 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
         requestSent = (RequestSent) this;
 
         SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+
         if (getIntent().getExtras() != null) {
             isSignup = getIntent().getExtras().getInt("issignup", 0);
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -72,46 +73,44 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
         btnStartReferring = (FancyButton) findViewById(R.id.btnStartReferring);
         txtTermsConditions = (TextView) findViewById(R.id.txtIagree);
         //  txt_Dob=(TextView)findViewById(R.id.txt_Dob);
-        btnStartReferring.setClickable(false);
-        btnStartReferring.setEnabled(false);
+//        btnStartReferring.setClickable(false);
+//        btnStartReferring.setEnabled(false);
 
-        chkIagree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//        chkIagree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+//
+//                if (b) {
+//
+//                    btnStartReferring.setBackgroundColor(getResources().getColor(R.color.btn_active));
+//                    btnStartReferring.setClickable(true);
+//                    btnStartReferring.setEnabled(true);
+//                } else {
+//
+//                    btnStartReferring.setBackgroundColor(getResources().getColor(R.color.btn_active));
+//                    btnStartReferring.setClickable(false);
+//                    btnStartReferring.setEnabled(false);
+//
+//                }
+//
+//            }
+//        });
 
-                if (b) {
 
-                    btnStartReferring.setBackgroundColor(getResources().getColor(R.color.btn_active));
-                    btnStartReferring.setClickable(true);
-                    btnStartReferring.setEnabled(true);
-                } else {
-
-                    btnStartReferring.setBackgroundColor(getResources().getColor(R.color.btn_active));
-                    btnStartReferring.setClickable(false);
-                    btnStartReferring.setEnabled(false);
-
-                }
-
-            }
-        });
-
-
-        txtTermsConditions.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent(Welcome.this, TermsConditions.class);
-                startActivity(intent);
-
-            }
-        });
+//        txtTermsConditions.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent(Welcome.this, TermsConditions.class);
+//                startActivity(intent);
+//
+//            }
+//        });
 
         btnStartReferring.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
-
-
 
                     if (isSignup == 0) {
                         Intent intent = new Intent(Welcome.this, Dashboard.class);

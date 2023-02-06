@@ -13,7 +13,7 @@
         <EditText
             android:id="@+id/branch_locator_searchView"
             android:padding="10dp"
-            android:background="@drawable/round_rect1"
+            android:background="@drawable/rect"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Search by city"

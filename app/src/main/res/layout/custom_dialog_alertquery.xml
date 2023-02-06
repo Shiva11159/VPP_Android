@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/relative1"
+    android:layout_width="match_parent"
+    android:background="@color/transparent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+       >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif-condensed"
+            android:padding="10dp"
+            android:text="Query Details"
+            android:textSize="@dimen/dimen_22"
+            android:textStyle="bold"
+            android:visibility="gone" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_marginTop="25dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/opensans_light"
+            android:paddingLeft="15dp"
+            android:text="Query"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp"
+
+            />
+
+        <TextView
+            android:id="@+id/querytxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingLeft="15dp"
+            android:inputType="text|textMultiLine"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="15dp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/opensans_light"
+            android:paddingLeft="15dp"
+            android:text="Remark"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="12dp" />
+
+        <TextView
+            android:id="@+id/remarktxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/opensans_regular"
+            android:paddingLeft="15dp"
+            android:inputType="text|textMultiLine"
+            android:text=""
+            android:textColor="@color/black"
+            android:textColorHint="@color/black"
+            android:textSize="15dp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/buttonImageclose"
+        app:tint="@color/white"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_alignParentRight="true"
+        android:layout_margin="5dp"
+        android:background="@drawable/round_button_background"
+        android:gravity="center_vertical|center_horizontal"
+        android:padding="5dp"
+        android:src="@drawable/cancel_"
+        android:textColor="#FFF"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+</RelativeLayout>

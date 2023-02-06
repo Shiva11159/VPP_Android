@@ -26,6 +26,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.application.vpp.ClientServer.Connectivity;
 import com.application.vpp.Const.Const;
 import com.application.vpp.Interfaces.ConnectionProcess;
+import com.application.vpp.Interfaces.DescrpncyIntrfce;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.Logics;
@@ -34,15 +35,16 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.sdsmdg.tastytoast.TastyToast;
 
-public class NavigationDrawer extends AppCompatActivity implements RequestSent {
+public class NavigationDrawer extends AppCompatActivity implements RequestSent, DescrpncyIntrfce {
 
+    boolean checkDiscpncy = false;
     protected DrawerLayout mDrawerLayout;
     ActionBarDrawerToggle mDrawerToggle;
     FrameLayout frame;
     Toolbar toolbar;
     LinearLayout left_drawer, followUs;
     RelativeLayout layoutAddLead, layoutInProcess, layoutMyLeads, layoutRejected, layoutNI, layoutClientList, layoutBrokerage, layoutProfile, layoutReferralLink, layoutcallback,
-            layoutAboutVpp, layoutFAQ, layoutUpcomingEvents, layoutContact, layoutQuery, layoutDashBoard2, layoutdiscrepancy, layoutsubpartner, layoutPrivacypolicy, layoutlogout;
+            layoutAboutVpp, layoutFAQ, layoutUpcomingEvents, layoutContact, layoutQuery, layoutDashBoard2, layoutdiscrepancy, layoutdiscrepancyup, layoutsubpartner, layoutPrivacypolicy, layoutlogout;
     RelativeLayout layoutfollowUs, facebook, twitter, venturaBlog, youtube, instagram, linkedin;
     TextView txtName, txtVppId, txtVer;
     String name = "";
@@ -56,6 +58,10 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
     View view;
     RequestSent requestSent;
     RelativeLayout mainLayout;
+
+//    public NavigationDrawer(boolean check) {
+//        this.checkDiscpncy = check;
+//    }
 
 
     @Override
@@ -88,10 +94,12 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
         layoutQuery = (RelativeLayout) findViewById(R.id.layoutQuery);
         layoutDashBoard2 = (RelativeLayout) findViewById(R.id.layoutDashBoard2);
         layoutdiscrepancy = (RelativeLayout) findViewById(R.id.layoutdiscrepancy);
+        layoutdiscrepancyup = (RelativeLayout) findViewById(R.id.layoutdiscrepancyup);
         layoutsubpartner = (RelativeLayout) findViewById(R.id.layoutsubpartner);
         layoutPrivacypolicy = (RelativeLayout) findViewById(R.id.layoutPrivacypolicy);//  added by pravin 28.01.2021
         layoutlogout = (RelativeLayout) findViewById(R.id.layoutlogout);
 //        layoutDashBoard2.setVisibility(View.GONE);
+
 
         layoutFAQ = (RelativeLayout) findViewById(R.id.layoutFAQ);
         layoutUpcomingEvents = (RelativeLayout) findViewById(R.id.layoutUpcomingEvents);
@@ -334,68 +342,76 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
                 }
 
                 switch (id) {
-                    case R.id.layoutReferralLink: {
-                        if (Connectivity.getNetworkState(getApplicationContext())) {
-
-                            //startActivity(new Intent(Dashboard.this, DiscripancyActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-//                    Intent sendIntent = new Intent();
-//                    sendIntent.setAction(Intent.ACTION_SEND);
-//                    sendIntent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
-//                    sendIntent.setType("text/plain");
-//                    startActivity(sendIntent);
-
-                            String link = Logics.getPLFOA(NavigationDrawer.this);
-
-                            Log.e("link", link);
-                            layoutReferralLink.setVisibility(View.VISIBLE);
-                            Intent intent = new Intent();
-                            intent.setAction(Intent.ACTION_SEND);
-                            intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(NavigationDrawer.this));
-                            intent.setType("text/plain");
-                            Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(NavigationDrawer.this));
-                            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
-                            startActivity(chooserIntent);
-
-                          /*  if (link.length() > 0) {
-
-//                                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-//                                clipboard.setText(Logics.getPLFOA(NavigationDrawer.this));
-
-                               *//* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-                                    final android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) getApplicationContext()
-                                            .getSystemService(Context.CLIPBOARD_SERVICE);
-                                    final android.content.ClipData clipData = android.content.ClipData
-                                            .newPlainText("text label", Logics.getPLFOA(NavigationDrawer.this));
-                                    clipboardManager.setPrimaryClip(clipData);
-                                } else {
-                                    final android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) getApplicationContext()
-                                            .getSystemService(Context.CLIPBOARD_SERVICE);
-                                    clipboardManager.setText(Logics.getPLFOA(NavigationDrawer.this));
-                                }*//*
-
-                                if (link.equalsIgnoreCase("NOT IDENTIFIED")) {
-                                    layoutReferralLink.setVisibility(View.GONE);
-                                } else if (link.equalsIgnoreCase("Not VPP")) {
-                                    layoutReferralLink.setVisibility(View.GONE);
-                                }else {
-                                    layoutReferralLink.setVisibility(View.VISIBLE);
-                                    Intent intent = new Intent();
-                                    intent.setAction(Intent.ACTION_SEND);
-                                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(NavigationDrawer.this));
-                                    intent.setType("text/plain");
-                                    Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(NavigationDrawer.this));
-                                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
-                                    startActivity(chooserIntent);
-                                }
-                            }else {
-                                layoutReferralLink.setVisibility(View.GONE);
-                            }*/
-
-                        } else {
-                            Views.SweetAlert_NoDataAvailble(NavigationDrawer.this, "Connect internet !");
-                        }
-                    }
-                    break;
+//                    case R.id.layoutReferralLink: {
+//                        if (Connectivity.getNetworkState(getApplicationContext())) {
+//
+//                            //startActivity(new Intent(Dashboard.this, DiscripancyActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+////                    Intent sendIntent = new Intent();
+////                    sendIntent.setAction(Intent.ACTION_SEND);
+////                    sendIntent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
+////                    sendIntent.setType("text/plain");
+////                    startActivity(sendIntent);
+//
+//
+//                            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+//                            shareIntent.setType("text/plain");
+//                            String shareSubText = "WhatsApp - The Great Chat App";
+//                            String shareBodyText = "https://play.google.com/store/apps/details?id=com.whatsapp&hl=en";
+//                            shareIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubText);
+//                            shareIntent.putExtra(Intent.EXTRA_TEXT, shareBodyText);
+//                            startActivity(Intent.createChooser(shareIntent, "Share With"));
+//
+////                            String link = Logics.getPLFOA(NavigationDrawer.this);
+////                            Log.e("link", link);
+//                            layoutReferralLink.setVisibility(View.VISIBLE);
+////                            Intent intent = new Intent();
+////                            intent.setAction(Intent.ACTION_SEND);
+////                            intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(NavigationDrawer.this));
+////                            intent.setType("text/plain");
+////                            Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(NavigationDrawer.this));
+////                            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+////                            startActivity(chooserIntent);
+//
+//                          /*  if (link.length() > 0) {
+//
+////                                ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+////                                clipboard.setText(Logics.getPLFOA(NavigationDrawer.this));
+//
+//                               *//* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+//                                    final android.content.ClipboardManager clipboardManager = (android.content.ClipboardManager) getApplicationContext()
+//                                            .getSystemService(Context.CLIPBOARD_SERVICE);
+//                                    final android.content.ClipData clipData = android.content.ClipData
+//                                            .newPlainText("text label", Logics.getPLFOA(NavigationDrawer.this));
+//                                    clipboardManager.setPrimaryClip(clipData);
+//                                } else {
+//                                    final android.text.ClipboardManager clipboardManager = (android.text.ClipboardManager) getApplicationContext()
+//                                            .getSystemService(Context.CLIPBOARD_SERVICE);
+//                                    clipboardManager.setText(Logics.getPLFOA(NavigationDrawer.this));
+//                                }*//*
+//
+//                                if (link.equalsIgnoreCase("NOT IDENTIFIED")) {
+//                                    layoutReferralLink.setVisibility(View.GONE);
+//                                } else if (link.equalsIgnoreCase("Not VPP")) {
+//                                    layoutReferralLink.setVisibility(View.GONE);
+//                                }else {
+//                                    layoutReferralLink.setVisibility(View.VISIBLE);
+//                                    Intent intent = new Intent();
+//                                    intent.setAction(Intent.ACTION_SEND);
+//                                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(NavigationDrawer.this));
+//                                    intent.setType("text/plain");
+//                                    Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(NavigationDrawer.this));
+//                                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+//                                    startActivity(chooserIntent);
+//                                }
+//                            }else {
+//                                layoutReferralLink.setVisibility(View.GONE);
+//                            }*/
+//
+//                        } else {
+//                            Views.SweetAlert_NoDataAvailble(NavigationDrawer.this, "Connect internet !");
+//                        }
+//                    }
+//                    break;
 
                 }
 
@@ -480,6 +496,17 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
                     break;
                 }
                 switch (id) {
+                    case R.id.layoutdiscrepancyup: {
+                        if (Connectivity.getNetworkState(getApplicationContext())) {
+                            startActivity(new Intent(NavigationDrawer.this, DiscripancyActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                        } else {
+                            TastyToast.makeText(NavigationDrawer.this, "No Internet", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                        }
+
+                    }
+                    break;
+                }
+                switch (id) {
                     case R.id.layoutsubpartner: {
                         if (Connectivity.getNetworkState(getApplicationContext())) {
                             startActivity(new Intent(NavigationDrawer.this, SubPatnerActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
@@ -554,11 +581,11 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
 
     }
 
-//    public void personlized_link_for_accnt_opnApicall() {
-//
-//
-//        //getMobile_1
-//
+    public void personlized_link_for_accnt_opnApicall() {
+
+
+        //getMobile_1
+
 //        try {
 //            AlertDialogClass.PopupWindowShow(NavigationDrawer.this, mainLayout);
 //            JSONObject jsonObject = new JSONObject();
@@ -573,9 +600,9 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//
-//
-//    }
+
+
+    }
 
 
     @Override
@@ -603,6 +630,8 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
         super.onBackPressed();
 
     }
+
+
 
     public class ViewHandler extends Handler {
 
@@ -730,5 +759,19 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent {
     @Override
     public void requestSent(int value) {
 
+    }
+
+
+
+    @Override
+    public void CheckUp() {
+        layoutdiscrepancyup.setVisibility(View.VISIBLE); //setting up..
+        layoutdiscrepancy.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void CheckDown() {
+        layoutdiscrepancyup.setVisibility(View.GONE);
+        layoutdiscrepancy.setVisibility(View.VISIBLE); //setting down..
     }
 }

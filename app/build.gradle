@@ -6,9 +6,9 @@ android {
         applicationId "com.application.vpp"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 84    //--- 83 play given live
+        versionCode 86   //--- 84 play given live
         //versionName "2.1"
-        versionName "5.40"  //-- 5.39-- play given live
+        versionName "5.42"  //-- 5.40-- play given live
         multiDexEnabled true
         testInstrumentationRunner "andro idx.test.runner.AndroidJUnitRunner"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
@@ -72,6 +72,9 @@ android {
         exclude 'META-INF/ASL2.0'
         exclude("META-INF/*.kotlin_module")
     }
+    buildFeatures {
+        //viewBinding true
+    }
 }
 
 ext {
@@ -100,6 +103,8 @@ dependencies {
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation fileTree(dir: 'libs', include: ['*.aar', '*.jar'], exclude: [])
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.5.3'
     // debugCompile 'com.amitshekhar.android:debug-db:1.0.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
@@ -137,7 +142,12 @@ dependencies {
     /* implementation 'androidx.multidex:multidex:2.0.0'*/
 
     //dexter permissions
-    implementation "com.karumi:dexter:5.0.0"
+  //  implementation "com.karumi:dexter:5.0.0"
+
+//    implementation 'com.karumi:dexter:6.2.3'   // new added on 30 dec
+
+    implementation('com.karumi:dexter:5.0.0') { exclude group: 'com.android.support' }
+
 
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.7.1'
@@ -267,6 +277,7 @@ dependencies {
     implementation 'com.android.support:design:28.0.0-alpha3'
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha06'
+    implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
 
 }
 

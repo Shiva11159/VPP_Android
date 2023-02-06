@@ -128,7 +128,7 @@ public class QueryStatusAdapter extends RecyclerView.Adapter<QueryStatusAdapter.
         } else {
             holder.txtQuery.setText(queryDataList.get(holder.getAdapterPosition()).query);
         }
-        int x = queryDataList.get(holder.getAdapterPosition()).sr_no;
+        int x = Integer.parseInt(queryDataList.get(holder.getAdapterPosition()).sr_no);
         holder.txt_token.setText("" + x);
 
         if (queryDataList.get(holder.getAdapterPosition()).remark.length() > 14) {

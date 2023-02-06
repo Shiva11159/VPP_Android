@@ -549,12 +549,12 @@ public class Profile extends AppCompatActivity implements RequestSent, Connectio
 //                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.cancel_, 0);
                             }
 
-                            if (is_document_v.equalsIgnoreCase("1")) {
-                                txt_update_doc.setText("Verified");
-                                uploaddocbutton.setVisibility(View.GONE);
-                                txt_update_doc.setTextColor(getResources().getColor(R.color.black));
-//                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_, 0);
-                            }
+//                            if (is_document_v.equalsIgnoreCase("1")) {
+//                                txt_update_doc.setText("Verified");
+//                                uploaddocbutton.setVisibility(View.GONE);
+//                                txt_update_doc.setTextColor(getResources().getColor(R.color.black));
+////                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_, 0);
+//                            }
 
                             if (is_adhar_verified.equalsIgnoreCase("1") && (is_bank_verified.equalsIgnoreCase("1")) && (is_pan_verified.equalsIgnoreCase("1"))) {
                                 txt_update_doc.setText("Verified");
@@ -567,17 +567,19 @@ public class Profile extends AppCompatActivity implements RequestSent, Connectio
                                 txt_update_esign.setText("Verified");
                                 txt_update_esign.setTextColor(getResources().getColor(R.color.black));
                                 uploadesignbutton.setVisibility(View.GONE);
+                                Logics.setEsignStatus(Profile.this,"1");
+
 //                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_, 0);
                             }
 
                         }
 
-                         if (is_document_v.equalsIgnoreCase("1")) {
-                            txt_update_doc.setText("Verified");
-                            uploaddocbutton.setVisibility(View.GONE);
-                            txt_update_doc.setTextColor(getResources().getColor(R.color.black));
-//                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_, 0);
-                        }
+//                         if (is_document_v.equalsIgnoreCase("1")) {
+//                            txt_update_doc.setText("Verified");
+//                            uploaddocbutton.setVisibility(View.GONE);
+//                            txt_update_doc.setTextColor(getResources().getColor(R.color.black));
+////                                txt_update_doc.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.right_, 0);
+//                        }
 
                         if (is_adhar_verified.equalsIgnoreCase("0") || (is_bank_verified.equalsIgnoreCase("0")) || (is_pan_verified.equalsIgnoreCase("0"))) {
                             txt_update_doc.setText("Upload pending");
@@ -597,6 +599,8 @@ public class Profile extends AppCompatActivity implements RequestSent, Connectio
                             txt_update_esign.setTextColor(getResources().getColor(R.color.red));
                             uploadesignbutton.setVisibility(View.VISIBLE);
 
+                            Logics.setEsignStatus(Profile.this,"0");
+
                         }
 
 
@@ -606,6 +610,7 @@ public class Profile extends AppCompatActivity implements RequestSent, Connectio
                             txt_update_esign.setText("Verification pending");
                             txt_update_esign.setTextColor(getResources().getColor(R.color.red));
                             uploadesignbutton.setVisibility(View.GONE);
+                            Logics.setEsignStatus(Profile.this,"1");
 
                         }
 

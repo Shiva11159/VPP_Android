@@ -130,7 +130,7 @@ public class TCPClient extends Client implements TCPClientProcess {
 //            isManualDisconnected = false;
 
 
-           // tryToReconnect(0);
+            // tryToReconnect(0);
 
         } catch (Exception e) {
             onError("Error in " + className, e);
@@ -366,18 +366,18 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
             case Const.MSGFETCHDASHBOARD: {
-                if (Dashboard.handlerDashboard!=null){
+                if (Dashboard.handlerDashboard != null) {
                     Dashboard.handlerDashboard.sendMessage(msg);
-                }else {
+                } else {
                     //DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
                 }
             }
             break;
             case Const.MSGFETCHDASHBOARDDesign: {
-                if (Dashboard.handlerDashboard!=null){
+                if (Dashboard.handlerDashboard != null) {
                     Dashboard.handlerDashboard.sendMessage(msg);
-                }else {
-                  //  DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
+                } else {
+                    //  DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
                 }
             }
             break;
@@ -564,14 +564,15 @@ public class TCPClient extends Client implements TCPClientProcess {
             break;
             case Const.MSGQUERYLIST: {
                 QueryStatus.handlerQueryList.sendMessage(msg);
+                //QueryFragment.handlerQueryList1.sendMessage(msg);
             }
             break;
             case Const.MONTHLYLEAD: {
-               // DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
+                // DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
             }
             break;
             case Const.MSGMONTHLYEARNING: {
-               // DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
+                // DashoboardDesign.handlerDashoboardDesign.sendMessage(msg);
             }
             break;
             case Const.MSGTECHPROCREQ: {
@@ -596,6 +597,10 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
             case Const.MSG_GST: {
+                UpiPayment.upiHandler.sendMessage(msg);
+            }
+            break;
+            case Const.MSGCallPromocode: {
                 UpiPayment.upiHandler.sendMessage(msg);
             }
             break;

@@ -66,7 +66,7 @@ public class BranchLocatorFragment extends Fragment implements RequestSent,CallB
     AlertDialog alertDialog;
     LinearLayout bottomlinear;
     ConnectionProcess connectionProcess;
-    RequestSent requestSent;
+    //RequestSent requestSent;
 
     public BranchLocatorFragment() {
         // Required empty public constructor
@@ -87,7 +87,7 @@ public class BranchLocatorFragment extends Fragment implements RequestSent,CallB
         // Inflate the layout for this fragment
         Log.e("","onCreateView");
         connectionProcess = (ConnectionProcess) this;
-        requestSent = (RequestSent) this;
+        //requestSent = (RequestSent) this;
 
         view =  inflater.inflate(R.layout.branch_locator, container, false);
         context = getActivity();
@@ -238,7 +238,6 @@ public class BranchLocatorFragment extends Fragment implements RequestSent,CallB
                         // data = "[\"[{\"LeadDate\":\"10 Sep 2019 10:04\",\"LeadNo\":\"2506305\",\"CustomerName\":\"CHARANJIT SINGH\",\"BranchCode\":\"9999\",\"VPPPAN\":\"72729\",\"UserName\":\"11030 - Momita Bose\",\"ClientName\":\"  \",\"Status\":\"Call Back\",\"ProductName\":\"Commodities\"}]\"]";
                         //listDatasetArrayList = gson.fromJson(data, new TypeToken<ArrayList<LeadDetailReportDataset>>() {}.getType());
                         Type userListType = new TypeToken<ArrayList<BranchLocatorDetails>>(){}.getType();
-
 
                         listDatasetArrayList  = gson.fromJson(data,userListType);
                         branchListadapter = new BranchLocatorAdapter(getActivity(),listDatasetArrayList,callBack);

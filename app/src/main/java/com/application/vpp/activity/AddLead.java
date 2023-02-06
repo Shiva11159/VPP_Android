@@ -23,6 +23,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -46,8 +47,6 @@ import com.application.vpp.Utility.AlertDialogClass;
 import com.application.vpp.Views.Views;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
@@ -84,7 +83,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     int selectedLeadStatus = 1;
     String remark1 = Const.Check1UnChecked;
     String remark2 = Const.Check2UnChecked;
-    CheckBox chk1, chk2;
+    CheckBox chk1, chk2, chk3, chk4;
     int selectedDay, selectedMonth, selectedYear;
     int currDay, currMonth, currYear;
     int currHour = 9, currMin = 0;
@@ -96,19 +95,19 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     String[] listItems;
     boolean[] checkedItems;
     ArrayList<Integer> mProducts = new ArrayList<>();
-    ArrayList<Integer> selectedprodids = new ArrayList<>();
+//    ArrayList<Integer> selectedprodids = new ArrayList<>();
     String[] outputStrArr;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 2000;
     SweetAlertDialog sweetAlertDialog;
     boolean NOCheckINTERNET = false;
-    LinearLayout mainLayout;
+    RelativeLayout mainLayout;
 
-    boolean submitbtnPressed=false;
+    boolean submitbtnPressed = false;
 
     APiValidateAccount apiService1;
-    int MaxTry=0;
+    int MaxTry = 0;
 
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
 
@@ -128,26 +127,20 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         checkedItems = new boolean[arrayList.size()];
         prodlist = (TextView) findViewById(R.id.list_prod);
 //        btn1 = findViewById(R.id.btn1);
-        mainLayout =  findViewById(R.id.lytMain);
+        mainLayout = findViewById(R.id.lytMain);
         apiService1 = new APIClient().getClientsocketConn(AddLead.this).create(APiValidateAccount.class);
 
 
 //        new SendTOServer(AddLead.this,connectionProcess);
         imgContactFetchIcon = (ImageView) findViewById(R.id.imgContactFetchIcon);
-        btn1 =  findViewById(R.id.btn1);
+        btn1 = findViewById(R.id.btn1);
 
         btnSubmit = (FancyButton) findViewById(R.id.btn_submit);
-        // edtdate = (EditText)findViewById(R.id.edtDate);
-        //  edtTime = (EditText)findViewById(R.id.edtTime);
-
         edtName = (EditText) findViewById(R.id.edt_p_name);
         edtMobile = (EditText) findViewById(R.id.edt_p_number);
         edtEmail = (EditText) findViewById(R.id.edt_p_email);
         edtCity = (EditText) findViewById(R.id.edt_p_city);
         edtComments = (EditText) findViewById(R.id.edtComments);
-        //  spnr_product = (Spinner)findViewById(R.id.spnr_product);
-        //spnr_schedule = (Spinner)findViewById(R.id.spnr_schedule);
-
 
         edtName.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
         edtCity.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
@@ -155,8 +148,9 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         chk1 = (CheckBox) findViewById(R.id.chk1);
         chk2 = (CheckBox) findViewById(R.id.chk2);
 
-//        edtdate.setOnClickListener(this);
-//        edtTime.setOnClickListener(this);
+        chk3 = (CheckBox) findViewById(R.id.chk3);
+        chk4 = (CheckBox) findViewById(R.id.chk4);
+
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, arrayList);
        /* btn1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -206,11 +200,9 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
             }
         });*/
 
-       // inserSockettLogsArrayList=new ArrayList<>();
+        // inserSockettLogsArrayList=new ArrayList<>();
 
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", AddLead.this);
-
-
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", AddLead.this);
 
 
 //        if (inserSockettLogsArrayList != null) {
@@ -221,72 +213,77 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //        }
 
 
-        btn1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddLead.this);
-                mBuilder.setTitle("Select Products for Leads");
-                mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int position, boolean isChecked) {
-                        Log.d("ADDLead==", "" + position);
-                        Log.d("mProducts==", "" + mProducts.size());
-                        if (isChecked) {
-                            if (!mProducts.contains(position)) {
-                                mProducts.add(position);
-                            }
-                        } else if (mProducts.contains(position)) {
-                            for (int i = 0; i < mProducts.size(); i++) {
-                                if (position == mProducts.get(i)) {
-                                    mProducts.remove(i);
-                                }
-                            }
-
-                        }
-                    }
-                });
-                mBuilder.setCancelable(false);
-                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String item = "";
-
-                        outputStrArr = new String[mProducts.size()];
-
-                        for (int i = 0; i < mProducts.size(); i++) {
-
-                            item = item + listItems[mProducts.get(i)];
-
-                            outputStrArr[i] = listItems[mProducts.get(i)];
-
-                            Log.d("Selected products", listItems[mProducts.get(i)]);
-
-                            int selectid = dbh.getProductId(listItems[mProducts.get(i)]);
-
-                            selectedprodids.add(selectid);
-
-                            if (i != mProducts.size() - 1) {
-                                item = item + ",";
-                            }
-                        }
-                        prodlist.setText(item);
-                    }
-                });
-                mBuilder.setNegativeButton("DISMISS", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                mBuilder.show();
-            }
-        });
+//        btn1.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                AlertDialog.Builder mBuilder = new AlertDialog.Builder(AddLead.this);
+//                mBuilder.setTitle("Select Products for Leads");
+//                mBuilder.setMultiChoiceItems(listItems, checkedItems, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int position, boolean isChecked) {
+//                        Log.d("ADDLead==", "" + position);
+//                        Log.d("mProducts==", "" + mProducts.size());
+//                        if (isChecked) {
+//                            if (!mProducts.contains(position)) {
+//                                mProducts.add(position);
+//                            }
+//                        } else if (mProducts.contains(position)) {
+//                            for (int i = 0; i < mProducts.size(); i++) {
+//                                if (position == mProducts.get(i)) {
+//                                    mProducts.remove(i);
+//                                }
+//                            }
+//
+//                        }
+//                    }
+//                });
+//                mBuilder.setCancelable(false);
+//                mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String item = "";
+//
+//                        outputStrArr = new String[mProducts.size()];
+//
+//                        for (int i = 0; i < mProducts.size(); i++) {
+//
+//                            item = item + listItems[mProducts.get(i)];
+//
+//                            outputStrArr[i] = listItems[mProducts.get(i)];
+//
+//                            Log.d("Selected products", listItems[mProducts.get(i)]);
+//
+//                            int selectid = dbh.getProductId(listItems[mProducts.get(i)]);
+//
+//                            selectedprodids.add(selectid);
+//
+//                            if (i != mProducts.size() - 1) {
+//
+//                                item = item + ",";
+//
+//                            }
+//                        }
+//
+//                        prodlist.setText(item);
+//                    }
+//                });
+//                mBuilder.setNegativeButton("DISMISS", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                mBuilder.show();
+//            }
+//        });
 
         // spnr_product.setOnItemSelectedListener(this);
         // spnr_schedule.setOnItemSelectedListener(this);
 
         chk1.setOnCheckedChangeListener(this);
         chk2.setOnCheckedChangeListener(this);
+        chk3.setOnCheckedChangeListener(this);
+        chk4.setOnCheckedChangeListener(this);
         imgContactFetchIcon.setOnClickListener(this);
 
         //    spnr_product.setAdapter(adapter);
@@ -381,7 +378,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
             }
             break;
             case R.id.btn_submit: {
-                submitbtnPressed=true;
+                submitbtnPressed = true;
                 btnSubmit.setEnabled(false);
                 validation();
             }
@@ -416,7 +413,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     TastyToast.ERROR
             );
 
-        }else if (mobile.contains("-") || mobile.contains("*") || mobile.contains("#") || mobile.contains("+")) {
+        } else if (mobile.contains("-") || mobile.contains("*") || mobile.contains("#") || mobile.contains("+")) {
             Views.toast(this, "Enter mobile number without '+91 & special characters -,@,#'");
             btnSubmit.setEnabled(true);
 
@@ -425,14 +422,13 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
             btnSubmit.setEnabled(true);
 
 //            TastyToast.makeText(AddLead.this,"",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-        }  else if (city.length() < 3) {
+        } else if (city.length() < 3) {
             TastyToast.makeText(
                     getApplicationContext(),
                     "City Name should be more than 3 characters.",
                     TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR  );
-                    btnSubmit.setEnabled(true);
-
+                    TastyToast.ERROR);
+            btnSubmit.setEnabled(true);
 
 
         } else {
@@ -521,7 +517,6 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 if (b) {
                     remark1 = Const.Check1Checked;
                 } else {
-
                     remark1 = Const.Check1UnChecked;
                 }
             }
@@ -531,9 +526,41 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 if (b) {
                     remark2 = Const.Check2Checked;
                 } else {
-
                     remark2 = Const.Check2UnChecked;
                 }
+            }
+            break;
+
+            case R.id.chk3: {
+
+                if (b) {
+                    if (!mProducts.contains(2)) {
+                        mProducts.add(2);
+                    }
+                } else if (mProducts.contains(2)) {
+                    for (int i = 0; i < mProducts.size(); i++) {
+                        if (2 == mProducts.get(i)) {
+                            mProducts.remove(i);
+                        }
+                    }
+                }
+            }
+
+            break;
+            case R.id.chk4: {
+
+                if (b) {
+                    if (!mProducts.contains(39)) {
+                        mProducts.add(39);
+                    }
+                } else if (mProducts.contains(39)) {
+                    for (int i = 0; i < mProducts.size(); i++) {
+                        if (39 == mProducts.get(i)) {
+                            mProducts.remove(i);
+                        }
+                    }
+                }
+
             }
             break;
 
@@ -588,7 +615,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     } catch (JSONException e) {
                         e.printStackTrace();
                         FirebaseCrashlytics.getInstance().recordException(e);
-                        AlertDialogClass.ShowMsg(AddLead.this,e.getMessage());
+                        AlertDialogClass.ShowMsg(AddLead.this, e.getMessage());
 
                     }
 
@@ -620,17 +647,28 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                             String mesg = jsonObject.getString("message");
                             if (status != 0) {
                                 int pid = jsonObject.getInt("product");
+
+//                                Demat and trading account - 2
+//                                Sub partner - 39
+
+//                                if (pid == 2) {
+//                                    product = "Equity";
+//                                } else if (pid == 6) {
+//                                    product = "Mutual Fund";
+//                                } else if (pid == 4) {
+//                                    product = "Commodity";
+//                                } else if (pid == 39) {
+//                                    product = "VPP";
+//                                } else {
+//                                    product = "PMS";
+//                                }
+
                                 if (pid == 2) {
-                                    product = "Equity";
-                                } else if (pid == 6) {
-                                    product = "Mutual Fund";
-                                } else if (pid == 4) {
-                                    product = "Commodity";
+                                    product = "Demat and trading account";
                                 } else if (pid == 39) {
-                                    product = "VPP";
-                                } else {
-                                    product = "PMS";
+                                    product = "Sub partner";
                                 }
+
                                 if (status == 1) {
                                     display.append(product + ",");
                                 } else if (status == 2) {
@@ -683,7 +721,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     } catch (JSONException e) {
                         e.printStackTrace();
                         FirebaseCrashlytics.getInstance().recordException(e);
-                        AlertDialogClass.ShowMsg(AddLead.this,e.getMessage());
+                        AlertDialogClass.ShowMsg(AddLead.this, e.getMessage());
                         btnSubmit.setEnabled(true);
 
                     }
@@ -715,7 +753,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        Intent intent = new Intent(AddLead.this, AddLead.class).putExtra("from","");
+                        Intent intent = new Intent(AddLead.this, AddLead.class).putExtra("from", "");
                         startActivity(intent);
                     }
                 })
@@ -725,7 +763,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     private void sendData(String imei, String name, String mobile, String email, String city, String time, String comments) {
 
         JSONArray jsonArray = new JSONArray();
-        if (selectedprodids.size() != 0) {
+        if (mProducts.size() != 0) {
 //                ringProgressDialog = ProgressDialog.show(AddLead.this, "Please wait ...", "
 //
 //                Your Data ...", true);
@@ -734,12 +772,12 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //                ringProgressDialog.show();
             btnSubmit.setEnabled(false);
 
-            AlertDialogClass.PopupWindowShow(AddLead.this,mainLayout);
+            AlertDialogClass.PopupWindowShow(AddLead.this, mainLayout);
 //                ringProgressDialog = Views.showDialog(AddLead.this);
             try {
-                for (int j = 0; j < selectedprodids.size(); j++) {
+                for (int j = 0; j < mProducts.size(); j++) {
                     JSONObject jsonObject = new JSONObject();
-                    selectedProductId = selectedprodids.get(j);
+                    selectedProductId = mProducts.get(j);
 //
                     String vppid = Logics.getVppId(AddLead.this);
                     jsonObject.put("lead_name", name);
@@ -761,6 +799,9 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 json.put("data", jsonArray);
                 byte[] data = json.toString().getBytes();
 
+
+                Log.e("jsonjson", String.valueOf(json));
+
                 if (Connectivity.getNetworkState(getApplicationContext())) {
                     new SendTOServer(this, this, Const.MSGADDLEAD, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 } else {
@@ -769,11 +810,11 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     btnSubmit.setEnabled(true);
 
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 AlertDialogClass.PopupWindowDismiss();
                 Views.toast(this, e.getMessage());
                 FirebaseCrashlytics.getInstance().recordException(e);
-                AlertDialogClass.ShowMsg(AddLead.this,e.getMessage());
+                AlertDialogClass.ShowMsg(AddLead.this, e.getMessage());
                 btnSubmit.setEnabled(true);
 
             }
@@ -843,14 +884,14 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         if (inserSockettLogsArrayList != null) {
             if (inserSockettLogsArrayList.size() > 0) {
                 try {
-                    SharedPref.insertSocketLogs(inserSockettLogsArrayList,Logics.getVppId(AddLead.this),
+                    SharedPref.insertSocketLogs(inserSockettLogsArrayList, Logics.getVppId(AddLead.this),
                             "1",
                             Methods.getVersionInfo(AddLead.this),
-                            Methods.getlogsDateTime(),"AddLead",
+                            Methods.getlogsDateTime(), "AddLead",
                             Connectivity.getNetworkState(getApplicationContext()),
                             AddLead.this);
                     ;
-                }catch (Exception e){
+                } catch (Exception e) {
                     Toast.makeText(AddLead.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 Log.e("arrayListsize", String.valueOf(inserSockettLogsArrayList.size()));
@@ -872,7 +913,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //                    Log.e("jsonObject11", jsonObject.toString());
                     Log.e("jsonArray11", jsonArray.toString());
 
-                    UploadLogs.InsertLogsMethod(jsonArray,apiService1,inserSockettLogsArrayList,AddLead.this);
+                    UploadLogs.InsertLogsMethod(jsonArray, apiService1, inserSockettLogsArrayList, AddLead.this);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -884,7 +925,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         }
 
 
-       // TastyToast.makeText(AddLead.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+        // TastyToast.makeText(AddLead.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
     }
 
@@ -991,10 +1032,10 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //        dbh.insertLogs(Logics.getVppId(AddLead.this),this.getClass().getSimpleName(), String.valueOf(Calendar.getInstance().getTime()));
 
 
-       // SharedPref.insert(SharedPref.LogsALL,this.getClass().getSimpleName(),Logics.getVppId(AddLead.this),String.valueOf(Calendar.getInstance().getTime()),AddLead.this);
+        // SharedPref.insert(SharedPref.LogsALL,this.getClass().getSimpleName(),Logics.getVppId(AddLead.this),String.valueOf(Calendar.getInstance().getTime()),AddLead.this);
 
 
-        if (getIntent().getStringExtra("from").equalsIgnoreCase("0")){
+        if (getIntent().getStringExtra("from").equalsIgnoreCase("0")) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -1022,7 +1063,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 }
             });
 
-        }else {
+        } else {
             if (Connectivity.getNetworkState(getApplicationContext())) {
                 if (Const.isServerConnected == true && Const.isSocketConnected == false) {
                     runOnUiThread(new Runnable() {
@@ -1121,7 +1162,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
         btnSubmit.setEnabled(true);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -1159,14 +1200,14 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(AddLead.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 
@@ -1181,6 +1222,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //                })
 //                .show();
     }
+
     @Override
     protected void onDestroy() {
         handler.removeCallbacks(runnable);

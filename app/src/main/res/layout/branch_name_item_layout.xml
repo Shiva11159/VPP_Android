@@ -1,9 +1,19 @@
 <?xml version="1.0"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_margin="5dp" android:background="@color/white" tools:ignore="MissingConstraints" android:orientation="horizontal" xmlns:tools="http://schemas.android.com/tools" android:layout_height="wrap_content" android:layout_width="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_margin="5dp"
+    android:background="@color/white"
+    tools:ignore="MissingConstraints"
+    android:orientation="horizontal"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
 
 
-    <androidx.cardview.widget.CardView android:layout_margin="5dp" android:layout_height="50dp" android:layout_width="match_parent">
+    <androidx.cardview.widget.CardView
+        android:layout_margin="5dp"
+        android:layout_height="50dp"
+        android:layout_width="match_parent">
 
 
         <RelativeLayout
@@ -14,16 +24,23 @@
             android:clickable="true"
             android:id="@+id/relative_post_ur_query">
 
-            <View android:background="@color/palette2"
+            <View
+                android:background="@color/palette2"
                 android:layout_height="match_parent"
-                android:layout_width="5dp"/>
+                android:visibility="gone"
+                android:layout_width="5dp" />
 
-            <TextView android:layout_height="wrap_content"
-                android:layout_width="wrap_content" android:id="@+id/txt_branch_name"
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:id="@+id/txt_branch_name"
                 android:text="Post Your Query"
-                android:layout_marginStart="40dp" android:layout_centerVertical="true"
-                android:textSize="16sp" android:textColor="@color/card_textColor"
-                android:layout_alignParentStart="true"/>
+                android:fontFamily="@font/opensans_regular"
+                android:layout_marginStart="40dp"
+                android:layout_centerVertical="true"
+                android:textSize="16sp"
+                android:textColor="@color/gray900"
+                android:layout_alignParentStart="true" />
 
             <ImageView
                 android:background="@drawable/ic_right_arrow_black_14"
@@ -32,7 +49,7 @@
 
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="30dp"
-                android:layout_alignParentRight="true"/>
+                android:layout_alignParentRight="true" />
 
         </RelativeLayout>
 

@@ -192,7 +192,6 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
 
                     Log.e("handleMessage: ", data);
 
-
                     try {
                         if (data.equalsIgnoreCase("[]")) {
                             tv_nodataavail.setVisibility(View.VISIBLE);
@@ -289,6 +288,7 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
 
             String vppid = Logics.getVppId(ClientList.this);
 
+//            jsonObject.put("VPPID", "72891");
             jsonObject.put("VPPID", vppid);
             jsonObject.put("reportType", "AccountOpened");
 

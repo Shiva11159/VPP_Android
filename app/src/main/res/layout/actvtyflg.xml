@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/relative1"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/roundrectangle"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/Close_Popup_Share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="right"
+        android:drawableLeft="@drawable/cancel_"
+        android:drawableTint="@color/black"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text=""
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/collaboration_"
+                android:drawablePadding="10dp"
+
+                android:fontFamily="sans-serif-condensed"
+                android:padding="10dp"
+                android:text="Your referral link"
+                android:textColor="@color/black"
+                android:textSize="25dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/dotted_dark_line_ventura"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/et_link_"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="false"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingTop="5dp"
+                android:singleLine="true"
+                android:text="dfdfds"
+                android:textColor="@color/red900"
+                android:textColorHint="@color/black"
+                android:textSize="15dp" />
+
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_share"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:background="@color/transparent"
+            android:drawableRight="@drawable/next"
+            android:drawablePadding="5dp"
+            android:fontFamily="@font/opensans_semibold"
+            android:gravity="center"
+            android:text="Share"
+            android:textColor="@color/blue"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+    >
+
+</RelativeLayout>

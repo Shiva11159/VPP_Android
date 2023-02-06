@@ -30,6 +30,7 @@ public class ContactUs extends NavigationDrawer {
     RequestSent requestSent;
 
     //  TelephonyManager tm;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +56,6 @@ public class ContactUs extends NavigationDrawer {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new ConnectFragment(), "Connect");
         adapter.addFragment(new BranchLocatorFragment(), "Branch Locator");
-
         viewPager.setAdapter(adapter);
     }
 
@@ -86,6 +86,7 @@ public class ContactUs extends NavigationDrawer {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
+
     }
     @Override
     public void onBackPressed() {

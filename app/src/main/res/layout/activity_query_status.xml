@@ -1,115 +1,119 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="#EEEE"
-    android:layout_marginTop="?attr/actionBarSize">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:id="@+id/mainlayout"
-    android:background="#EEEE"
-    android:layout_marginTop="?attr/actionBarSize">
-    <View
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/mainlayout"
         android:layout_width="match_parent"
-        android:layout_marginTop="1dp"
-        android:layout_height="1dp"
-        android:visibility="gone"
-        android:backgroundTint="@color/appcolor"
-        android:background="@color/divider"/>
-    <LinearLayout
-        android:id="@+id/heading1"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:weightSum="3.5"
         android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/token"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/opensans_regular"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_weight="2"
-            android:text="Token ID" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/heading2"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        android:weightSum="3.5"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/scheme"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/opensans_regular"
-
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:layout_weight="2"
-            android:text="Date" />
-
-        <TextView
-            android:id="@+id/date"
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:textStyle="bold"
-
-            android:textColor="@color/black"
-            android:textSize="17sp"
-            android:fontFamily="@font/opensans_regular"
-            android:layout_weight="1.5"
-            android:text="Satus" />
-    </LinearLayout>
-<!--    <LinearLayout-->
-<!--        android:id="@+id/heading2"-->
-<!--        android:layout_marginTop="10dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:weightSum="3.5"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_width="match_parent">-->
-<!--        -->
-<!--    </LinearLayout>-->
-    <LinearLayout
-        android:id="@+id/heading4"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/query"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:textSize="17sp"
-            android:fontFamily="@font/opensans_regular"
-            android:text="Query" />
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/listQuery"
-        android:layout_margin="5dp"
         android:background="#EEEE"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-      >
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/divider"
+            android:backgroundTint="@color/appcolor"
+            android:visibility="gone" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/heading1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="3.5">
+
+            <TextView
+                android:id="@+id/token"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Token ID"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/heading2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="3.5">
+
+            <TextView
+                android:id="@+id/scheme"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+
+                android:fontFamily="@font/opensans_regular"
+                android:text="Date"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+
+                android:fontFamily="@font/opensans_regular"
+                android:text="Satus"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+        <!--    <LinearLayout-->
+        <!--        android:id="@+id/heading2"-->
+        <!--        android:layout_marginTop="10dp"-->
+        <!--        android:orientation="horizontal"-->
+        <!--        android:weightSum="3.5"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_width="match_parent">-->
+        <!--        -->
+        <!--    </LinearLayout>-->
+        <LinearLayout
+            android:id="@+id/heading4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
+            <TextView
+                android:id="@+id/query"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/opensans_regular"
+                android:text="Query"
+                android:textColor="@color/black"
+                android:textSize="17sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical"
+
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/listQuery">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/tv_nodataavail"
         android:layout_width="wrap_content"

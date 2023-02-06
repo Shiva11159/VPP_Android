@@ -209,7 +209,9 @@ public class ImagePickerActivity extends AppCompatActivity {
 
         UCrop.of(sourceUri, destinationUri)
                 .withOptions(options)
+
                 .start(this);
+
     }
 
     private void handleUCropResult(Intent data) {

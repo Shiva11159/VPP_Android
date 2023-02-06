@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:id="@+id/relative1"
+    android:background="@drawable/roundrectangle"
+    android:padding="10dp"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dimen_20"
+            android:orientation="horizontal">
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:fontFamily="sans-serif-condensed"
+            android:textSize="@dimen/dimen_22"
+            android:text="Request a Call Back"/>
+
+
+        <EditText
+            android:id="@+id/et_Name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:paddingLeft="15dp"
+            android:layout_marginTop="20dp"
+            android:textSize="15dp"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/opensans_light"
+            android:hint="Name *"
+            android:inputType="text"
+            android:textColor="@color/black"
+
+            />
+
+
+        <EditText
+            android:textSize="15dp"
+            android:id="@+id/et_mobileno_"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:singleLine="true"
+            android:paddingLeft="10dp"
+            android:maxLength="10"
+            android:layout_marginTop="20dp"
+            android:textColorHint="@color/black"
+            android:fontFamily="@font/opensans_light"
+            android:hint="Mobile No *"
+            android:inputType="number"
+            android:textColor="@color/black" />
+
+
+        <Button
+            android:id="@+id/btn_proceed"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonback1"
+            android:text="Proceed"
+            android:fontFamily="@font/opensans_light"
+            android:textStyle="bold"
+            android:textColor="@color/white"/>
+
+    </LinearLayout>>
+
+</RelativeLayout>

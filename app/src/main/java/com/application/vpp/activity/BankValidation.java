@@ -355,13 +355,12 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     }
 
     private void call_bankvarification(){
-try {
+    try {
     AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
     JSONObject jsonObject = new JSONObject();
     String strAccNo = edtAccNo.getText().toString().trim().toUpperCase();
 
     String strIfsc = edtIfscCode.getText().toString().trim().toUpperCase();
-
 
     jsonObject.put("ifsc", strIfsc);
     jsonObject.put("acc_no", strAccNo);
@@ -609,6 +608,7 @@ try {
                 case Const.MSGBANKVERIFICATION:{
                     String data = (String) msg.obj;
                     Log.d("Message", "handleMessagePan: " + data);
+                    Log.e("data", data);
                     JSONObject jsonObject = null;
                     try {
                         jsonObject = new JSONObject(data);
@@ -617,6 +617,8 @@ try {
 
                             AlertDialogClass.PopupWindowDismiss();
                             String data1 = jsonObject.getString("bank_response");
+
+                            Log.e("data1",data1 );
                             Gson g = new Gson();
                             BankValidateData bk = g.fromJson(data1, BankValidateData.class);
                             if(bk!=null) {
@@ -647,6 +649,7 @@ try {
 
                                     if (!networkrepcode.equalsIgnoreCase("M5") || !!networkrepcode.equalsIgnoreCase("52")) {
 
+                                        Log.e("onResponse: ", "99999");
 
                                         Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
                                         txtAccountValidateNote.setText(bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
@@ -674,6 +677,7 @@ try {
                                     AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
                                     AlertDialogClass.PopupWindowDismiss();
                                     //show error popup in excetion too.
+                                    Log.e("onResponse: ", "00000");
 
 
                                 }
@@ -688,11 +692,14 @@ try {
                         e.printStackTrace();
                         AlertDialogClass.PopupWindowDismiss();
                         AlertDialogClass.ShowMsg(BankValidation.this, "Opps!! something went wrong please contact to customer support team");
+                        Log.e("onResponse: ", "four");
+
                     }
                     catch (Exception e) {
                         e.printStackTrace();
                         AlertDialogClass.PopupWindowDismiss();
                         AlertDialogClass.ShowMsg(BankValidation.this, "Opps!! something went wrong please contact to customer support team");
+                        Log.e("onResponse: ", "5555");
 
                     }
                 }

@@ -1,438 +1,730 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    xmlns:card_view="http://schemas.android.com/apk/res-auto">
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@color/white"
+        app:cardElevation="2dp">
+
         <LinearLayout
+            android:id="@+id/lin1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <androidx.cardview.widget.CardView
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <LinearLayout
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:backgroundTint="@color/white"
-                card_view:cardCornerRadius="5dp"
-                card_view:cardBackgroundColor="@color/white"
-                card_view:cardElevation="10dp"
-                card_view:cardMaxElevation="15dp"
-                android:layout_height="200dp">
-                <RelativeLayout
-                    android:id="@+id/contacts"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textColor="@color/appcolor"
+                android:orientation="vertical">
 
-                        android:textSize="17sp"
-                        android:text="Head Office: "
-                        android:id="@+id/c1"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="17sp"
-                        android:layout_toRightOf="@+id/c1"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="20dp"
-
-                        android:text="+91-22-67547000"
-                        android:id="@+id/c2"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:layout_marginTop="2dp"
-                        android:layout_below="@+id/c1"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textSize="17sp"
-                        android:textColor="@color/appcolor"
-
-                        android:text="  VPP Team:"
-                        android:id="@+id/c3"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="17sp"
-                        android:layout_toRightOf="@+id/c3"
-                        android:layout_below="@+id/c2"
-                        android:id="@+id/c4"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="20dp"
-                        android:text=""
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:layout_marginTop="2dp"
-                        android:layout_below="@+id/c3"
-                        android:textColor="@color/appcolor"
-
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textSize="17sp"
-                        android:text="          Email:"
-                        android:id="@+id/c5"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="17sp"
-                        android:layout_toRightOf="@+id/c5"
-                        android:layout_below="@+id/c4"
-                        android:id="@+id/c6"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="30dp"
-
-                        android:text="vpp@ventura1.com"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:layout_marginTop="2dp"
-                        android:layout_below="@+id/c5"
-                        android:textColor="@color/appcolor"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="1dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textSize="17sp"
-                        android:text="Anuja Vichare:"
-                        android:id="@+id/c7"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/c7"
-                        android:layout_below="@+id/c6"
-                        android:id="@+id/c8"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="25dp"
-
-                        android:text=" +91 22 6622 7262"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/c7"
-                        android:layout_below="@+id/c8"
-                        android:id="@+id/c9"
-                        android:layout_marginTop="1dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="25dp"
-
-                        android:text=" +91 9920755443  "
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="start"
-                        android:layout_below="@+id/c9"
-                        android:textColor="@color/appcolor"
-                        android:layout_alignParentStart="true"
-                        android:layout_marginLeft="20dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:textSize="17sp"
-                        android:text="  Pari Savla:"
-                        android:id="@+id/c10"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/c10"
-                        android:layout_below="@+id/c9"
-                        android:id="@+id/c11"
-
-                        android:layout_marginTop="6dp"
-
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="25dp"
-
-                        android:text=" +91 22 6622 7262"
-                        android:layout_height="wrap_content"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:textSize="16sp"
-                        android:layout_toRightOf="@+id/c10"
-                        android:layout_below="@+id/c11"
-                        android:id="@+id/c12"
-                        android:layout_marginTop="1dp"
-                        android:fontFamily="@font/opensans_regular"
-                        android:layout_marginLeft="25dp"
-
-                        android:text=" +91 8779152522  "
-                        android:layout_height="wrap_content"/>
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="@color/white"
-
-                android:layout_width="match_parent"
-                android:layout_marginTop="20dp"
-                android:layout_margin="5dp"
-                android:layout_height="50dp">
-                <RelativeLayout
-                    android:id="@+id/card_view_callBack"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <View
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/palette1"/>
-
-                    <TextView
-                        android:id="@+id/txtAddReference"
-                        android:layout_alignParentStart="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/card_textColor"
-                        android:textSize="16sp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="40dp"
-                        android:text="Request a Call Back"/>
-                    <ImageView
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_right_arrow_black_14"/>
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cardView_callbackform"
-                app:cardBackgroundColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="250dp">
-                <LinearLayout
-                    android:id="@+id/card_view_callback_form"
+                <EditText
+                    android:id="@+id/editText_Vppid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
+                    android:background="@color/white"
+                    android:hint="Enter VPPID"
+                    android:padding="10dp"
+                    android:textAllCaps="true"
+                    android:visibility="gone">
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/text_input_name"
-                        android:layout_width="match_parent"
-                        android:layout_marginTop="10dp"
+                </EditText>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:padding="5dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/mobileNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:fontFamily="@font/opensans_regular"
-                        android:layout_height="wrap_content">
+                        android:gravity="left"
+                        android:text="Head Office"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray800"
+                        android:textSize="12dp" />
 
-                        <EditText android:textAllCaps="true"
-                            android:id="@+id/edt_name"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="text"
-                            android:maxLength="30"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/opensans_regular"
-                            android:textColor="@color/colour_new_text"
-                            android:hint="Name *"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:id="@+id/text_input_phone_number"
+                    <TextView
+                        android:id="@+id/txtupiid"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="02267547000"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator"
+                    android:visibility="gone" />
+
+                <LinearLayout
+                    android:id="@+id/R4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp"
+                    android:visibility="gone">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/name"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:text="Vpp Team"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txt_ben_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="7dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="VENTURA SECURITIES LTD"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:id="@+id/R5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/bank"
+                        style="@style/lumpsumLeft"
+                        android:layout_weight="0.5"
                         android:fontFamily="@font/opensans_regular"
-                        android:layout_height="wrap_content">
+                        android:text="Email"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray800"
 
-                        <EditText android:textAllCaps="true"
-                            android:id="@+id/edt_phone_number"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:maxLength="10"
-                            android:textSize="16sp"
-                            android:layout_marginLeft="5dp"
-                            android:fontFamily="@font/opensans_regular"
-                            android:textColor="@color/colour_new_text"
-                            android:hint="Phone Number *"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <!--                    <android.support.design.widget.TextInputLayout-->
-                    <!--                        android:id="@+id/text_input_callback_date"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_marginTop="5dp"-->
-                    <!--                        android:fontFamily="@font/opensans_regular"-->
-                    <!--                        android:layout_height="wrap_content">-->
+                        android:textSize="12dp" />
 
-                    <!--                        <EditText android:textAllCaps="true"-->
-                    <!--                            android:id="@+id/edt_callback_date"-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:inputType="text"-->
-                    <!--                            android:maxLength="30"-->
-                    <!--                            android:textSize="16sp"-->
-                    <!--                            android:layout_marginLeft="5dp"-->
-                    <!--                            android:fontFamily="@font/opensans_regular"-->
-                    <!--                            android:textColor="@color/colour_new_text"-->
-                    <!--                            android:hint="CallBack Date *"/>-->
-                    <!--                    </android.support.design.widget.TextInputLayout>-->
-                    <!--                    <android.support.design.widget.TextInputLayout-->
-                    <!--                        android:id="@+id/text_input_callback_time"-->
-                    <!--                        android:layout_width="match_parent"-->
-                    <!--                        android:layout_marginTop="5dp"-->
-                    <!--                        android:fontFamily="@font/opensans_regular"-->
-                    <!--                        android:layout_height="wrap_content">-->
+                    <TextView
+                        android:id="@+id/txt_bankacc"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="vpp@ventura1.com"
+                        android:textAllCaps="true"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
 
-                    <!--                        <EditText android:textAllCaps="true"-->
-                    <!--                            android:id="@+id/edt_callback_time"-->
-                    <!--                            android:layout_width="match_parent"-->
-                    <!--                            android:layout_height="wrap_content"-->
-                    <!--                            android:inputType="text"-->
-                    <!--                            android:maxLength="30"-->
-                    <!--                            android:textSize="16sp"-->
-                    <!--                            android:layout_marginLeft="5dp"-->
-                    <!--                            android:fontFamily="@font/opensans_regular"-->
-                    <!--                            android:textColor="@color/colour_new_text"-->
-                    <!--                            android:hint="CallBack Time*"/>-->
-                    <!--                    </android.support.design.widget.TextInputLayout>-->
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_callback_submit"
-                        android:layout_width="126dp"
-                        android:layout_height="41dp"
-                        android:layout_gravity="center_horizontal"
-                        android:paddingLeft="20dp"
-                        android:layout_margin="10dp"
-                        android:paddingRight="20dp"
-                        android:layout_marginTop="10dp"
-                        android:visibility="visible"
-                        fancy:fb_borderColor="#FFFFFF"
-                        fancy:fb_borderWidth="1dp"
-                        fancy:fb_defaultColor="@color/colour_new_button"
-                        fancy:fb_focusColor="#9bd823"
-                        fancy:fb_iconPosition="left"
-                        fancy:fb_radius="30dp"
-                        fancy:fb_text="SUBMIT"
-                        fancy:fb_textColor="#FFFFFF"
-                        fancy:fb_textFont="@font/opensans_semibold"
-                        tools:ignore="DuplicateIds"
 
-                        />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:id="@+id/R6"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/ifsc"
+                        style="@style/lumpsumLeft"
+                        android:layout_weight="0.5"
+
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Anuja Vichare"
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray800"
+
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txt_ifsc_Val"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="02266227262"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
                 </LinearLayout>
 
 
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                app:cardBackgroundColor="@color/white"
-
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="50dp">
-                <RelativeLayout
-                    android:id="@+id/relative_post_ur_query"
-                    android:clickable="true"
-                    android:focusable="true"
-                    android:background="?attr/selectableItemBackground"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <View
-                        android:layout_width="5dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/palette2"/>
-                    <TextView
-                        android:id="@+id/txtInProcess"
-                        android:layout_alignParentStart="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/card_textColor"
-                        android:textSize="16sp"
-                        android:layout_centerVertical="true"
-                        android:layout_marginStart="40dp"
-                        android:text="Post Your Query"/>
-
-                    <ImageView
-                        android:layout_alignParentRight="true"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="30dp"
-                        android:layout_centerVertical="true"
-                        android:background="@drawable/ic_right_arrow_black_14"/>
-                </RelativeLayout>
-
-            </androidx.cardview.widget.CardView>
-            <androidx.cardview.widget.CardView
-                android:id="@+id/card_view_post_ur_query1"
-                app:cardBackgroundColor="@color/white"
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="250dp">
                 <LinearLayout
-                    android:id="@+id/card_view_post_query_form"
+                    android:id="@+id/R7"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center_horizontal">
+
+                    android:padding="5dp"
+                    android:weightSum="3">
+
+
                     <TextView
-                        android:id="@+id/q_tv"
+                        android:id="@+id/txtbank_name_Val"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="09920755443"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
+                    android:id="@+id/R8"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:id="@+id/barnch_name"
+                        style="@style/lumpsumLeft"
+                        android:layout_weight="0.5"
+                        android:fontFamily="@font/opensans_regular"
+                        android:text="Pari savla "
+                        android:textAllCaps="true"
+                        android:textColor="@color/gray800"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtbranch_name_Val"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="02266227262"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"
+                    android:weightSum="3">
+
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="2.5"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text="08779152522"
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ScrollView
+        android:id="@+id/mainLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/card_view">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:fancy="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linear"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+
+                        android:layout_height="50dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="5dp"
+                        app:cardBackgroundColor="@color/white">
+
+                        <RelativeLayout
+                            android:id="@+id/card_view_callBack"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
+
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/palette1" />
+
+                            <TextView
+                                android:id="@+id/txtAddReference"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="40dp"
+
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Request a Call Back"
+
+                                android:textColor="@color/gray700"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/image1"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="30dp"
+                                android:background="@drawable/ic_right_arrow_black_14" />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+
+                    <LinearLayout
+                        android:id="@+id/card_view_callback_form"
                         android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="Type Your Query"
-                        android:layout_below="@+id/sub"
-                        android:textSize="17sp" />
-                    <EditText android:textAllCaps="true"
-                        android:id="@+id/q_edt"
-                        android:hint="Type Your Query"
-                        android:layout_gravity="start"
-                        android:gravity="start"
+
+                        android:layout_marginLeft="6dp"
+                        android:layout_marginRight="5dp"
+                        android:orientation="horizontal">
+
+                        <View
+                            android:layout_width="3dp"
+                            android:layout_height="match_parent"
+                            android:background="@color/palette1"
+                            android:visibility="gone" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal"
+                            android:orientation="vertical">
+
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/text_input_name"
+                                android:layout_width="match_parent"
+
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+                                android:background="@drawable/rect"
+                                android:fontFamily="@font/opensans_regular">
+
+                                <EditText
+                                    android:id="@+id/edt_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginLeft="5dp"
+                                    android:background="@android:color/transparent"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:hint=" Name *"
+                                    android:inputType="text"
+                                    android:maxLength="30"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="10dp"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colour_new_text"
+                                    android:textSize="16sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                android:id="@+id/text_input_phone_number"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="10dp"
+
+                                android:background="@drawable/rect"
+                                android:fontFamily="@font/opensans_regular">
+
+                                <EditText
+                                    android:id="@+id/edt_phone_number"
+                                    android:layout_width="match_parent"
+                                    android:imeOptions="actionDone"
+                                    android:layout_height="wrap_content"
+                                    android:background="@android:color/transparent"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:hint=" Phone Number *"
+
+                                    android:inputType="number"
+                                    android:maxLength="10"
+                                    android:paddingTop="5dp"
+                                    android:paddingBottom="10dp"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/colour_new_text"
+                                    android:textSize="16sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
+                            <!--                    <android.support.design.widget.TextInputLayout-->
+                            <!--                        android:id="@+id/text_input_callback_date"-->
+                            <!--                        android:layout_width="match_parent"-->
+                            <!--                        android:layout_marginTop="5dp"-->
+                            <!--                        android:fontFamily="@font/opensans_regular"-->
+                            <!--                        android:layout_height="wrap_content">-->
+
+                            <!--                        <EditText android:textAllCaps="true"-->
+                            <!--                            android:id="@+id/edt_callback_date"-->
+                            <!--                            android:layout_width="match_parent"-->
+                            <!--                            android:layout_height="wrap_content"-->
+                            <!--                            android:inputType="text"-->
+                            <!--                            android:maxLength="30"-->
+                            <!--                            android:textSize="16sp"-->
+                            <!--                            android:layout_marginLeft="5dp"-->
+                            <!--                            android:fontFamily="@font/opensans_regular"-->
+                            <!--                            android:textColor="@color/colour_new_text"-->
+                            <!--                            android:hint="CallBack Date *"/>-->
+                            <!--                    </android.support.design.widget.TextInputLayout>-->
+                            <!--                    <android.support.design.widget.TextInputLayout-->
+                            <!--                        android:id="@+id/text_input_callback_time"-->
+                            <!--                        android:layout_width="match_parent"-->
+                            <!--                        android:layout_marginTop="5dp"-->
+                            <!--                        android:fontFamily="@font/opensans_regular"-->
+                            <!--                        android:layout_height="wrap_content">-->
+
+                            <!--                        <EditText android:textAllCaps="true"-->
+                            <!--                            android:id="@+id/edt_callback_time"-->
+                            <!--                            android:layout_width="match_parent"-->
+                            <!--                            android:layout_height="wrap_content"-->
+                            <!--                            android:inputType="text"-->
+                            <!--                            android:maxLength="30"-->
+                            <!--                            android:textSize="16sp"-->
+                            <!--                            android:layout_marginLeft="5dp"-->
+                            <!--                            android:fontFamily="@font/opensans_regular"-->
+                            <!--                            android:textColor="@color/colour_new_text"-->
+                            <!--                            android:hint="CallBack Time*"/>-->
+                            <!--                    </android.support.design.widget.TextInputLayout>-->
+                            <mehdi.sakout.fancybuttons.FancyButton
+                                android:id="@+id/btn_callback_submit"
+                                android:layout_width="126dp"
+                                android:layout_height="41dp"
+                                android:layout_gravity="center_horizontal"
+                                android:layout_margin="10dp"
+                                android:layout_marginTop="10dp"
+                                android:paddingLeft="20dp"
+                                android:paddingRight="20dp"
+                                android:visibility="gone"
+                                fancy:fb_borderColor="#FFFFFF"
+                                fancy:fb_borderWidth="1dp"
+                                fancy:fb_defaultColor="@color/colour_new_button"
+                                fancy:fb_focusColor="#9bd823"
+                                fancy:fb_iconPosition="left"
+                                fancy:fb_radius="30dp"
+                                fancy:fb_text="SUBMIT"
+                                fancy:fb_textColor="#FFFFFF"
+                                fancy:fb_textFont="@font/opensans_semibold"
+                                tools:ignore="DuplicateIds"
+
+                                />
+
+                            <TextView
+                                android:id="@+id/callback_submit"
+                                android:layout_width="100dp"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center|right"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginRight="10dp"
+                                android:layout_marginBottom="8dp"
+                                android:layout_weight="1"
+                                android:background="@drawable/blueee_button_background"
+                                android:drawableTint="@color/white"
+                                android:fontFamily="@font/opensans_light"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="SUBMIT"
+                                android:textColor="@color/white"
+                                android:textStyle="bold"
+                                android:visibility="visible" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
-                        android:layout_height="100dp"
-                        android:cursorVisible="true"
-                        android:padding="5dp"
-                        android:layout_below="@+id/q_tv"
-                        android:inputType="textCapSentences|textMultiLine"
-                        android:maxLength="2000"
-                        android:scrollHorizontally="false"
-                        android:singleLine="false" />
 
-                    <mehdi.sakout.fancybuttons.FancyButton
-                        android:id="@+id/btn_submit_query"
-                        android:layout_width="100dp"
-                        android:layout_height="42dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        app:cardBackgroundColor="@color/white">
 
+                        <RelativeLayout
+                            android:id="@+id/relative_post_ur_query"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="?attr/selectableItemBackground"
+                            android:clickable="true"
+                            android:focusable="true">
 
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginBottom="10dp"
-                        android:gravity="center"
-                        fancy:fb_borderColor="@color/appcolor"
-                        fancy:fb_borderWidth="1dp"
-                        fancy:fb_defaultColor="@color/colour_new_button"
-                        fancy:fb_focusColor="#da8bb3"
-                        fancy:fb_radius="11dp"
-                        fancy:fb_text="SUBMIT"
-                        fancy:fb_textColor="#FFFFFF"
-                        fancy:fb_textSize="14sp" />
+                            <View
+                                android:layout_width="5dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/palette2" />
+
+                            <TextView
+                                android:id="@+id/txtInProcess"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginStart="40dp"
+                                android:fontFamily="@font/opensans_semibold"
+                                android:text="Post Your Query"
+                                android:textColor="@color/gray700"
+                                android:textSize="16sp" />
+
+                            <ImageView
+                                android:id="@+id/image2"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_alignParentRight="true"
+                                android:layout_centerVertical="true"
+                                android:layout_marginEnd="30dp"
+                                android:background="@drawable/ic_right_arrow_black_14" />
+                            />
+                        </RelativeLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <LinearLayout
+                        android:id="@+id/card_view_post_query_form"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/q_tv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/sub"
+                            android:layout_marginTop="10dp"
+                            android:text="Type Your Query"
+                            android:textSize="17sp"
+                            android:visibility="gone" />
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:visibility="gone"
+                            android:background="@drawable/rect"
+                            android:fontFamily="@font/opensans_regular">
+
+                            <EditText
+                                android:imeOptions="actionDone"
+                                android:id="@+id/q_edt"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="5dp"
+                                android:background="@android:color/transparent"
+                                android:fontFamily="@font/opensans_regular"
+                                android:hint=" Type Your Query "
+                                android:inputType="text"
+                                android:lines="3"
+                                android:paddingTop="5dp"
+                                android:paddingBottom="10dp"
+                                android:textAllCaps="true"
+                                android:textColor="@color/colour_new_text"
+                                android:textSize="16sp" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <mehdi.sakout.fancybuttons.FancyButton
+                            android:id="@+id/btn_submit_query"
+                            android:layout_width="100dp"
+                            android:layout_height="42dp"
+                            android:layout_centerHorizontal="true"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:visibility="gone"
+                            fancy:fb_borderColor="@color/appcolor"
+                            fancy:fb_borderWidth="1dp"
+                            fancy:fb_defaultColor="@color/colour_new_button"
+                            fancy:fb_focusColor="#da8bb3"
+                            fancy:fb_radius="11dp"
+                            fancy:fb_text="SUBMIT"
+                            fancy:fb_textColor="#FFFFFF"
+                            fancy:fb_textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/query_submit"
+                            android:layout_width="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center|right"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_marginBottom="8dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/blueee_button_background"
+                            android:drawableTint="@color/white"
+                            android:fontFamily="@font/opensans_light"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="SUBMIT"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:visibility="gone" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-        </LinearLayout>
-    </LinearLayout>
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linear"
+                android:padding="15dp">
+
+                <View
+                    android:id="@+id/indicator"
+                    android:layout_width="0dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/gradient_bg_"
+                    android:visibility="gone" />
+
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:visibility="gone"
+                    app:tabGravity="fill"
+                    app:tabIndicatorColor="?attr/colorAccent"
+                    app:tabIndicatorGravity="stretch"
+                    app:tabMaxWidth="0dp"
+                    app:tabMode="fixed"
+                    app:tabSelectedTextColor="@android:color/white"
+                    app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
+                    app:tabTextColor="?attr/colorPrimary" />
+
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/viewpager"
+                    android:visibility="gone"
+                    android:layout_below="@+id/tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:layout_weight="1" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
     </ScrollView>
+
+</RelativeLayout>

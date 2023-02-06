@@ -4,7 +4,13 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VPP_Android.iml" filepath="$PROJECT_DIR$/.idea/modules/VPP_Android.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/VPP_Android.app.unitTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.iml" filepath="$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.main.iml" filepath="$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/myapplication/VPP_Android.myapplication.unitTest.iml" />
     </modules>
   </component>
 </project>

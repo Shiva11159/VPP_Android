@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:id="@+id/relative1"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
     android:layout_height="match_parent"
     tools:context="com.application.vpp.activity.Dashboard">
 
@@ -27,8 +28,7 @@
                 android:background="@null"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/rupee"
-                android:tint="@color/white">
-
+                app:tint="@color/white">
             </ImageButton>
 
             <TextView
@@ -93,7 +93,7 @@
                                 android:backgroundTint="@color/black"
                                 android:padding="10dp"
                                 android:src="@drawable/paynow"
-                                android:tint="@color/black" />
+                                app:tint="@color/black" />
 
                             <View
                                 android:layout_width="1dp"
@@ -417,6 +417,48 @@
 
 
                             </LinearLayout>
+                           <LinearLayout
+                               android:visibility="gone"
+                               android:layout_width="match_parent"
+                               android:orientation="horizontal"
+                               android:layout_marginTop="10dp"
+                               android:layout_height="wrap_content">
+
+                               <EditText
+                                   android:id="@+id/et_promocode"
+                                   android:padding="10dp"
+                                   android:layout_weight="1"
+                                   android:background="@drawable/rect"
+                                   android:layout_width="match_parent"
+                                   android:layout_height="wrap_content"
+                                   android:hint="Enter Promocode" />
+
+                               <TextView
+                                   android:layout_weight="3"
+                                   android:id="@+id/txt_apply"
+                                   android:layout_width="match_parent"
+                                   android:layout_gravity="center"
+                                   android:gravity="center|right"
+                                   android:layout_marginRight="10dp"
+                                   android:layout_height="wrap_content"
+                                   android:text="Apply"
+                                   android:textSize="20dp"
+                                   android:fontFamily="@font/opensans_semibold"
+                                   android:textColor="@color/ventura_color"
+                                   android:visibility="visible" />
+
+                           </LinearLayout>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_gravity="center"
+                                android:gravity="left"
+                                android:layout_height="wrap_content"
+                                android:text="Promocodes applied successfully."
+                                android:layout_marginTop="5dp"
+                                android:textSize="15dp"
+                                android:fontFamily="@font/opensans_regular"
+                                android:textColor="@color/green500"
+                                android:visibility="gone" />
 
                         </LinearLayout>
 
@@ -514,18 +556,43 @@
             android:fontFamily="@font/opensans_light"
             android:layout_height="wrap_content"></CheckBox>
 
-        <Button
+        <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/buttonRazorpay1"
+            android:layout_width="match_parent"
+            android:layout_margin="15dp"
+
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+
+            android:layout_marginTop="25dp"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            fancy:fb_borderColor="#FFFFFF"
+            fancy:fb_borderWidth="1dp"
+            fancy:fb_defaultColor="@color/colour_new_button"
+            fancy:fb_focusColor="#9bd823"
+            fancy:fb_iconPosition="left"
+            fancy:fb_radius="30dp"
+            fancy:fb_text="Pay Now"
+            fancy:fb_textColor="#FFFFFF" />
+
+
+        <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_20dp"
             android:layout_marginRight="@dimen/dimen_20dp"
             android:layout_weight="1"
+
+            android:layout_marginBottom="10dp"
             android:background="@drawable/buttonback1"
             android:fontFamily="@font/opensans_light"
-            android:text="Pay Now"
             android:textColor="@color/white"
-            android:visibility="visible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnTechprocess"
@@ -550,6 +617,7 @@
             android:fontFamily="@font/opensans_light"
             android:gravity="center"
             android:text="Pay Later"
+            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="15dp"
 

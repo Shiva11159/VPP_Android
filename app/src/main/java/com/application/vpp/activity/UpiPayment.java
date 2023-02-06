@@ -87,7 +87,6 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     boolean checkamount = false;
     JSONObject jsonObjectresponse, jsonObjectrequest;
     String amount_str = "", creatorderid, order_id, paymentId, orderId, signature;
-
     FragmentManager fm = getSupportFragmentManager();
 
     @BindView(R.id.pay_later)
@@ -100,7 +99,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 //    SweetAlertDialog pDialog;
 
     @BindView(R.id.buttonRazorpay1)
-    Button buttonRazorpay;
+    FancyButton buttonRazorpay;
 
     @BindView(R.id.btnTechprocess)
     Button btnTechprocess;
@@ -116,6 +115,14 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
     @BindView(R.id.relative1)
     RelativeLayout relative1;
+
+    @BindView(R.id.et_promocode)
+    EditText et_promocode;
+
+    @BindView(R.id.txt_apply)
+    TextView txt_apply;
+
+
     ConfirmPayment confirmPayment;
     //private static final int TEZ_REQUEST_CODE = 123;
     public static final int UPI_PAYMENT = 0;
@@ -195,6 +202,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
         accno = SharedPref.getPreferences(UpiPayment.this, "bankAccNo") != null ? SharedPref.getPreferences(UpiPayment.this, "bankAccNo") : "";
 
+        // CALL_Promocode("");
         if (getIntent().getExtras() != null) {
             isDocument = getIntent().getExtras().getInt("isDocument", 0);
 
@@ -231,44 +239,58 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     }
 
     //only for android 11
-    public void open(){
-        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("Dear partner, our eSign feature is under development, request you to skip this and complete it after a week ");
-        alertDialogBuilder.setPositiveButton("Skip",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Intent intent = new Intent(UpiPayment.this, Dashboard.class);
-                        startActivity(intent);
-                    }
-                });
+//    public void open() {
+//        android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(this);
+//        alertDialogBuilder.setMessage("Dear partner, our eSign feature is under development, request you to skip this and complete it after a week ");
+//        alertDialogBuilder.setPositiveButton("Skip",
+//                new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface arg0, int arg1) {
+//                        Intent intent = new Intent(UpiPayment.this, Dashboard.class);
+//                        startActivity(intent);
+//                    }
+//                });
+//
+//        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
+//        alertDialog.show();
+//    }
 
-        android.app.AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
     @Override
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
+            case R.id.et_promocode: {
+                linearlayout_upipayment.setVisibility(View.VISIBLE);
+            }
+            break;
+
+            case R.id.txt_apply: {
+                linearlayout_upipayment.setVisibility(View.VISIBLE);
+
+                if (et_promocode.getText().toString().equalsIgnoreCase("")) {
+
+                } else {
+
+                }
+            }
+            break;
+
             case R.id.button: {
                 linearlayout_upipayment.setVisibility(View.VISIBLE);
-                //linearlayout_state_autocomplete.setVisibility(View.GONE);
             }
             break;
             case R.id.pay_later: {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-//                    open();
-//                }else{
-//                    Intent intent = new Intent(UpiPayment.this, PhotoVideoSignatureActivity.class);
-//                    //  Intent intent = new Intent(UpiPayment.this, Dashboard.class);
-//                    startActivity(intent);
-//                    SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
-//                }
 
-                Intent intent = new Intent(UpiPayment.this, PhotoVideoSignatureActivity.class);
-                //  Intent intent = new Intent(UpiPayment.this, Dashboard.class);
-                startActivity(intent);
-                SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+
+                if (Logics.getEsignStatus(UpiPayment.this).equalsIgnoreCase("0")) {
+                    Intent intent = new Intent(UpiPayment.this, PhotoVideoSignatureActivity.class);
+                    startActivity(intent);
+                    SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+                } else {
+                    startActivity(new Intent(UpiPayment.this, Dashboard.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+                    SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+                }
+
             }
             break;
 
@@ -309,7 +331,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                             Bundle bundle = new Bundle();
 //                            bundle.putString("id", "");
 //                            GstDlg resourse_share = new GstDlg();
-                            gstDlg = GstDlg.newInstance(gstProceed,UpiPayment.this);
+                            gstDlg = GstDlg.newInstance(gstProceed, UpiPayment.this);
                             gstDlg.show(fm, "Dialog Fragment");
 //                            gstDlg.setArguments(bundle);
                         } else {
@@ -554,7 +576,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                                 String error_desc = (String) data
                                         .getStringExtra(PaymentActivity.RETURN_ERROR_DESCRIPTION);
                                 Toast.makeText(getApplicationContext(), " Got error :"
-                                        + error_code + "--- " + error_desc, Toast.LENGTH_SHORT)
+                                                + error_code + "--- " + error_desc, Toast.LENGTH_SHORT)
                                         .show();
                                 PaymentMessage = error_code + "--- " + error_desc;
                                 Log.d("UpiPayment" + " Code=>", error_code);
@@ -723,9 +745,18 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     public void Confirm() {
 //        shiva
         //// call activity here...
-        Intent intent = new Intent(UpiPayment.this, Dashboard.class);
-        //intent.putExtra("isPaymentDone",1);
-        startActivity(intent);
+//        Intent intent = new Intent(UpiPayment.this, Dashboard.class);
+//        //intent.putExtra("isPaymentDone",1);
+//        startActivity(intent);
+
+        if (Logics.getEsignStatus(UpiPayment.this).equalsIgnoreCase("0")) {
+            Intent intent = new Intent(UpiPayment.this, PhotoVideoSignatureActivity.class);
+            startActivity(intent);
+            SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+        } else {
+            startActivity(new Intent(UpiPayment.this, Dashboard.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+            SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, "");
+        }
     }
 
     @Override
@@ -765,8 +796,6 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     }
 
 
-
-
     public class ViewHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -794,6 +823,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                         if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                             callamount = true;
                             amount_str = jsonObject.getString("amount");
+//                            amount_str = "100";
                             SharedPref.savePreferences(UpiPayment.this, SharedPref.amount, amount_str);
                             txt_title.setText("One time Registration fees \n to become Partner Rs." + Integer.parseInt(amount_str) / 100);
                             //btnTechprocess.setVisibility(View.VISIBLE);
@@ -801,6 +831,39 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                         } else {
                             callamount = false;
                             Toast.makeText(UpiPayment.this, "amount fetch falied..", Toast.LENGTH_SHORT).show();
+                        }
+
+                    } catch (Exception e) {
+                        Log.e("exception", e.getMessage());
+                        FirebaseCrashlytics.getInstance().recordException(e);
+                        Toast.makeText(UpiPayment.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+
+                case Const.MSGCallPromocode:
+                    try {
+                       /* pDialog.dismiss();
+                        pDialog.cancel();*/
+
+                        AlertDialogClass.PopupWindowDismiss();
+                        checkamount = true;
+
+                        Log.e("promoResponse", data);
+                        JSONObject jsonObject = new JSONObject(data);
+
+
+                        if (jsonObject.getString("status").equalsIgnoreCase("1")) {
+                            Log.e("promoResponse", "success");
+
+                            JSONArray jsonArray = jsonObject.getJSONArray("promocodedata");
+                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            String discount = jsonObject1.getString("discount");
+                            String is_active = jsonObject1.getString("is_active");
+                            String message = jsonObject1.getString("message");
+
+                        } else {
+                            Log.e("promoResponse", "failure");
+
                         }
 
                     } catch (Exception e) {
@@ -819,13 +882,13 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                         Log.e("MSG_GST", data);
                         JSONObject jsonObject = new JSONObject(data);
 
-                        if (jsonObject.getString("status").equalsIgnoreCase("1")){
+                        if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                             CallcreateOrder();
 //                            Toast.makeText(UpiPayment.this, jsonObject.getString("mesage"), Toast.LENGTH_SHORT).show();
-                            TastyToast.makeText(getApplicationContext(),  jsonObject.getString("mesage"), TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                            TastyToast.makeText(getApplicationContext(), jsonObject.getString("mesage"), TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
-                        }else {
-                            TastyToast.makeText(getApplicationContext(),  jsonObject.getString("mesage"), TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                        } else {
+                            TastyToast.makeText(getApplicationContext(), jsonObject.getString("mesage"), TastyToast.LENGTH_LONG, TastyToast.ERROR);
                         }
 
                         gstDlg.dismiss();
@@ -1221,7 +1284,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             pDialog.setCancelable(true);
             pDialog.show();*/
 
-            AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
             new SendTOServer(UpiPayment.this, requestSent, Const.MSGMOUNT, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            pDialog.dismiss();
@@ -1233,11 +1296,12 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     }
 
     @Override
-    public void GstProceedclick(GstDlg gstDlg,String gstno,String gstname,String gstaddress) {
-        this.gstDlg=gstDlg;
-        CALL_gst(gstno,gstname,gstaddress);
+    public void GstProceedclick(GstDlg gstDlg, String gstno, String gstname, String gstaddress) {
+        this.gstDlg = gstDlg;
+        CALL_gst(gstno, gstname, gstaddress);
     }
-    private void CALL_gst(String gstno,String gstname,String gstaddress) {
+
+    private void CALL_gst(String gstno, String gstname, String gstaddress) {
         try {
             JSONObject jsonObject = new JSONObject();
 
@@ -1257,12 +1321,30 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             pDialog.setCancelable(true);
             pDialog.show();*/
 
-            AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
             new SendTOServer(UpiPayment.this, requestSent, Const.MSG_GST, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            pDialog.dismiss();
             AlertDialogClass.PopupWindowDismiss();
 
+            e.printStackTrace();
+            FirebaseCrashlytics.getInstance().recordException(e);
+        }
+    }
+
+    private void CALL_Promocode(String promocode) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("promocode", promocode);
+
+            Log.e("promoRequest", jsonObject.toString());
+            byte data[] = jsonObject.toString().getBytes();
+
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
+            new SendTOServer(UpiPayment.this, requestSent, Const.MSGCallPromocode, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } catch (JSONException e) {
+//            pDialog.dismiss();
+            AlertDialogClass.PopupWindowDismiss();
             e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
         }
@@ -1298,7 +1380,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             pDialog.setTitleText("Loading");
             pDialog.setCancelable(true);
             pDialog.show();*/
-            AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
 
             new SendTOServer(UpiPayment.this, requestSent, Const.MSGTECHPROCREQ, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -1485,7 +1567,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             pDialog.setCancelable(true);
             pDialog.show();*/
 
-            AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
 
             new SendTOServer(UpiPayment.this, requestSent, MSGTECHPROCRESP, data1, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (Exception e) {
@@ -1499,7 +1581,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        // super.onBackPressed();
     }
 
     ///----------------------razorpay-------
@@ -1509,7 +1591,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
         try {
             JSONObject jsonObject = new JSONObject();
             String vpp_id = Logics.getVppId(UpiPayment.this);
-            if(vpp_id!= null || vpp_id.trim().length()>5) {
+            if (vpp_id != null || vpp_id.trim().length() > 5) {
 
                 jsonObject.put("vpp_id", vpp_id);
 
@@ -1532,10 +1614,10 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
                 AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
                 new SendTOServer(UpiPayment.this, requestSent, Const.MSGCREATEORDEROBJ, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            }else{
+            } else {
 
                 TastyToast.makeText(UpiPayment.this, "something went wrong, please login or Signup", TastyToast.LENGTH_SHORT, TastyToast.ERROR).show();
-                Intent intent = new Intent(UpiPayment.this, SliderImages.class).putExtra("from","");
+                Intent intent = new Intent(UpiPayment.this, SliderImages.class).putExtra("from", "");
                 startActivity(intent);
             }
 
@@ -1546,6 +1628,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     }
 
     public void startPayment(String id) {
+
         /**
          * Instantiate Checkout
          */
@@ -1554,13 +1637,16 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
         //      rzp_test_wzgnSUypkltsAF	        QiLifBMAECa6nSlNvO58OQRa
 
         com.razorpay.Checkout checkout_rz = new com.razorpay.Checkout();
-        checkout_rz.setKeyID("rzp_live_3fJw8WVyANEt4w");    //
+        checkout_rz.setKeyID("rzp_live_3fJw8WVyANEt4w");    //live
+//        checkout_rz.setKeyID("rzp_test_wzgnSUypkltsAF");    // test
 
         //rzp_live_3fJw8WVyANEt4w -- live key
         //rzp_test_wzgnSUypkltsAF --- test key
+
         /**
          * Set your logo here
          */
+
         checkout_rz.setImage(R.drawable.ic_launcher_background);
 
         /**
@@ -1631,12 +1717,13 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
        /* if (pDialog == null) {
             pDialog = new SweetAlertDialog(UpiPayment.this, SweetAlertDialog.PROGRESS_TYPE);
         }
+
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading");
         pDialog.setCancelable(true);
         pDialog.show();*/
 
-        AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+        AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
         new SendTOServer(UpiPayment.this, requestSent, Const.MSGSAVECHECKOUT, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -1673,7 +1760,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             pDialog.setCancelable(true);
             pDialog.show();*/
 
-            AlertDialogClass.PopupWindowShow(UpiPayment.this,relative1);
+            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
 
             new SendTOServer(UpiPayment.this, requestSent, Const.MSGVALIDATESIGNATURE, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
@@ -1746,7 +1833,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             if (!UpiPayment.this.isFinishing()) {
                 sweetAlertDialog.show();
             } else {
-               // Toast.makeText(UpiPayment.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(UpiPayment.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
             }
             sweetAlertDialog.setCancelable(false);
 

@@ -2,6 +2,7 @@ package com.application.vpp.activity;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,16 +12,20 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +35,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentManager;
 
 import com.application.vpp.ClientServer.ConnectTOServer;
 import com.application.vpp.ClientServer.Connectivity;
@@ -39,6 +45,8 @@ import com.application.vpp.Database.DatabaseHelper;
 import com.application.vpp.Datasets.ProductMasterDataset;
 import com.application.vpp.HttpsTrustManager;
 import com.application.vpp.Interfaces.ConnectionProcess;
+import com.application.vpp.Interfaces.DescrpncyIntrfce;
+import com.application.vpp.Interfaces.GstProceed;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.ExitActivity;
@@ -47,6 +55,8 @@ import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Utility.AlertDialogClass;
 import com.application.vpp.Views.Views;
 import com.application.vpp.other.FcmMessagingService;
+import com.application.vpp.other.GstDlg;
+import com.application.vpp.other.ShareLinkDlg;
 import com.daasuu.cat.CountAnimationTextView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
@@ -62,6 +72,7 @@ import com.google.android.play.core.tasks.OnSuccessListener;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.sdsmdg.tastytoast.TastyToast;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.MemoryPolicy;
@@ -85,8 +96,19 @@ import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
 import me.toptas.fancyshowcase.listener.OnViewInflateListener;
 
-public class Dashboard extends com.application.vpp.activity.NavigationDrawer implements RequestSent, View.OnClickListener, ConnectionProcess {
+public class Dashboard extends com.application.vpp.activity.NavigationDrawer implements GstProceed, RequestSent, View.OnClickListener, ConnectionProcess {
+
+    public static View customView;
+    public static PopupWindow popupWindow;
+    boolean ranBefore;
+
+    GstProceed gstProceed;
     RelativeLayout cardDisspripancy, cardBrokerage, cardClient, cardMyLeads, cardInProcess, cardRejected, cardAddLead, cardNotInterested;
+
+    CardView cardReferral;
+
+    boolean reff = false;
+    RelativeLayout cardReferral1;
     public static Handler handlerDashboard;
     //    public static Handler handlervppcallonDashboard1;
     static Gson gson;
@@ -97,12 +119,12 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
     int cardVisibility = 0;
     CardView cardViewInProgress, cardViewInRejected;
     ImageView imgDropDown;
-    TextView txtdescripancy, txtAddReference, txtInProcess, txtMyLead, txtRejected, txtNotInterested, txtClients, txtPayout;
+    TextView txtdescripancy, txtReferral, txtAddReference, txtInProcess, txtMyLead, txtRejected, txtNotInterested, txtClients, txtPayout;
     CountAnimationTextView txtMyLeadsCount, txtClientsCount;
     byte[] data = null;
     byte[] data1 = null;
     private FancyShowCaseQueue fancyShowCaseQueue;
-    FancyShowCaseView fancyShowCaseView0, fancyShowCaseView1;
+    FancyShowCaseView fancyShowCaseView0;
     FancyShowCaseView fancyShowCaseView2;
     FancyShowCaseView fancyShowCaseView3, fancyShowCaseView4, fancyShowCaseView5, fancyShowCaseView6, fancyShowCaseView7;
     int screenValue = 0;
@@ -128,6 +150,8 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
     String result = "";
     RelativeLayout mainLayout;
 
+    DescrpncyIntrfce descrpncyIntrfce;
+
 //    String is_selfie_verified = "0";
 //    String is_video_verified = "0";
 //    String is_esign_verified = "0";
@@ -135,12 +159,24 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
     String is_selfie_verified = "0";
     String is_esign_verified = "0";
 
+    boolean conditionCheck1Doc = true;
+    boolean conditionCheck1Discrpncy = true;
+    boolean conditionCheck2Payment = true;
+    boolean conditionCheck3Esign = true;
+
+    SharedPreferences preferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_dashboard_1, mDrawerLayout);
 
+        descrpncyIntrfce = (DescrpncyIntrfce) this;
         dbh = new DatabaseHelper(this);
+        gstProceed = (GstProceed) this;
+
+        preferences = getPreferences(MODE_PRIVATE);
+
 
 //        AppUpdater appUpdater = new AppUpdater(Dashboard.this);
 //        appUpdater.start();
@@ -152,20 +188,19 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
         isfirstTime = Logics.getInstScreenVal(this);
         mainLayout = findViewById(R.id.mainLayout);
-
         layoutCard3 = (LinearLayout) findViewById(R.id.layoutCard3);
         cardAddLead = (RelativeLayout) findViewById(R.id.cardAddLead);
         cardMyLeads = (RelativeLayout) findViewById(R.id.cardMyLeads);
         cardInProcess = (RelativeLayout) findViewById(R.id.cardInProcess);
         cardRejected = (RelativeLayout) findViewById(R.id.cardRejcted);
         cardBrokerage = (RelativeLayout) findViewById(R.id.cardBrokerage);
+        cardReferral = (CardView) findViewById(R.id.cardReferral);
+        cardReferral1 = (RelativeLayout) findViewById(R.id.cardReferral1);
         cardDisspripancy = (RelativeLayout) findViewById(R.id.cardDisspripancy);
         cardClient = (RelativeLayout) findViewById(R.id.cardClient);
         cardNotInterested = (RelativeLayout) findViewById(R.id.cardNotInterested);
-
         cardViewInProgress = (CardView) findViewById(R.id.cardViewInProgress);
         cardViewInRejected = (CardView) findViewById(R.id.cardViewRejected);
-
         txtAddReference = (TextView) findViewById(R.id.txtAddReference);
         txtInProcess = (TextView) findViewById(R.id.txtInProcess);
         txtMyLead = (TextView) findViewById(R.id.txtMyLeads);
@@ -177,6 +212,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
         txtMyLeadsCount = (CountAnimationTextView) findViewById(R.id.txtMyLeadsCount);
         txtClientsCount = (CountAnimationTextView) findViewById(R.id.txtClientsCount);
         txtdescripancy = (TextView) findViewById(R.id.txtdescripancy);
+        txtReferral = (TextView) findViewById(R.id.txtReferral);
         //   imgDropDown = (ImageView)findViewById(R.id.imgDropDown);
 
         cardAddLead.setOnClickListener(this);
@@ -184,11 +220,24 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
         cardMyLeads.setOnClickListener(this);
         cardRejected.setOnClickListener(this);
         cardBrokerage.setOnClickListener(this);
+        cardReferral.setOnClickListener(this);
         cardDisspripancy.setOnClickListener(this);
         cardClient.setOnClickListener(this);
         cardNotInterested.setOnClickListener(this);
 
         View drawerIcon = getToolbarNavigationIcon(toolbar);
+
+
+        cardReferral1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("onClick: ", "zzz");
+                FragmentManager fm = getSupportFragmentManager();
+
+                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(gstProceed, Dashboard.this);
+                gstDlg.show(fm, "Dialog Fragment");
+            }
+        });
 
 //        private void shareTextUrl() {
 //            Intent share = new Intent(android.content.Intent.ACTION_SEND);
@@ -247,7 +296,16 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
+                        // btn.setOnClickListener(mClickListener);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView0.hide();
+                            }
+                        });
+
+
                         btn.setText("Next");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
@@ -261,27 +319,27 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                 })
                 .build();
 
-        fancyShowCaseView1 = new FancyShowCaseView.Builder(this)
-                .title("Second Queue Item")
-                .focusOn(txtInProcess)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("In process");
-                        //   subtitle.setText("Check me out to know your in/out timings.");
-                        //  subtitle.setText("Check me out to know if you are on time at work or On leave.");
-                        subtitle.setText("We’re sending your references to our system. Work In Progress…");
-                        Log.d("0", "onViewInflated: ");
-                        screenValue = 1;
-                    }
-                })
-                .build();
+//        fancyShowCaseView1 = new FancyShowCaseView.Builder(this)
+//                .title("Second Queue Item")
+//                .focusOn(txtInProcess)
+//                .closeOnTouch(false)
+//                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NonNull View view) {
+//                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
+//                        btn.setOnClickListener(mClickListener);
+//                        btn.setText("Next");
+//                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+//                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+//                        txtView.setText("In process");
+//                        //   subtitle.setText("Check me out to know your in/out timings.");
+//                        //  subtitle.setText("Check me out to know if you are on time at work or On leave.");
+//                        subtitle.setText("We’re sending your references to our system. Work In Progress…");
+//                        Log.d("0", "onViewInflated: ");
+//                        screenValue = 1;
+//                    }
+//                })
+//                .build();
 
         fancyShowCaseView2 = new FancyShowCaseView.Builder(this)
                 .title("Third Queue Item")
@@ -291,14 +349,23 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
+                        //btn.setOnClickListener(mClickListener);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView2.hide();
+
+                            }
+                        });
+
+
                         btn.setText("Next");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
                         txtView.setText("My References");
                         subtitle.setText("Yes, your reference has been accepted by our system! You can track the communication between us and your reference.");
                         Log.d("1", "onViewInflated: ");
-                        screenValue = 2;
+                        screenValue = 1;
                     }
                 })
 
@@ -312,7 +379,15 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
+                        //btn.setOnClickListener(mClickListener);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView3.hide();
+
+                            }
+                        });
+
                         btn.setText("Next");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
@@ -321,7 +396,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
 
                         Log.d("2", "onViewInflated: ");
-                        screenValue = 3;
+                        screenValue = 2;
                     }
                 })
 
@@ -336,7 +411,15 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
+                        //btn.setOnClickListener(mClickListener);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView4.hide();
+
+                            }
+                        });
+
                         btn.setText("Next");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
@@ -345,7 +428,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
 
                         Log.d("2", "onViewInflated: ");
-                        screenValue = 4;
+                        screenValue = 3;
                     }
                 })
 
@@ -360,7 +443,15 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
+                        //btn.setOnClickListener(mClickListener);
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView5.hide();
+
+                            }
+                        });
+
                         btn.setText("Next");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
@@ -368,7 +459,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         subtitle.setText("Congrats, your referred accounts are open!");
 
                         Log.d("2", "onViewInflated: ");
-                        screenValue = 5;
+                        screenValue = 4;
                     }
                 })
 
@@ -383,42 +474,82 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
-                        btn.setText("Next");
+                        //btn.setOnClickListener(mClickListener);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView6.hide();
+
+                            }
+                        });
+
+                        if (reff == false) {
+                            btn.setText("Finish");
+                            if (!ranBefore) {
+                                // first time
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putBoolean("RanBefore", true);
+                                editor.commit();
+                            }
+                        } else {
+                            btn.setText("Next");
+
+                        }
+
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
                         txtView.setText("My Earnings");
                         subtitle.setText("Wow, your referral income has started!");
 
-
                         Log.d("2", "onViewInflated: ");
-                        screenValue = 6;
+                        screenValue = 5;
 
                         isfirstTime = 1;
                         Logics.setInstScreenVal(Dashboard.this, isfirstTime);
-
 
                     }
                 })
 
                 .build();
+
         fancyShowCaseView7 = new FancyShowCaseView.Builder(this)
                 .title("Fourth Queue Item")
-                .focusOn(txtdescripancy)
-                .focusOn(txtdescripancy)
+                .focusOn(txtReferral)
+                .focusOn(txtReferral)
                 .closeOnTouch(false)
                 .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
                     @Override
                     public void onViewInflated(@NonNull View view) {
                         Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        btn.setOnClickListener(mClickListener);
-                        btn.setText("Finish");
+                        //btn.setOnClickListener(mClickListener);
+
+                        btn.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                fancyShowCaseView7.hide();
+
+                            }
+                        });
+                        if (reff == true) {
+                            btn.setText("Finish");
+                            if (!ranBefore) {
+                                // first time
+                                SharedPreferences.Editor editor = preferences.edit();
+                                editor.putBoolean("RanBefore", true);
+                                editor.commit();
+                            }
+                        } else {
+                            btn.setText("Next");
+
+                        }
+//                        btn.setText("Finish");
                         TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
                         TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
                         txtView.setText("Share your personalized referral link");
                         subtitle.setText("you can share your personalized referral link!");
                         Log.d("2", "onViewInflated: ");
-                        screenValue = 7;
+                        screenValue = 6;
 
                         isfirstTime = 1;
                         Logics.setInstScreenVal(Dashboard.this, isfirstTime);
@@ -431,20 +562,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
 //        if(Logics.getInstScreenVal(this)!=0) {
 
-        if (isFirstTime1()) {
-            fancyShowCaseQueue = new FancyShowCaseQueue()
-                    .add(fancyShowCaseView0)
-                    .add(fancyShowCaseView1)
-                    .add(fancyShowCaseView2)
-                    .add(fancyShowCaseView3)
-                    .add(fancyShowCaseView4)
-                    .add(fancyShowCaseView5)
-                    .add(fancyShowCaseView6)
-                    .add(fancyShowCaseView7);
-
-            fancyShowCaseQueue.show();
-
-        }
         // GetVppDetails();
 
     /*    int paymentdone = 0;
@@ -478,6 +595,110 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             Logics.setVppPanDetails(com.application.vpp.activity.Dashboard.this, "", "", 0);
             Logics.setOtpVerificationDetails(com.application.vpp.activity.Dashboard.this, "", "", 0, 0, 0);
         }
+
+
+        // before i was calling on resume method
+
+        AlertDialogClass.PopupWindowDismiss();
+
+        try {
+            currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            // Toast.makeText(Dashboard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+
+        }
+
+        new GetVersionCode().execute();
+
+        connectionProcess = (ConnectionProcess) this;
+        if (Connectivity.getNetworkState(getApplicationContext())) {
+            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProgressDlgConnectSocket(Dashboard.this, connectionProcess, "Server Not Available");
+                    }
+                });
+            } else if (Const.isSocketConnected == true) {
+                try {
+                    JSONObject jsonObject = new JSONObject();
+                    JSONObject jsonObject1 = new JSONObject();
+                    String vppid = Logics.getVppId(Dashboard.this);
+
+                    jsonObject.put("VPPID", vppid);
+                    jsonObject.put("reportType", "LeadsCount");
+                    jsonObject.put("version", "android");
+
+                    jsonObject1.put("VPPID", vppid);
+                    jsonObject1.put("reportType", "LeadsCount");
+                    jsonObject1.put("version", "android");
+                    jsonObject1.put("token_id", FcmMessagingService.getToken(getApplicationContext()));
+
+                    data = jsonObject.toString().getBytes();
+                    data1 = jsonObject1.toString().getBytes();
+
+                    AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+
+                    GetVppDetails();
+
+                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGFETCHDOCSTAT, data1, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGPRODUCTMASTER, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGFETCHDASHBOARD, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    //  personlized_link_for_accnt_opnApicall();
+                    //   new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHVERSION,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    //    new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHLEADDETAILREPORT,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        } else {
+            Views.SweetAlert_NoDataAvailble(Dashboard.this, "Internet Not Available");
+
+        }
+
+
+        ///added this lines extra by shiva ....
+
+        handler.postDelayed(runnable = new Runnable() {
+            @Override
+            public void run() {
+                handler.postDelayed(runnable, delay);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (!Connectivity.getNetworkState(getApplicationContext())) {
+                            NOCheckINTERNET = true;   /// no net ....
+                            Log.e("run: ", "no net");
+                            imgConnection.setImageResource((R.drawable.ic_up_and_down_arrows_symbol_red));
+//                            lineinternet.setBackgroundColor(getResources().getColor(R.color.red));
+//                            txtinternet.setText("Online");
+                            showSnackbar("Internet Not Available");
+
+                        } else {
+//                            NOCheckINTERNET = false;   /// no net ....
+                            imgConnection.setImageResource((R.drawable.ic_up_and_down_arrows_symbol));
+//                            lineinternet.setBackgroundColor(getResources().getColor(R.color.btn_active));
+//                            showSnackbar("Online");
+
+//                            imgConnection.setBackground(getResources().getDrawable(R.drawable.ic_up_and_down_arrows_symbol));
+                            //Log.e("run: ", " net available");
+
+                        }
+
+                        if (NOCheckINTERNET == true) {
+                            if (Connectivity.getNetworkState(getApplicationContext())) {
+                                NOCheckINTERNET = false;
+//                                if (Const.dismiss == true)
+                                new ConnectTOServer(Dashboard.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+                            }
+                        }
+                    }
+                });
+            }
+        }, delay);
 
     }
 
@@ -542,14 +763,13 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //    }
 
     private boolean isFirstTime1() {
-        SharedPreferences preferences = getPreferences(MODE_PRIVATE);
-        boolean ranBefore = preferences.getBoolean("RanBefore", false);
-        if (!ranBefore) {
-            // first time
-            SharedPreferences.Editor editor = preferences.edit();
-            editor.putBoolean("RanBefore", true);
-            editor.commit();
-        }
+        ranBefore = preferences.getBoolean("RanBefore", false);
+//        if (!ranBefore) {
+//            // first time
+//            SharedPreferences.Editor editor = preferences.edit();
+//            editor.putBoolean("RanBefore", true);
+//            editor.commit();
+//        }
         return !ranBefore;
     }
 
@@ -654,40 +874,72 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
             case R.id.cardBrokerage: {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
+
+                    Log.e("onClick: ", "zzz");
+                    FragmentManager fm = getSupportFragmentManager();
+
+//                    ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(gstProceed, Dashboard.this);
+//                    gstDlg.show(fm, "Dialog Fragment");
                     startActivity(new Intent(Dashboard.this, Payout.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
                 } else {
                     Views.SweetAlert_NoDataAvailble(Dashboard.this, "Connect internet !");
                 }
             }
             break;
-//            case R.id.cardDisspripancy: {
-//                if (Connectivity.getNetworkState(getApplicationContext())) {
-//                    //startActivity(new Intent(Dashboard.this, DiscripancyActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-////                    Intent sendIntent = new Intent();
-////                    sendIntent.setAction(Intent.ACTION_SEND);
-////                    sendIntent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
-////                    sendIntent.setType("text/plain");
-////                    startActivity(sendIntent);
-//
-//                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
-//                    clipboard.setText(Logics.getPLFOA(Dashboard.this));
-//
-//                    Intent intent = new Intent();
-//                    intent.setAction(Intent.ACTION_SEND);
-//                    intent.putExtra(Intent.EXTRA_TEXT, ""+clipboard.getText());
-//                    intent.setType("text/plain");
+
+//            case R.id.cardReferral1: {
 //
 //
+//                Log.e( "onClick: ", "zzz");
+//                FragmentManager fm = getSupportFragmentManager();
 //
-//                    Intent chooserIntent = Intent.createChooser(intent, "Chooser Title");
-//                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { intent     });
-//                    startActivity(chooserIntent);
+//                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(gstProceed, Dashboard.this);
+//                gstDlg.show(fm, "Dialog Fragment");
 //
-//                } else {
-//                    Views.SweetAlert_NoDataAvailble(Dashboard.this, "Connect internet !");
-//                }
+////                Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
+////                if (Connectivity.getNetworkState(getApplicationContext())) {
+////                    String link = Logics.getPLFOA(Dashboard.this);
+////                    Intent intent = new Intent();
+////                    intent.setAction(Intent.ACTION_SEND);
+////                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+////
+////                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
+////                    intent.setType("text/plain");
+////                    Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(Dashboard.this));
+////                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+////                    startActivity(chooserIntent);
+//////
+////                }
 //            }
 //            break;
+////            case R.id.cardDisspripancy: {
+////                if (Connectivity.getNetworkState(getApplicationContext())) {
+////                    //startActivity(new Intent(Dashboard.this, DiscripancyActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//////                    Intent sendIntent = new Intent();
+//////                    sendIntent.setAction(Intent.ACTION_SEND);
+//////                    sendIntent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
+//////                    sendIntent.setType("text/plain");
+//////                    startActivity(sendIntent);
+////
+////                    ClipboardManager clipboard = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
+////                    clipboard.setText(Logics.getPLFOA(Dashboard.this));
+////
+////                    Intent intent = new Intent();
+////                    intent.setAction(Intent.ACTION_SEND);
+////                    intent.putExtra(Intent.EXTRA_TEXT, ""+clipboard.getText());
+////                    intent.setType("text/plain");
+////
+////
+////
+////                    Intent chooserIntent = Intent.createChooser(intent, "Chooser Title");
+////                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { intent     });
+////                    startActivity(chooserIntent);
+////
+////                } else {
+////                    Views.SweetAlert_NoDataAvailble(Dashboard.this, "Connect internet !");
+////                }
+////            }
+////            break;
 
             case R.id.cardClient: {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
@@ -842,6 +1094,11 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
         });
     }
 
+    @Override
+    public void GstProceedclick(GstDlg gstDlg, String gstno, String gstname, String gstaddress) {
+
+    }
+
     public class ViewHandler extends Handler {
         @Override
         public void handleMessage(Message msg) {
@@ -923,7 +1180,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                 }
                 break;
 
-
                 case Const.MSGFETCHDOCSTAT:
                     String dataq = (String) msg.obj;
                     Log.e("doc_response_dash", dataq);
@@ -935,12 +1191,111 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         JSONObject jsonObject1 = jsonArray.getJSONObject(1);
 
+                        String is_payment_p = jsonObject.getString("is_payment_p");
+
+
                         is_selfie_verified = jsonObject1.getString("is_selfie_verified");
                         //is_video_verified = jsonObject1.getString("is_video_verified");
                         is_esign_verified = jsonObject1.getString("is_esign_verified");
 
+
+                        is_bank_verified = jsonObject1.getString("is_bank_verified");
+                        is_adhar_verified = jsonObject1.getString("is_adhar_verified");
+                        is_pan_verified = jsonObject1.getString("is_pan_verified");
+
+                        // doc...
+
+                        //0 means not uploaded..
+//                        1 means verified..
+                        // 2 rejected..
+//                        3 means verification pending..
+
+                        if (is_adhar_verified.equalsIgnoreCase("0") || (is_bank_verified.equalsIgnoreCase("0")) || (is_pan_verified.equalsIgnoreCase("0"))) {
+                            Logics.setDocumentStatus(Dashboard.this, "0");
+                            conditionCheck1Doc = true;
+                            conditionCheck1Discrpncy = false;
+                        } else if (is_adhar_verified.equalsIgnoreCase("2") || (is_bank_verified.equalsIgnoreCase("2")) || (is_pan_verified.equalsIgnoreCase("2"))) {
+                            Logics.setDocumentStatus(Dashboard.this, "0");
+                            conditionCheck1Discrpncy = true;
+                            conditionCheck1Doc = true;
+                        } else {
+                            Logics.setDocumentStatus(Dashboard.this, "1");
+                            conditionCheck1Doc = false;
+                            conditionCheck1Discrpncy = false;
+                        }
+
+
+                        if (is_adhar_verified.equalsIgnoreCase("2") ||
+                                (is_bank_verified.equalsIgnoreCase("2")) ||
+                                (is_pan_verified.equalsIgnoreCase("2")) || is_selfie_verified.equalsIgnoreCase("2") ||
+                                is_esign_verified.equalsIgnoreCase("2")) {
+                            Logics.setDescrStatus(Dashboard.this, "up");
+                            descrpncyIntrfce.CheckUp();
+//                            NavigationDrawer navigationDrawer = new NavigationDrawer();
+//                            navigationDrawer.layoutdiscrepancyup.setVisibility(View.VISIBLE);
+//                            navigationDrawer.layoutdiscrepancy.setVisibility(View.GONE);
+                            //
+                        } else {
+                            descrpncyIntrfce.CheckDown();
+                            Logics.setDescrStatus(Dashboard.this, "down");
+//                            NavigationDrawer navigationDrawer = new NavigationDrawer();
+//                            navigationDrawer.layoutdiscrepancyup.setVisibility(View.GONE);
+//                            navigationDrawer.layoutdiscrepancy.setVisibility(View.VISIBLE);
+                        }
+
+                        //payment...
+
+                        if (is_payment_p.equalsIgnoreCase("1")) {
+                            Logics.setPaymentStatus(Dashboard.this, "1");
+                            conditionCheck2Payment = false;
+                        } else {
+                            Logics.setPaymentStatus(Dashboard.this, "0");
+                            conditionCheck2Payment = true;
+                        }
+
+                        //esign ...
+
                         if (is_selfie_verified.equalsIgnoreCase("0") || (is_esign_verified.equalsIgnoreCase("0"))) {
-                            //startAlertesygn();
+                            Logics.setEsignStatus(Dashboard.this, "0");
+                            conditionCheck3Esign = true;
+                        } else if (is_selfie_verified.equalsIgnoreCase("2") || (is_esign_verified.equalsIgnoreCase("2"))) {
+                            Logics.setEsignStatus(Dashboard.this, "0");
+                            conditionCheck3Esign = true;
+                        } else {
+                            Logics.setEsignStatus(Dashboard.this, "1");
+                            conditionCheck3Esign = false;
+                        }
+
+//                        if (conditionCheck1Doc == true || conditionCheck2Payment == true || conditionCheck3Esign == true) {
+//                            startAlertPopup(Dashboard.this, mainLayout);
+//                        }
+
+                        Log.e("handleMessage1: ", String.valueOf(conditionCheck1Doc));
+                        Log.e("handleMessage2: ", String.valueOf(conditionCheck2Payment));
+                        Log.e("handleMessage3: ", String.valueOf(conditionCheck3Esign));
+
+                        int ii = 0;
+
+                        if (conditionCheck1Doc == false) { // doc done
+                            ii = 1;
+                            Log.e("handleMessage: ", "1");
+                        }
+                        if (conditionCheck1Doc == false && conditionCheck2Payment == false) { // doc and payment done
+                            Log.e("handleMessage: ", "2");
+                            ii = 2;
+                        }
+
+                        if (conditionCheck1Doc == false && conditionCheck2Payment == false && conditionCheck3Esign == false) { //doc ,payment, esign done.
+                            Log.e("handleMessage: ", "3");
+                            ii = 3;
+                        }
+
+                        if (conditionCheck1Discrpncy == true) {
+                            startAlertPopup1(Dashboard.this, mainLayout, ii);
+                        } else {
+                            if (ii != 3) {
+                                startAlertPopup(Dashboard.this, mainLayout, ii);
+                            }
                         }
 
 
@@ -950,6 +1305,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //                        String is_email_v = jsonObject.getString("is_email_v");
 
 //                        //is_payment_p  o pending 1 done
+
 //                        if (is_payment_p.equalsIgnoreCase("1")) {
 //                            SharedPref.savePreferences(getApplicationContext(), SharedPref.is_payment_p, "1");
 //                            SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment, SharedPref.UPIPaymentDONE);
@@ -1154,6 +1510,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         if (status == 1) {
                             if (isDeactivated == 1) {
                                 //Toast.makeText(SplashScreen.this, "Your Account is Deactivated", Toast.LENGTH_LONG).show();
+
                                 TastyToast.makeText(
                                         getApplicationContext(),
                                         "Your Account is Deactivated",
@@ -1191,24 +1548,59 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                                 "email":"PRAVINDI.BOOKONSPOT@GMAIL.COM","vpp_id":"11145"},"downloadApk":0,"message":"Existing User","status":1}  }*/
 
                                         SharedPref.savePreferences(Dashboard.this, "state", state);
-                                        Logics.setPaymentStatus(Dashboard.this, vppdata.getString("is_pay_p"));
+                                        // Logics.setPaymentStatus(Dashboard.this, vppdata.getString("is_pay_p"));
                                         SharedPref.savePreferences(Dashboard.this, "bankAccNo", bankAccNo);
                                         Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
 
                                         try {
                                             if (accnt_opn_link.equalsIgnoreCase("NOT IDENTIFIED")) {
-                                                layoutReferralLink.setVisibility(View.GONE);
+                                                cardReferral.setVisibility(View.GONE);
+                                                reff = false;
+
                                             } else if (accnt_opn_link.equalsIgnoreCase("Not VPP")) {
-                                                layoutReferralLink.setVisibility(View.GONE);
-                                            } else  if (accnt_opn_link.trim() == null || accnt_opn_link.trim().equals("")){
-                                                layoutReferralLink.setVisibility(View.GONE);
-                                            }else{
-                                                layoutReferralLink.setVisibility(View.VISIBLE);
+                                                cardReferral.setVisibility(View.GONE);
+                                                reff = false;
+
+                                            } else if (accnt_opn_link.trim() == null || accnt_opn_link.trim().equals("")) {
+                                                cardReferral.setVisibility(View.GONE);
+                                                reff = false;
+
+                                            } else {
+                                                cardReferral.setVisibility(View.VISIBLE);
+                                                reff = true;
                                             }
                                         } catch (Exception e) {
                                             Log.e("handleMessage: ", e.getMessage());
                                         }
                                     }
+
+                                    if (isFirstTime1()) {
+
+                                        if (reff == true) {
+                                            fancyShowCaseQueue = new FancyShowCaseQueue()
+                                                    .add(fancyShowCaseView0)
+                                                    .add(fancyShowCaseView2)
+                                                    .add(fancyShowCaseView3)
+                                                    .add(fancyShowCaseView4)
+                                                    .add(fancyShowCaseView5)
+                                                    .add(fancyShowCaseView6)
+                                                    .add(fancyShowCaseView7);
+                                            fancyShowCaseQueue.show();
+
+                                        } else {
+                                            fancyShowCaseQueue = new FancyShowCaseQueue()
+                                                    .add(fancyShowCaseView0)
+                                                    .add(fancyShowCaseView2)
+                                                    .add(fancyShowCaseView3)
+                                                    .add(fancyShowCaseView4)
+                                                    .add(fancyShowCaseView5)
+                                                    .add(fancyShowCaseView6);
+                                            fancyShowCaseQueue.show();
+
+                                        }
+
+                                    }
+
 
                                 } else {
                                     startAlert();
@@ -1331,146 +1723,67 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
         return navIcon;
     }
 
-
-    View.OnClickListener mClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Log.d("", "onClick: ");
-
-            if (screenValue == 0) {
-                fancyShowCaseView0.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 1) {
-                fancyShowCaseView1.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 2) {
-                fancyShowCaseView2.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 3) {
-                fancyShowCaseView3.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 4) {
-                fancyShowCaseView4.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 5) {
-                fancyShowCaseView5.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 6) {
-                fancyShowCaseView6.hide();
-                // fancyShowCaseQueue.cancel(true);
-            } else if (screenValue == 7) {
-                fancyShowCaseView7.hide();
-                // fancyShowCaseQueue.cancel(true);
-            }
-            // fancyShowCaseQueue.cancel(true);
-
-        }
-    };
+//    View.OnClickListener mClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View view) {
+//            Log.d("", "onClick: ");
+//
+//            if (screenValue == 0) {
+//                fancyShowCaseView0.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//            } else if (screenValue == 1) {
+//                fancyShowCaseView2.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//            } else if (screenValue == 2) {
+//                fancyShowCaseView3.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//            } else if (screenValue == 3) {
+//                fancyShowCaseView4.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//            } else if (screenValue == 4) {
+//                fancyShowCaseView5.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//            } else if (screenValue == 5) {
+//                fancyShowCaseView6.hide();
+//                // fancyShowCaseQueue.cancel(true);
+//
+//                if (!ranBefore) {
+//
+//                    // first time
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putBoolean("RanBefore", true);
+//                    editor.commit();
+//                }
+//
+//                Log.e("onClick: ", "aa");
+//            }
+//
+//
+//            /*else if (screenValue == 5) {
+//                fancyShowCaseView6.hide();
+//                Log.e("onClick: ", "bb");
+//
+//                if (!ranBefore) {
+//
+//                    // first time
+//                    SharedPreferences.Editor editor = preferences.edit();
+//                    editor.putBoolean("RanBefore", true);
+//                    editor.commit();
+//                }
+//                // fancyShowCaseQueue.cancel(true);
+//            } *//*else if (screenValue == 7) {
+//                fancyShowCaseView7.hide();
+//
+//                // fancyShowCaseQueue.cancel(true);
+//            }*/
+//            // fancyShowCaseQueue.cancel(true);
+//        }
+//    };
 
     @Override
     protected void onResume() {
         Log.e("onResume: ", "caalleed");
 
-        AlertDialogClass.PopupWindowDismiss();
-
-        try {
-            currentVersion = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-            // Toast.makeText(Dashboard.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-
-        }
-
-        new GetVersionCode().execute();
-
-        connectionProcess = (ConnectionProcess) this;
-        if (Connectivity.getNetworkState(getApplicationContext())) {
-            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ProgressDlgConnectSocket(Dashboard.this, connectionProcess, "Server Not Available");
-                    }
-                });
-            } else if (Const.isSocketConnected == true) {
-                try {
-                    JSONObject jsonObject = new JSONObject();
-                    JSONObject jsonObject1 = new JSONObject();
-                    String vppid = Logics.getVppId(Dashboard.this);
-
-                    jsonObject.put("VPPID", vppid);
-                    jsonObject.put("reportType", "LeadsCount");
-                    jsonObject.put("version", "android");
-
-                    jsonObject1.put("VPPID", vppid);
-                    jsonObject1.put("reportType", "LeadsCount");
-                    jsonObject1.put("version", "android");
-                    jsonObject1.put("token_id", FcmMessagingService.getToken(getApplicationContext()));
-
-                    data = jsonObject.toString().getBytes();
-                    data1 = jsonObject1.toString().getBytes();
-
-                    AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
-
-                    GetVppDetails();
-
-                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGFETCHDOCSTAT, data1, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGPRODUCTMASTER, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    new SendTOServer(Dashboard.this, Dashboard.this, Const.MSGFETCHDASHBOARD, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    //  personlized_link_for_accnt_opnApicall();
-                    //   new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHVERSION,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-                    //    new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHLEADDETAILREPORT,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            Views.SweetAlert_NoDataAvailble(Dashboard.this, "Internet Not Available");
-
-        }
-
-
-        ///added this lines extra by shiva ....
-
-        handler.postDelayed(runnable = new Runnable() {
-            @Override
-            public void run() {
-                handler.postDelayed(runnable, delay);
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (!Connectivity.getNetworkState(getApplicationContext())) {
-                            NOCheckINTERNET = true;   /// no net ....
-                            Log.e("run: ", "no net");
-                            imgConnection.setImageResource((R.drawable.ic_up_and_down_arrows_symbol_red));
-//                            lineinternet.setBackgroundColor(getResources().getColor(R.color.red));
-//                            txtinternet.setText("Online");
-                            showSnackbar("Internet Not Available");
-
-                        } else {
-//                            NOCheckINTERNET = false;   /// no net ....
-                            imgConnection.setImageResource((R.drawable.ic_up_and_down_arrows_symbol));
-//                            lineinternet.setBackgroundColor(getResources().getColor(R.color.btn_active));
-//                            showSnackbar("Online");
-
-//                            imgConnection.setBackground(getResources().getDrawable(R.drawable.ic_up_and_down_arrows_symbol));
-                            //Log.e("run: ", " net available");
-
-                        }
-
-                        if (NOCheckINTERNET == true) {
-                            if (Connectivity.getNetworkState(getApplicationContext())) {
-                                NOCheckINTERNET = false;
-//                                if (Const.dismiss == true)
-                                new ConnectTOServer(Dashboard.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-                            }
-                        }
-                    }
-                });
-            }
-        }, delay);
 
         super.onResume();
     }
@@ -1508,6 +1821,222 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         Intent intent = new Intent(Dashboard.this, PhotoVideoSignatureActivity.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
+                    }
+                });
+        android.app.AlertDialog alert = alertBuild.create();
+        alert.show();
+    }
+
+
+    public void startAlertPopup(Context context, View linearLayout1, int ii) {
+        String[] descriptionData = {"Documents", "Payment", "Esign"};
+
+        // Create an alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // set the custom layout
+        final View customLayout = getLayoutInflater().inflate(R.layout.layout_doc,
+                null);
+        builder.setView(customLayout);
+
+        builder.setCancelable(false);
+
+
+        Button button = (Button) customLayout.findViewById(R.id.btn_proceed);
+        StateProgressBar stateProgressBar = (StateProgressBar) customLayout.findViewById(R.id.progress_bar);
+        stateProgressBar.setStateDescriptionData(descriptionData);
+
+        stateProgressBar.setStateDescriptionTypeface("fonts/RobotoSlab-Light.ttf");
+        stateProgressBar.setStateNumberTypeface("fonts/Questrial-Regular.ttf");
+
+
+        if (ii == 0) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+        } else if (ii == 1) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+        } else if (ii == 2) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+        } else if (ii == 3) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
+        }
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (conditionCheck1Doc == true) {
+                    Intent intent = new Intent(Dashboard.this, UploadDocScreen.class);
+                    intent.putExtra(Const.from, Const.doc);
+                    intent.putExtra(Const.bankstatus, is_bank_verified);
+                    intent.putExtra(Const.adharstatus, is_adhar_verified);
+                    intent.putExtra(Const.panstatus, is_pan_verified);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    //payemnt..
+                } else if (conditionCheck2Payment == true) {
+                    Intent intent = new Intent(Dashboard.this, UpiPayment.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    //esign..
+                } else if (conditionCheck3Esign == true) {
+                    Intent intent = new Intent(Dashboard.this, PhotoVideoSignatureActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
+        // add a button
+        // create and show
+        // the alert dialog
+        AlertDialog dialog
+                = builder.create();
+        dialog.show();
+    }
+
+    public void startAlertPopup1(Context context, View linearLayout1, int ii) {
+        String[] descriptionData = {"Documents", "Payment", "Esign"};
+
+        // Create an alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // set the custom layout
+        final View customLayout = getLayoutInflater().inflate(R.layout.layout_doc1,
+                null);
+        builder.setView(customLayout);
+
+        builder.setCancelable(false);
+        Button button = (Button) customLayout.findViewById(R.id.btn_proceed);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (conditionCheck1Doc == true) {
+                    Intent intent = new Intent(Dashboard.this, UploadDocScreen.class);
+                    intent.putExtra(Const.from, Const.doc);
+                    intent.putExtra(Const.bankstatus, is_bank_verified);
+                    intent.putExtra(Const.adharstatus, is_adhar_verified);
+                    intent.putExtra(Const.panstatus, is_pan_verified);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    //payemnt..
+                } else if (conditionCheck2Payment == true) {
+                    Intent intent = new Intent(Dashboard.this, UpiPayment.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+
+                    //esign..
+                } else if (conditionCheck3Esign == true) {
+                    Intent intent = new Intent(Dashboard.this, PhotoVideoSignatureActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
+        // add a button
+        // create and show
+        // the alert dialog
+        AlertDialog dialog
+                = builder.create();
+        dialog.show();
+    }
+
+
+    public static void startAlertPopup2(Context context, View linearLayout1, int ii) {
+
+        String[] descriptionData = {"Documents", "Payment", "Esign"};
+
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        customView = layoutInflater.inflate(R.layout.layout_doc, null);
+        //instantiate popup window
+        popupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+//        popupWindow.setOutsideTouchable(true);
+
+        StateProgressBar stateProgressBar = (StateProgressBar) customView.findViewById(R.id.progress_bar);
+        stateProgressBar.setStateDescriptionData(descriptionData);
+
+        stateProgressBar.setStateDescriptionTypeface("fonts/RobotoSlab-Light.ttf");
+        stateProgressBar.setStateNumberTypeface("fonts/Questrial-Regular.ttf");
+
+
+        if (ii == 0) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.ONE);
+        } else if (ii == 1) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.TWO);
+        } else if (ii == 2) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.THREE);
+        } else if (ii == 3) {
+            stateProgressBar.setCurrentStateNumber(StateProgressBar.StateNumber.FOUR);
+        }
+        //display the popup window
+        new Handler().postDelayed(new Runnable() {
+
+            public void run() {
+                popupWindow.showAtLocation(linearLayout1, Gravity.CENTER, 0, 0);
+            }
+
+        }, 200L);
+
+        if (!popupWindow.isShowing()) {
+            customView.setVisibility(View.VISIBLE);
+        } else {
+            customView.setVisibility(View.GONE);
+        }
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString("id","");
+//        GstDlg resourse_share=new GstDlg();
+//        resourse_share.show(fm, "Dialog Fragment");
+//        resourse_share.setArguments(bundle);
+
+    }
+
+
+    private void startAlertPopup1() {
+        android.app.AlertDialog.Builder alertBuild = new android.app.AlertDialog.Builder(this)
+                .setTitle("Documents Pending ! ")
+                .setMessage("Documents are mandatory part to complete your registration process, it will just take a few minutes !\n please complete.")
+                .setCancelable(false)
+                .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.dismiss();
+                        dialogInterface.cancel();
+
+                        //
+                        //doc..
+
+                        if (conditionCheck1Doc == true) {
+                            Intent intent = new Intent(Dashboard.this, UploadDocScreen.class);
+                            intent.putExtra(Const.from, Const.doc);
+                            intent.putExtra(Const.bankstatus, is_bank_verified);
+                            intent.putExtra(Const.adharstatus, is_adhar_verified);
+                            intent.putExtra(Const.panstatus, is_pan_verified);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                            //payemnt..
+                        } else if (conditionCheck2Payment == true) {
+                            Intent intent = new Intent(Dashboard.this, UpiPayment.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+
+                            //esign..
+                        } else if (conditionCheck3Esign == true) {
+                            Intent intent = new Intent(Dashboard.this, PhotoVideoSignatureActivity.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        }
+
                     }
                 });
         android.app.AlertDialog alert = alertBuild.create();
@@ -1734,6 +2263,8 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                 @Override
                 public void onClick(View view) {
                     SharedPref.savePreferences(Dashboard.this, "PopUpShow", "0");
+                    SharedPref.savePreferences(Dashboard.this, "popup_udpated_date",
+                            SharedPref.getPreferences(Dashboard.this, "popup_udpated_date1"));
                     dialogLockPIN.dismiss();
                     dialogLockPIN.cancel();
                 }
@@ -1801,20 +2332,20 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
             Picasso.with(Dashboard.this).load(SharedPref.getPreferences(c, "linkPopup")).memoryPolicy(MemoryPolicy.NO_CACHE)
                     .networkPolicy(NetworkPolicy.NO_CACHE).into(popupimage, new Callback() {
-                @Override
-                public void onSuccess() {
-                    Log.d("TAG", "onSuccess");
+                        @Override
+                        public void onSuccess() {
+                            Log.d("TAG", "onSuccess");
 
-                    if (!((Activity) Dashboard.this).isFinishing()) {
-                        dialogLockPIN.show();
-                    }
-                }
+                            if (!((Activity) Dashboard.this).isFinishing()) {
+                                dialogLockPIN.show();
+                            }
+                        }
 
-                @Override
-                public void onError() {
-                    Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT).show();
-                }
-            });
+                        @Override
+                        public void onError() {
+                            Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT).show();
+                        }
+                    });
 
         } catch (Exception e) {
             //  VenturaException.Print(e);

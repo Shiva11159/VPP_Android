@@ -70,6 +70,7 @@ public class Const {
     public static final int MSGTECHPROCRESP =63;
     //public static final int MSGNotificationtoken =00;
     public static final int MSGCallbackdetails =64;
+    public static final int MSGCallPromocode =65;
     public static final int MSG_GST =66;
     public static final int MSG_StateCity =67;
     public static final int MSG_LOGS =68;
@@ -156,14 +157,30 @@ public class Const {
     //public static final int SERVER_PORT = 8888;  // LIVE PORT
 
     //Live app on new port
+
+
+//#user=Peng
+//#database=vpp
+//#pwd=Vpp@54321
+//            #dbip=172.16.102.161:3306
+//            #dbip=localhost:3306
 //
+//
+//    user=root
+//            database=vpp
+//    pwd=root
+//            dbip=172.16.102.55:3306
+
+
+    //
 //    public static String SERVER_IP = "vpp.ventura1.com";
     public static String SERVER_IP = "43.242.213.117";  // main ip live ...
-//
-//    public static final int SERVER_PORT = 2020 ; //shiva PORT testing..
+
+    //
+    //    public static final int SERVER_PORT = 2020 ; //shiva PORT testing..
     public static final int SERVER_PORT = 7778 ; //shiva PORT production...
 
-//    public static String SERVER_IP = "192.168vppid.43.65"; //Local Server
+    //    public static String SERVER_IP = "192.168vppid.43.65"; //Local Server
     //public static final int SERVER_PORT = 8081;     //Local PORT
 
     //public static final String PUBLICKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyzc9kBvFRFB+PwBJceFNHdvXScht9qCvOHyH6TZavVadgjxYFJAP5HQBSK/qf8zDzrwCmU2DKoTTkTtBBxr1U/B2YCAh6w/HEaY07BjSg+S4MphMTrGj5t1PwZDrbs9E6RePs+9UHN6W5Rk73le2wpciOaXT5WlEw3QJEszmnuL18rKtQ0XJpxkkpmVxA+tmNUsmgqBFlZw5DnQUVGZ8L+bwEsTHhTtsb0Uigo2aiowQxeZXCiEQaKkPhzJ1WSh6m2X+9PfHFsnDt4hZ0NzxOeOTOvz6/Qm3uwk87ANl934ul90xGe+y0BTAJnwdWqMLn72CVTz38/LpXw04kWAgAwIDAQAB";

@@ -51,7 +51,7 @@ public class QueryStatus extends NavigationDrawer implements RequestSent, Connec
     static Gson gson;
     ArrayList<QueryStatusData> queryStatusData = new ArrayList<>();
     RecyclerView listQuery;
-//    ProgressDialog ringProgressDialog;
+    //    ProgressDialog ringProgressDialog;
     QueryStatusAdapter queryStatusAdapter;
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
@@ -257,7 +257,7 @@ public class QueryStatus extends NavigationDrawer implements RequestSent, Connec
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                       ProgressDlgConnectSocket(QueryStatus.this, connectionProcess, "Server Not Available");
+                                        ProgressDlgConnectSocket(QueryStatus.this, connectionProcess, "Server Not Available");
 //                                        ConnectToserver(connectionProcess);
                                     }
                                 });
