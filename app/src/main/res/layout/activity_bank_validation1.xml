@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/roundrectangle"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/lreg"
+        android:gravity="right"
+        android:text=""
+        android:textColor="@color/gray900"></TextView>
+
+
+    <include
+        layout="@layout/activity_signup_screen"
+        android:visibility="gone"></include>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView_"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
+        android:background="@color/transparent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="left"
+                android:src="@drawable/alertlogo"></ImageView>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/coordinatorLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lbold"
+                            android:padding="5dp"
+                            android:text="Enter Bank Details"
+                            android:textColor="@color/venturanew"
+                            android:textSize="25dp"
+                            android:textStyle="bold" />
+                        <TextView
+                            android:id="@+id/txtAccNoOld"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="25dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lbold"
+                            android:padding="5dp"
+                            android:visibility="gone"
+                            android:text="Old Account number"
+                            android:textColor="@color/venturanew"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edtAccNoOld"
+                            android:layout_width="match_parent"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:layout_height="40dp"
+                            android:text="149301510436"
+
+                            android:visibility="gone"
+                            android:drawableRight="@drawable/bankaccountno"
+
+                            android:background="@drawable/rect"
+                            android:cursorVisible="true"
+                            android:fontFamily="@font/lbold"
+                            android:hint="Old Account Number *"
+                            android:inputType="number"
+                            android:padding="10dp"
+                            android:textColor="@color/gray700"
+                            android:singleLine="true"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:id="@+id/txtACC"
+                            android:layout_marginTop="15dp"
+
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lbold"
+                            android:padding="5dp"
+                            android:text="Account number"
+                            android:textColor="@color/venturanew"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edtAccNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector"
+                            android:drawableRight="@drawable/bankaccountno"
+                            android:cursorVisible="true"
+                            android:textColor="@color/gray700"
+                            android:fontFamily="@font/lbold"
+                            android:hint="Enter New Account Number *"
+                            android:inputType="number"
+                            android:padding="10dp"
+                            android:singleLine="true"
+                            android:textSize="14dp" />
+
+<!--
+                        android:text="149301510436"
+-->
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:id="@+id/txtIFSC"
+                            android:fontFamily="@font/lbold"
+                            android:padding="5dp"
+                            android:text="IFSC code"
+                            android:textColor="@color/venturanew"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/edtIfscCode"
+                            android:drawableRight="@drawable/ifsccod"
+                            android:layout_width="match_parent"
+                            android:drawableTint="@color/gray500"
+                            android:layout_height="40dp"
+                            android:textAllCaps="true"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector"
+                            android:cursorVisible="true"
+                            android:fontFamily="@font/lbold"
+                            android:hint="Enter IFSC Code *"
+                            android:inputType="textCapCharacters"
+                            android:padding="10dp"
+                            android:textColor="@color/gray700"
+                            android:singleLine="true"
+                            android:textSize="14dp" />
+<!--
+                        android:text="ICIC0001493"
+-->
+
+                        <RelativeLayout
+                            android:id="@+id/lay_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:id="@+id/txtNote"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="28dp"
+                                android:fontFamily="@font/lreg"
+                                android:text="NOTE : "
+                                android:textSize="16sp"
+                                android:visibility="gone" />
+
+                            <TextView
+                                android:id="@+id/txt"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="10dp"
+                                android:layout_toRightOf="@+id/txtNote"
+                                android:fontFamily="@font/lreg"
+                                android:text="NOTE : As per Bank details entered this account belongs to : "
+                                android:textSize="15dp"
+                                android:visibility="visible" />
+
+                            <TextView
+                                android:id="@+id/txtNote3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_below="@+id/txt"
+                                android:layout_marginLeft="10dp"
+                                android:layout_marginTop="10dp"
+                                android:layout_toRightOf="@+id/txtNote"
+                                android:fontFamily="@font/lbold"
+                                android:textColor="@color/venturanew"
+                                android:textSize="15dp" />
+
+                        </RelativeLayout>
+
+                        <Button
+                            android:id="@+id/btn_verify_AccNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="40dp"
+                            android:background="@drawable/button_"
+                            android:fontFamily="@font/lbold"
+                            android:text="Verify"
+                            android:textColor="@color/white" />
+
+                    </LinearLayout>
+
+                    <!-- Login Button -->
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/layout_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </RelativeLayout>
+    </ScrollView>
+    <Button
+        android:id="@+id/btn_bankProceed"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/button_"
+        android:fontFamily="@font/lbold"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingRight="20dp"
+        android:paddingBottom="10dp"
+        android:text="Proceed"
+        android:textColor="@color/white"
+        android:visibility="gone" />
+
+
+</RelativeLayout>

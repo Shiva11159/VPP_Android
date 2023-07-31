@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="vertical">
+
+    <TableLayout
+        android:id="@+id/tblTop10List"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:stretchColumns="*">
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/txtDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="0"
+                android:background="@drawable/cellshape"
+                android:fontFamily="@font/lreg"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="HELLO THERE"
+                android:textAllCaps="true"
+                android:textColor="@color/black"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtName"
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:background="@drawable/cellshape"
+                android:textColor="@color/black"
+                android:fontFamily="@font/lreg"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="HELLO THERE "
+                android:textAllCaps="true"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtMobileNo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:background="@drawable/cellshape"
+                android:fontFamily="@font/lreg"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="HELLO THERE "
+                android:textAllCaps="true"
+                android:textColor="@color/colorAccent"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/txtStatus"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:background="@drawable/cellshape"
+                android:fontFamily="@font/lbold"
+                android:gravity="center"
+                android:lines="1"
+                android:padding="10dp"
+                android:text="HELLO THERE "
+                android:textAllCaps="true"
+                android:textColor="@color/btn_active"
+                android:textSize="10dp" />
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

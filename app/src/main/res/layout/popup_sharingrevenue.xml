@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView_"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
+        android:background="@drawable/roundrectangle">
+
+        <ProgressBar
+
+            android:id="@+id/progress_bar"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginTop="15dp"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+        </ProgressBar>
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="left"
+            android:src="@drawable/alertlogo"></ImageView>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image">
+
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/checkbox_sharing"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="?attr/selectableItemBackground"
+                        android:buttonTint="#4FCE5D"
+                        android:clickable="true"
+                        android:fontFamily="@font/lreg"
+                        android:paddingLeft="5dp"
+                        android:shadowColor="@color/ventura_color"
+                        android:text="@string/revenuesharing1"
+                        android:textColor="@color/gray700"
+                        android:textSize="15dp"
+
+                        >
+
+                    </TextView>
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/txtIagree"
+                    android:layout_width="75dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/lbold"
+                    android:gravity="center"
+                    android:background="@drawable/button_"
+                    android:padding="5dp"
+                    android:clickable="true"
+                    android:text="I Agree"
+                    android:textColor="@color/white"
+                    android:textSize="14dp" />
+
+                <!-- Login Button -->
+
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <ImageView
+            android:id="@+id/buttonImageclose"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:visibility="gone" />
+
+
+    </RelativeLayout>
+</ScrollView>

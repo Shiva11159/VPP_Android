@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollView_"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="1dp"
+        android:background="@drawable/roundrectangle">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_gravity="left"
+            android:src="@drawable/alertlogo"></ImageView>
+
+        <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/coordinatorLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image">
+
+            <TextView
+                android:text="Clear Filter"
+                android:id="@+id/txtFilter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/lreg"
+                android:drawableRight="@drawable/clearfilter"
+                android:gravity="center"
+                android:layout_gravity="right"
+                ></TextView>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/dimen_10">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lbold"
+                    android:padding="5dp"
+                    android:text="Filter by product"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <CheckBox
+                        android:id="@+id/MF"
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lreg"
+                        android:text="MF"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/Comm"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+
+                        android:fontFamily="@font/lreg"
+                        android:text="Comm"
+                        android:textSize="18sp" />
+
+                    <CheckBox
+                        android:id="@+id/Equity"
+
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+
+                        android:fontFamily="@font/lreg"
+                        android:text="Equity"
+                        android:textSize="18sp" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/lbold"
+                    android:padding="5dp"
+                    android:text="Filter by Month and Year"
+                    android:textColor="@color/black"
+                    android:textSize="20dp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <CheckBox
+                        android:id="@+id/SelectDate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lreg"
+                        android:text=" Select Date"
+                        android:textSize="18sp" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:id="@+id/linearLayoutspinner"
+                        android:layout_height="wrap_content"
+                        android:visibility="visible"
+                        android:orientation="horizontal">
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:id="@+id/spin_mon"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"></Spinner>
+
+                        <Spinner
+                            android:layout_width="match_parent"
+                            android:id="@+id/spin_year"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"></Spinner>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_gravity="right"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/button_"
+                    android:fontFamily="@font/lbold"
+                    android:paddingLeft="20dp"
+                    android:paddingTop="10dp"
+
+                    android:paddingRight="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="Filter"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white" />
+
+                <!-- Login Button -->
+
+            </LinearLayout>
+
+        </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+        <ImageView
+            android:id="@+id/forgot_closeimage"
+            android:layout_width="@dimen/dimen_30"
+            android:layout_height="@dimen/dimen_30"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:visibility="visible" />
+
+
+    </RelativeLayout>
+</ScrollView>

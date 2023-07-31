@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainlayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colour_new_toolbar"
+        tools:context="com.application.vpp.activity.Dashboard">
+
+        <LinearLayout
+            android:id="@+id/linearText"
+            android:layout_width="match_parent"
+            android:layout_height="72dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/opensans_semibold"
+                android:paddingLeft="10dp"
+                android:text="Authenticate"
+                android:textColor="@color/white"
+                android:textSize="22sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearlayout_main_otp_screen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearText"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearFirst"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linearText"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/top_rounded"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="Please enter OTP sent on :"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/opensans_bold"
+                        android:text="+91 8082369498"
+                        android:textColor="@color/colour_new_text"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/edt_mob_otp"
+                    android:layout_width="364dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_black"
+
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/txt_resend_mob"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_email"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteX="286dp"
+                    tools:layout_editor_absoluteY="542dp" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_mob_submit"
+                    android:layout_width="126dp"
+                    android:layout_height="41dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:visibility="visible"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/colour_new_button"
+                    fancy:fb_focusColor="#9bd823"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="Verify"
+                    fancy:fb_textColor="#FFFFFF"
+                    fancy:fb_textFont="@font/opensans_semibold"
+                    tools:ignore="DuplicateIds"
+
+                    />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/view"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_below="@+id/linearFirst"
+
+                android:background="@color/colour_new_text"
+
+                tools:layout_editor_absoluteY="375dp" />
+
+            <LinearLayout
+                android:id="@+id/linear2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/view"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:id="@+id/textView3"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/opensans_regular"
+                    android:text="Please enter OTP sent on :"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/opensans_bold"
+                    android:text="+91 8082369498"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/edt_email_otp"
+                    android:layout_width="364dp"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/border_black"
+                    android:inputType="number"
+                    android:maxLength="4"
+                    android:textAllCaps="true" />
+
+                <TextView
+                    android:id="@+id/txt_email_resend"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/change_email"
+                    android:textColor="@color/colour_new_text"
+                    android:textSize="12sp"
+                    tools:layout_editor_absoluteX="286dp"
+                    tools:layout_editor_absoluteY="542dp" />
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_email_submit"
+                    android:layout_width="126dp"
+                    android:layout_height="41dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:visibility="visible"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/colour_new_button"
+                    fancy:fb_focusColor="#9bd823"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="Verify"
+                    fancy:fb_textColor="#FFFFFF"
+                    fancy:fb_textFont="@font/opensans_semibold"
+                    tools:ignore="DuplicateIds"
+
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linear3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/linear2"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:visibility="visible">
+
+                <mehdi.sakout.fancybuttons.FancyButton
+                    android:id="@+id/btn_proceed"
+                    android:layout_width="126dp"
+                    android:layout_height="41dp"
+                    android:layout_below="@+id/linear2"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/white"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:visibility="gone"
+                    fancy:fb_borderColor="#FFFFFF"
+                    fancy:fb_borderWidth="1dp"
+                    fancy:fb_defaultColor="@color/colour_new_button"
+                    fancy:fb_focusColor="#9bd823"
+                    fancy:fb_iconPosition="left"
+                    fancy:fb_radius="30dp"
+                    fancy:fb_text="Proceed"
+                    fancy:fb_textColor="#FFFFFF"
+                    fancy:fb_textFont="@font/opensans_semibold"
+                    tools:ignore="DuplicateIds" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/nestedscrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/linearlayout_main_otp_screen"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/top_rounded"
+            android:visibility="visible"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+
+
+
+
+
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+    </RelativeLayout>
+
+
+</ScrollView>

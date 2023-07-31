@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fancy="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/roundrectangle"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/txt_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_gravity="left"
+        android:layout_margin="10dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/lreg"
+        android:gravity="right"
+
+        android:text=""
+        android:textColor="@color/gray900"></TextView>
+
+
+    <include
+        layout="@layout/activity_signup_screen"
+        android:visibility="gone"></include>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView_"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="45dp"
+        android:background="@color/transparent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="1dp">
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="left"
+                android:src="@drawable/alertlogo"></ImageView>
+
+            <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/coordinatorLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/image">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/dimen_10">
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="40dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/lbold"
+                            android:padding="5dp"
+                            android:text="Add your email"
+                            android:textColor="@color/venturanew"
+                            android:textSize="25dp" />
+
+                        <TextView
+                            android:id="@+id/txtOtpMoborEmailheader"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lbold"
+                            android:paddingLeft="10dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="10dp"
+                            android:text="This is where we will send you important updates and communication about partner program."
+                            android:textSize="15dp" />
+
+                        <EditText
+                            android:id="@+id/edt_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="25dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/selector"
+                            android:fontFamily="@font/opensans_regular"
+                            android:hint="Enter email"
+                            android:padding="10dp"
+                            android:textSize="14dp">
+
+                        </EditText>
+
+
+                        <Button
+                            android:id="@+id/btn_login"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="30dp"
+                            android:background="@drawable/buttonback11"
+                            android:fontFamily="@font/lbold"
+                            android:paddingLeft="20dp"
+                            android:textAllCaps="false"
+                            android:paddingTop="10dp"
+                            android:paddingRight="20dp"
+                            android:paddingBottom="10dp"
+                            android:text="Proceed"
+                            android:textColor="@color/white" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+
+                            android:layout_gravity="center"
+                            android:fontFamily="@font/lbold"
+                            android:layout_marginTop="10dp"
+                            android:gravity="center"
+                            android:text="OR"></TextView>
+
+                        <Button
+                            android:id="@+id/sign_in_button"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:drawableLeft="@drawable/google"
+                            android:layout_alignParentBottom="true"
+                            android:layout_marginTop="10dp"
+                            android:background="@drawable/button_"
+                            android:fontFamily="@font/lbold"
+                            android:paddingLeft="20dp"
+                            android:paddingTop="10dp"
+                            android:paddingRight="20dp"
+                            android:textAllCaps="false"
+                            android:paddingBottom="10dp"
+                            android:text="Continue with Google "
+                            android:textColor="@color/white" />
+
+
+                    </LinearLayout>
+
+                    <!-- Login Button -->
+                    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/layout_header"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="5dp"
+                        android:animateLayoutChanges="true"
+                        android:orientation="vertical"
+                        android:visibility="visible">
+
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:padding="5dp">
+
+
+                        </RelativeLayout>
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+
+</RelativeLayout>
