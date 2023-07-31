@@ -19,6 +19,7 @@ public class SharedPref {
     public static String state="state";
 
     public static String UPIPayment="UPIPayment";
+    public static String UPIPayment1="UPIPayment1";
     public static String UPIPaymentDONE="UPIPaymentDONE";
 
     public static String is_payment_p="is_payment_p";
@@ -44,6 +45,17 @@ public class SharedPref {
     public static String getPreferences(Context context, String keyValue) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         return sharedPreferences.getString(keyValue, "");
+
+    }
+
+    public static void savePreferences1(Context mContext, String key, String value) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        SharedPreferences.Editor editor  = sharedPreferences.edit();
+        editor.putString(key, value).apply();
+    }
+    public static String getPreferences1(Context context, String keyValue) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString(keyValue, "0");
 
     }
 

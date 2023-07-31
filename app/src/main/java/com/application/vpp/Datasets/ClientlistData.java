@@ -71,7 +71,7 @@ public class ClientlistData {
         this.notInterestedreason = notInterestedreason;
     }
 
-    public ClientlistData(String clientCode, String clientName, String productName, String accountOpenedDate, String leadNo, String customerName, String leadDate, String notInterestedreason) {
+    public ClientlistData(String MobileNo,String clientCode, String clientName, String productName, String accountOpenedDate, String leadNo, String customerName, String leadDate, String notInterestedreason) {
         ClientCode = clientCode;
         ClientName = clientName;
         ProductName = productName;
@@ -80,6 +80,7 @@ public class ClientlistData {
         CustomerName = customerName;
         LeadDate = leadDate;
         this.notInterestedreason = notInterestedreason;
+        this.MobileNo = MobileNo;
     }
 
     public String ClientCode;
@@ -90,6 +91,16 @@ public class ClientlistData {
     public String CustomerName;
     public String LeadDate;
     public String notInterestedreason;
+
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
+
+    public String MobileNo;
 
     @Override
     public boolean equals(Object o) {

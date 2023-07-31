@@ -1,13 +1,21 @@
 package com.application.vpp.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.telecom.Call;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -24,6 +32,7 @@ import com.application.vpp.ClientServer.SendTOServer;
 import com.application.vpp.Const.Const;
 import com.application.vpp.Datasets.InProcessDataset;
 import com.application.vpp.Datasets.InserSockettLogs;
+import com.application.vpp.Interfaces.CallBack;
 import com.application.vpp.Interfaces.ConnectionProcess;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
@@ -47,38 +56,43 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 
 public class
 
-RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess {
+RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess, CallBack {
+    EditText searchView;
+    CallBack callBack;
+    AlertDialog alertDialog;
 
+    InProcessAdapter inProcessAdapter;
     RecyclerView listRejected;
     public static Handler handlerRejectedList;
     static Gson gson;
-//    ProgressDialog ringProgressDialog;
+    //    ProgressDialog ringProgressDialog;
     ArrayList<InProcessDataset> rejecDatasetArrayList;
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
     TextView tv_nodataavail;
-    LinearLayout linearrejected;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 2000;
     boolean NOCheckINTERNET = false;
     Context context;
     RelativeLayout mainlayout;
-    String data="";
+    String data = "";
     StringBuffer ssb = null;
 
-    int MaxTry=0;
-    ArrayList<InserSockettLogs>inserSockettLogsArrayList;
+    int MaxTry = 0;
+    ArrayList<InserSockettLogs> inserSockettLogsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_rejected_list, mDrawerLayout);
+        callBack = (CallBack) this;
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
-        linearrejected = (LinearLayout) findViewById(R.id.linearrejected);
         listRejected = (RecyclerView) findViewById(R.id.listRejected);
         tv_nodataavail = (TextView) findViewById(R.id.tv_nodataavail);
+        searchView = (EditText) findViewById(R.id.searchView);
+
         mainlayout = findViewById(R.id.mainlayout);
         ssb = new StringBuffer();
 
@@ -86,8 +100,28 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         gson = gsonBuilder.create();
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", RejectedList.this);
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", RejectedList.this);
 
+
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                Log.e("afterTextChanged: ", String.valueOf(s));
+                filter(s.toString());
+
+            }
+        });
 
 //        ringProgressDialog = ProgressDialog.show(RejectedList.this, "Please wait ...", "Loading Your Data ...", true);
 //        ringProgressDialog.setCancelable(true);
@@ -106,11 +140,53 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
         }
 */
 
+
     }
 
     @Override
     public void requestSent(int value) {
 
+    }
+
+    @Override
+    public void getDetails(String branchname, String contactperson, String emailid, String mobileno) {
+
+    }
+
+    @Override
+    public void getReason(String reason, String name, String leadNo, String updatedDate) {
+        showPopup(reason, name, leadNo, updatedDate);
+
+    }
+
+    private void showPopup(String reason, String name, String leadNo, String updatedDate) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = LayoutInflater.from(this);
+        final View dialogView = inflater.inflate(R.layout.reason_popup, null);
+        builder.setView(dialogView);
+        TextView txtreason = dialogView.findViewById(R.id.txtreason);
+        TextView txt_updateddate = dialogView.findViewById(R.id.txt_updateddate);
+//        TextView txt_name = dialogView.findViewById(R.id.textview_lead_name);
+//        TextView txtleadNo = dialogView.findViewById(R.id.textview_lead_no);
+
+//        txt_name.setText("Name: " + name);
+//        txtleadNo.setText("Lead No: " + leadNo);
+        txtreason.setText("Reason : " + reason);
+        txt_updateddate.setText("Updated Date : " + updatedDate);
+        TextView close = dialogView.findViewById(R.id.imageViewdlg);
+
+        //  FancyButton btn_positive = dialogView.findViewById(R.id.btnIsRegYes);
+        close.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        alertDialog.dismiss();
+                    }
+                });
+        builder.setCancelable(true);
+        alertDialog = builder.show();
+
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
     }
 
 
@@ -128,25 +204,31 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
 //                ringProgressDialog.dismiss();
 //            }
 
-            AlertDialogClass.PopupWindowDismiss();
             int msgCode = msg.arg1;
             switch (msgCode) {
 
                 case Const.MSGFETCHLEADREJECTED: {
                     if (data.equalsIgnoreCase("[]")) {
                         tv_nodataavail.setVisibility(View.VISIBLE);
-                        linearrejected.setVisibility(View.GONE);
+
+                        searchView.setVisibility(View.GONE);
+                        listRejected.setVisibility(View.GONE);
                         ssb.setLength(0);
+
+                        AlertDialogClass.PopupWindowDismiss();
+
 
                     } else {
 
-                       // rejecDatasetArrayList.clear();
+                        searchView.setVisibility(View.VISIBLE);
+
+                        // rejecDatasetArrayList.clear();
                         tv_nodataavail.setVisibility(View.GONE);
-                        linearrejected.setVisibility(View.VISIBLE);
-                        if(data.endsWith("]")) {
+                        listRejected.setVisibility(View.VISIBLE);
+                        if (data.endsWith("]")) {
                             rejecDatasetArrayList = gson.fromJson(data, new TypeToken<ArrayList<InProcessDataset>>() {
                             }.getType());
-                            InProcessAdapter inProcessAdapter = new InProcessAdapter(rejecDatasetArrayList, RejectedList.this, "rejected");
+                            inProcessAdapter = new InProcessAdapter(rejecDatasetArrayList, RejectedList.this, "rejected", callBack);
                             listRejected.setLayoutManager(new LinearLayoutManager(RejectedList.this));
                             listRejected.setAdapter(inProcessAdapter);
                             listRejected.setItemAnimator(new DefaultItemAnimator());
@@ -155,7 +237,7 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
                         }
 
                     }
-                  //  ssb.setLength(0);
+                    //  ssb.setLength(0);
                 }
                 break;
 
@@ -213,7 +295,7 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
             String vppid = Logics.getVppId(RejectedList.this);
 //            jsonObject.put("VPPID", "su72259");
             jsonObject.put("VPPID", vppid);
-//            jsonObject.put("VPPID","650666");
+//            jsonObject.put("VPPID", "650666");
             jsonObject.put("reportType", "Rejected");
 
             byte data[] = jsonObject.toString().getBytes();
@@ -430,7 +512,7 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -468,14 +550,14 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(RejectedList.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 
@@ -496,4 +578,18 @@ RejectedList extends NavigationDrawer implements RequestSent, ConnectionProcess 
         handler.removeCallbacks(runnable);
         super.onDestroy();
     }
+
+    private void filter(String text) {
+        ArrayList<InProcessDataset> filteredList = new ArrayList<>();
+        for (InProcessDataset item : rejecDatasetArrayList) {
+            if (item.getProspectName() != null) {
+                if (item.getProspectName().toUpperCase().contains(text.toUpperCase()) || item.getMobileNo().toUpperCase().contains(text.toUpperCase())) {
+                    filteredList.add(item);
+                }
+            }
+            Log.e("filterSize: ", String.valueOf(filteredList.size()));
+            inProcessAdapter.filterList(filteredList);
+        }
+    }
+
 }

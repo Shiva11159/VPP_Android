@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="#EEEE"
     android:orientation="horizontal">
 
@@ -12,11 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:ignore="NamespaceTypo"
-        card_view:cardBackgroundColor="@color/white"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardElevation="14dp"
-        card_view:cardPreventCornerOverlap="false"
-        card_view:cardUseCompatPadding="false">
+        card_view:cardBackgroundColor="@color/gray100"
+        card_view:cardCornerRadius="1dp"
+        card_view:cardElevation="10dp"
+        card_view:cardMaxElevation="@dimen/dimen_10">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -50,7 +49,8 @@
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:background="@drawable/roundclose"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/week"
@@ -101,7 +101,8 @@
 
                 <include
                     android:id="@+id/line1"
-                    layout="@layout/sideline" />
+                    layout="@layout/sideline"
+                    android:visibility="gone" />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     xmlns:tools="http://schemas.android.com/tools"
@@ -126,12 +127,32 @@
                             android:orientation="vertical">
 
                             <LinearLayout
-                                android:layout_width="fill_parent"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
 
+                                <TextView
+                                    android:id="@+id/txtDate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:gravity="left"
+                                    android:text="dsjdksjdks"
+                                    android:textColor="@color/black"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="horizontal">
+
                                 <LinearLayout
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
 
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -140,19 +161,63 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="sans-serif-condensed"
-                                        android:text="Token No : "
-                                        android:textColor="@color/black"
-                                        android:textSize="15sp" />
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:gravity="left"
+                                        android:text="Token No"
+                                        android:textSize="@dimen/dimen_12" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:gravity="left"
+                                        android:text=" :  "
+                                        />
 
                                     <TextView
                                         android:id="@+id/txttoken"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="@font/opensans_light"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/opensans_regular"
+                                        android:gravity="left"
                                         android:text="Source"
-                                        android:textColor="@color/black"
-                                        android:textSize="15sp" />
+                                        />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="2"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:id="@+id/txtstatusopen"
+                                        android:layout_weight="1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/white"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:gravity="right"
+                                        android:text="open"
+                                        android:textAllCaps="true"
+
+                                        android:textColor="@color/main_green_stroke_color"
+                                        android:visibility="gone" />
+                                    <TextView
+                                        android:id="@+id/txtstatusclose"
+                                        android:layout_weight="1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:drawableTint="@color/white"
+                                        android:fontFamily="@font/opensans_bold"
+                                        android:gravity="right"
+                                        android:textAllCaps="true"
+                                        android:text="close"
+                                        android:textColor="@color/red"
+                                        android:visibility="gone" />
+
+
                                 </LinearLayout>
 
                                 <ImageView
@@ -165,99 +230,109 @@
                                     android:background="@drawable/opne"
                                     android:gravity="right"
                                     android:textColor="#fff"
-                                    android:tint="#fff" />
+                                    android:visibility="gone" />
 
                             </LinearLayout>
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:orientation="horizontal">
+                                android:orientation="horizontal"
+                                android:visibility="gone">
 
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:id="@+id/txtremark"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/opensans_bold"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:text="Remark"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:gravity="left"
+                                    android:text=":"
+                                    android:textColor="@color/gray800"
+                                    android:textSize="12dp" />
+
+                                <TextView
+                                    android:id="@+id/txtqueryremark"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_semibold"
                                     android:text="Query  : "
-                                    android:textSize="9dp" />
+                                    android:textColor="@color/gray800"
+                                    android:textSize="14dp" />
+
+
+                                <!--My dropdown Button -->
+                                <ImageButton
+                                    android:id="@+id/button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="1"
+                                    android:background="@drawable/triangle"
+                                    android:text="ViewDetails"
+                                    android:textColor="#fff"
+                                    android:visibility="gone" />
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:text="Query"
+                                    android:textColor="@color/black"
+                                    android:textSize="14dp" />
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_regular"
+                                    android:gravity="left"
+                                    android:text=":"
+                                    android:textColor="@color/gray800"
+                                    android:textSize="12dp" />
 
                                 <TextView
                                     android:id="@+id/txtquery"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
+
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="@font/opensans_light"
-                                    android:text="pnr"
-                                    android:textColor="@color/black"
-                                    android:textSize="11dp" />
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/opensans_semibold"
+                                    android:text="Query  : "
+                                    android:textColor="@color/gray800"
+                                    android:textSize="14dp" />
+
 
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <TextView
 
-                            android:id="@+id/txtstatus"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="right"
-                            android:layout_marginRight="8sp"
-                            android:layout_weight="1"
-                            android:background="@drawable/dotted_dark_line"
-                            android:fontFamily="@font/opensans_bold"
-                            android:gravity="right"
-                            android:padding="5dp"
-                            android:paddingTop="5dp"
-                            android:paddingBottom="5dp"
-                            android:text="ticketdep_Tm"
-                            android:textAllCaps="true"
-                            android:textColor="@color/gray600"
-                            android:textSize="10sp"
-                            android:visibility="gone" />
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal">
-
-                            <TextView
-                                android:id="@+id/txtremark"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/opensans_bold"
-                                android:text="Remark  : "
-                                android:textSize="12sp"
-                                />
-                            <TextView
-                                android:id="@+id/txtqueryremark"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:fontFamily="@font/opensans_light"
-                                android:text="txtqueryremark"
-                                android:textColor="@color/cardview_dark_background"
-                                android:textSize="12sp"
-                                tools:ignore="MissingConstraints,NotSibling" />
-
-                            <!--My dropdown Button -->
-                            <ImageButton
-                                android:id="@+id/button"
-                                android:layout_width="wrap_content"
-                                android:layout_height="match_parent"
-                                android:layout_gravity="center"
-                                android:layout_weight="1"
-                                android:background="@drawable/triangle"
-                                android:text="ViewDetails"
-                                android:textColor="#fff"
-                                android:tint="#fff"
-                                android:visibility="gone" />
-
-
-                        </LinearLayout>
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
-                            android:orientation="horizontal">
+                            android:orientation="horizontal"
+                            android:visibility="gone">
 
                             <TextView
                                 android:id="@+id/txtseehide"
@@ -282,8 +357,7 @@
                                 android:background="@drawable/down"
                                 android:gravity="center"
                                 android:text="ViewDetails"
-                                android:textColor="#fff"
-                                android:tint="#fff" />
+                                android:textColor="#fff" />
 
                         </LinearLayout>
 
@@ -352,10 +426,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="1dp"
                 android:background="@color/textLight"
-                android:visibility="visible" />
+                android:visibility="gone" />
 
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <TextView
         android:id="@+id/booleantxt"
         android:layout_width="wrap_content"
@@ -363,6 +438,7 @@
         android:fontFamily="@font/opensans_bold"
         android:text="Remark  : "
         android:textSize="12sp"
-        />
+        android:visibility="gone" />
 
 </LinearLayout>
+

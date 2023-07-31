@@ -1,71 +1,195 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:id="@+id/mainlayout"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="?attr/actionBarSize"
+    android:id="@+id/mainlayout"
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/linearrejected"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:id="@+id/linearleadhide"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="5dp">
+        android:visibility="visible">
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txt_Scripcode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginBottom="5dp"
+                android:fontFamily="@font/opensans_semibold"
+                android:layout_weight="2"
+                android:visibility="gone"
+                android:text="*Note - Click on any list to see not rejected reason."
+                android:textColor="@color/venturanew"
+                android:textSize="@dimen/dimen_12"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/searchView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/mf_et_border"
+                android:drawableRight="@drawable/search"
+                android:padding="5dp"
+                android:hint="Search by name and contact no"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:fontFamily="@font/opensans_light"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14dp">
+
+            </EditText>
+
+            <TableLayout
+                android:id="@+id/tblTop10List"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="0dp"
+                        android:lines="1"
+                        android:textAllCaps="true"
+
+                        android:textSize="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/lbold"
+                        android:gravity="center"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:padding="5dp"
+                        android:text="LeadDate" />
+
+                    <TextView
+                        android:id="@+id/txtName"
+
+                        android:lines="1"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/lbold"
+
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:padding="5dp"
+                        android:text="Name" />
+
+                    <TextView
+                        android:id="@+id/txtMobileNo"
+                        android:layout_width="0dp"
+                        android:fontFamily="@font/lbold"
+                        android:lines="1"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textSize="10dp"
+                        android:layout_column="1"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:padding="5dp"
+                        android:text="contact no" />
+
+                    <TextView
+                        android:id="@+id/txtProduct"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/lbold"
+                        android:lines="1"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:layout_height="wrap_content"
+                        android:textAllCaps="true"
+                        android:layout_column="1"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:padding="5dp"
+                        android:text="Product" />
+                </TableRow>
+            </TableLayout>
+
+
+        </LinearLayout>
+        <!--        <androidx.appcompat.widget.SearchView-->
+        <!--            android:id="@+id/searchView"-->
+        <!--            app:queryHint="Search Here.."-->
+        <!--            android:layout_margin="5dp"-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:autofillHints="Search By Name"-->
+        <!--            android:background="@drawable/searchround" />-->
 
         <LinearLayout
-            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="4">
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/opensans_light"
                 android:gravity="center"
-                android:text="Date"
-                android:textColor="@color/gray600"
-                android:textSize="@dimen/material_size_12"
+                android:text="Lead Id"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/opensans_light"
-                android:text="Name of the Prospect"
-                android:textColor="@color/gray600"
-                android:textSize="10dp"
+                android:gravity="center"
+                android:text="Name"
                 android:textStyle="bold" />
 
             <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:fontFamily="@font/opensans_light"
-                android:text="ProductName"
-                android:textColor="@color/gray600"
-                android:textSize="10dp"
+                android:gravity="center"
+                android:text="Product"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Status"
                 android:textStyle="bold" />
 
         </LinearLayout>
 
     </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/listRejected"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/linearrejected"
-        android:padding="5dp">
-
-    </androidx.recyclerview.widget.RecyclerView>
 
     <TextView
         android:id="@+id/tv_nodataavail"
@@ -78,4 +202,16 @@
         android:textSize="25dp"
         android:visibility="gone" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listRejected"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearleadhide"
+        android:layout_marginLeft="5dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp">
+
+    </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

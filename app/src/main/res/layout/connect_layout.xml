@@ -58,11 +58,11 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/opensans_regular"
+                        android:fontFamily="@font/lreg"
                         android:gravity="left"
                         android:text="Head Office"
                         android:textAllCaps="true"
-                        android:textColor="@color/gray800"
+                        android:textColor="@color/venturanew"
                         android:textSize="12dp" />
 
                     <TextView
@@ -73,7 +73,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_marginRight="10dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="02267547000"
                         android:textAllCaps="true"
@@ -149,10 +149,10 @@
                         android:id="@+id/bank"
                         style="@style/lumpsumLeft"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/opensans_regular"
+                        android:fontFamily="@font/lreg"
                         android:text="Email"
                         android:textAllCaps="true"
-                        android:textColor="@color/gray800"
+                        android:textColor="@color/venturanew"
 
                         android:textSize="12dp" />
 
@@ -163,7 +163,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="vpp@ventura1.com"
                         android:textAllCaps="true"
@@ -196,10 +196,10 @@
                         style="@style/lumpsumLeft"
                         android:layout_weight="0.5"
 
-                        android:fontFamily="@font/opensans_regular"
+                        android:fontFamily="@font/lreg"
                         android:text="Anuja Vichare"
                         android:textAllCaps="true"
-                        android:textColor="@color/gray800"
+                        android:textColor="@color/venturanew"
 
                         android:textSize="12dp" />
 
@@ -210,7 +210,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="02266227262"
                         android:textColor="@color/black"
@@ -237,7 +237,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="09920755443"
                         android:textColor="@color/black"
@@ -268,10 +268,10 @@
                         android:id="@+id/barnch_name"
                         style="@style/lumpsumLeft"
                         android:layout_weight="0.5"
-                        android:fontFamily="@font/opensans_regular"
+                        android:fontFamily="@font/lreg"
                         android:text="Pari savla "
                         android:textAllCaps="true"
-                        android:textColor="@color/gray800"
+                        android:textColor="@color/venturanew"
                         android:textSize="12dp" />
 
                     <TextView
@@ -281,7 +281,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="02266227262"
                         android:textColor="@color/black"
@@ -304,7 +304,7 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
-                        android:fontFamily="@font/opensans_light"
+                        android:fontFamily="@font/lreg"
                         android:gravity="right"
                         android:text="08779152522"
                         android:textColor="@color/black"
@@ -348,7 +348,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
 
-                        android:layout_height="50dp"
+                        android:layout_height="@dimen/dimen_40"
                         android:layout_marginLeft="5dp"
                         android:layout_marginTop="20dp"
                         android:layout_marginRight="5dp"
@@ -375,16 +375,16 @@
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="40dp"
 
-                                android:fontFamily="@font/opensans_semibold"
+                                android:fontFamily="@font/lbold"
                                 android:text="Request a Call Back"
 
                                 android:textColor="@color/gray700"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
 
                             <ImageView
                                 android:id="@+id/image1"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="30dp"
@@ -512,6 +512,7 @@
                             <mehdi.sakout.fancybuttons.FancyButton
                                 android:id="@+id/btn_callback_submit"
                                 android:layout_width="126dp"
+
                                 android:layout_height="41dp"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_margin="10dp"
@@ -559,7 +560,7 @@
                     <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
 
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:layout_margin="5dp"
                         app:cardBackgroundColor="@color/white">
 
@@ -583,15 +584,15 @@
                                 android:layout_alignParentStart="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginStart="40dp"
-                                android:fontFamily="@font/opensans_semibold"
+                                android:fontFamily="@font/lbold"
                                 android:text="Post Your Query"
                                 android:textColor="@color/gray700"
-                                android:textSize="16sp" />
+                                android:textSize="16dp" />
 
                             <ImageView
                                 android:id="@+id/image2"
-                                android:layout_width="20dp"
-                                android:layout_height="20dp"
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:layout_marginEnd="30dp"
@@ -636,6 +637,7 @@
                                 android:fontFamily="@font/opensans_regular"
                                 android:hint=" Type Your Query "
                                 android:inputType="text"
+
                                 android:lines="3"
                                 android:paddingTop="5dp"
                                 android:paddingBottom="10dp"
@@ -648,6 +650,8 @@
                             android:id="@+id/btn_submit_query"
                             android:layout_width="100dp"
                             android:layout_height="42dp"
+
+
                             android:layout_centerHorizontal="true"
                             android:layout_marginBottom="10dp"
                             android:gravity="center"
@@ -664,7 +668,7 @@
                         <TextView
                             android:id="@+id/query_submit"
                             android:layout_width="100dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="40dp"
                             android:layout_gravity="center|right"
                             android:layout_marginTop="10dp"
                             android:layout_marginRight="10dp"
@@ -674,11 +678,10 @@
                             android:drawableTint="@color/white"
                             android:fontFamily="@font/opensans_light"
                             android:gravity="center"
-                            android:padding="10dp"
                             android:text="SUBMIT"
                             android:textColor="@color/white"
                             android:textStyle="bold"
-                            android:visibility="gone" />
+                            android:visibility="visible" />
 
                     </LinearLayout>
 
@@ -703,19 +706,17 @@
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
-                    android:visibility="gone"
                     app:tabGravity="fill"
-                    app:tabIndicatorColor="?attr/colorAccent"
                     app:tabIndicatorGravity="stretch"
                     app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
+                    android:background="@drawable/tab_layout_round_border"
                     app:tabSelectedTextColor="@android:color/white"
                     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                     app:tabTextColor="?attr/colorPrimary" />
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewpager"
-                    android:visibility="gone"
                     android:layout_below="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"

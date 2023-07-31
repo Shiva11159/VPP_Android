@@ -6,9 +6,9 @@ android {
         applicationId "com.application.vpp"
         minSdkVersion 21
         targetSdkVersion 31
-        versionCode 86   //--- 84 play given live
+        versionCode 92  //--- 91 play given live
         //versionName "2.1"
-        versionName "5.42"  //-- 5.40-- play given live
+        versionName "5.48"  //-- 5.47-- play given live
         multiDexEnabled true
         testInstrumentationRunner "andro idx.test.runner.AndroidJUnitRunner"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
@@ -47,9 +47,9 @@ android {
         checkReleaseBuilds false
         abortOnError false
     }
-    dexOptions {
-        javaMaxHeapSize "4G"
-    }
+//    dexOptions {
+//        javaMaxHeapSize "4G"
+//    }
 
     useLibrary 'org.apache.http.legacy'
     buildToolsVersion '31.0.0'
@@ -87,6 +87,9 @@ ext {
 
 dependencies {
 //    implementation 'com.aminography:primedatepicker:1.0.5'
+
+    //noinspection GradleCompatible
+    implementation 'com.android.support:design:28.0.0'
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.3.0'
@@ -187,6 +190,8 @@ dependencies {
     implementation files('libs/mail.jar')
     implementation files('libs/activation.jar')
 
+    //implementation files('libs/javax.mail.jar')
+
     implementation group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.12-b140109.1041'
     implementation group: 'xerces', name: 'xercesImpl', version: '2.12.0'
 
@@ -267,6 +272,7 @@ dependencies {
     implementation(group: 'org.bytedeco', name: 'javacv-platform', version: versions.javacv) {
         exclude group: 'org.bytedeco.javacpp-presets'
     }
+
     implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}"
     implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm'
     implementation group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: "${versions.ffmpeg}-${versions.javacv}", classifier: 'android-arm64'
@@ -278,6 +284,12 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.google.android.material:material:1.1.0-alpha06'
     implementation 'com.kofigyan.stateprogressbar:stateprogressbar:1.0.0'
+    implementation 'com.vstechlab.easyfonts:easyfonts:1.0.0'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'com.github.dewinjm:monthyear-picker:1.0.2'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+
+    implementation 'com.vivekkaushik.datepicker:datePickerTimeline:0.0.1'
 
 }
 

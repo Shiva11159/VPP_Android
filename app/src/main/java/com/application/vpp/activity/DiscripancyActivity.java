@@ -601,7 +601,7 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
                         String is_email_v = jsonObject.getString("is_email_v");
                         //is_payment_p  o pending 1 done
                         if (is_payment_p.equalsIgnoreCase("1")) {
-                            imgpaymentstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right));
+                            imgpaymentstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right_));
                             tvpaymentStatus.setText("Payment completed");
 //                            tvpaymentStatus.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
                             arrow2.setVisibility(View.GONE);
@@ -616,7 +616,7 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
                         }
 
                         Log.e("11", String.valueOf(jsonObject1.length()));
-                        Log.e("22", String.valueOf(jsonObject1.toString()));
+                        Log.e("22q", String.valueOf(jsonObject1.toString()));
 
                         if (jsonObject1.length() != 0) {
                             cardview1.setVisibility(View.GONE);
@@ -645,7 +645,7 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
 
                             } else if (is_bank_verified.equalsIgnoreCase("1")) {
                                 tvbankStatus.setText("Verified");
-                                imgbankstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right));
+                                imgbankstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right_));
 //                            tvbankStatus.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
                                 cardView3.setClickable(false);
 
@@ -675,7 +675,7 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
 
                             } else if (is_adhar_verified.equalsIgnoreCase("1")) {
                                 tvadharStatus.setText("Verified");
-                                imgadharstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right));
+                                imgadharstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right_));
 //                            tvadharStatus.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
                                 cardView4.setClickable(false);
 
@@ -705,7 +705,7 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
 
                             } else if (is_pan_verified.equalsIgnoreCase("1")) {
                                 tvpanStatus.setText("Verified");
-                                imgpanstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right));
+                                imgpanstatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right_));
 //                            tvpanStatus.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
                                 cardView5.setClickable(false);
 
@@ -760,9 +760,9 @@ public class DiscripancyActivity extends NavigationDrawer implements RequestSent
 
                         } else if (is_selfie_verified.equalsIgnoreCase("1")) {
                             tvselfieStatus.setText("Verified");
-                            imgselfiestatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right));
+                            imgselfiestatus.setBackground(getApplicationContext().getResources().getDrawable(R.drawable.right_));
 //                            tvpanStatus.setTextColor(getApplicationContext().getResources().getColor(R.color.colorAccent));
-                            cardView5.setClickable(false);
+                            cardView6.setClickable(false);
 
                         } else if (is_selfie_verified.equalsIgnoreCase("2")) {
                             tvselfieStatus.setText("Discrepancy raised");

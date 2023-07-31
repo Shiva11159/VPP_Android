@@ -37,6 +37,7 @@ public class Const {
     public static final int MSGUPDATCONTACT= 28;
     public static  final  int MSGUPDATEPAYMENTSTATUS=29;
     public static  final  int MSGAUTHENTICATE=30;
+
     public static  final  int MSGAUTHENTICATERESEND=31;
     public static final int MSGCHECKPAN = 32;
     public static final int MSGSAVEPAN = 33;
@@ -64,7 +65,6 @@ public class Const {
     public static final int MSGSAVECHECKOUT = 58;
     public static final int MSGMOUNT = 59;
     public static  final  int MSGSAVEGPAYRESPONSE=60;
-
     public static final int MSGTECHPROCREQ = 62;
     public static final int MSGSUBPARTNERCATEGORY = 61;
     public static final int MSGTECHPROCRESP =63;
@@ -84,6 +84,15 @@ public class Const {
     public static final int MSGSOCKETCONNECTEDCLIENT = 107;
     public static final int MSGBANKVERIFICATION = 71;
     public static final int MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING = 72;
+    public static final int MSG_UPDATEACCOUNT_IFSCCODE = 73;
+
+    // new method created for individual otp send replaced by msgcode 2 ..
+    public static final int MSG_SIGNUP_OTP_NEW = 74;
+
+    //    new method created for individual otp send  public static  final  int MSGAUTHENTICATE=30;
+    public static final int MSGAUTHENTICATERESENDOTP = 75;
+
+    public static final int MSG_POSTREVENUESHARING = 76;
 
 
     public static String simNumber = "12345678";
@@ -177,10 +186,11 @@ public class Const {
     public static String SERVER_IP = "43.242.213.117";  // main ip live ...
 
     //
-    //    public static final int SERVER_PORT = 2020 ; //shiva PORT testing..
+//        public static final int SERVER_PORT = 2020 ; //shiva PORT testing..
     public static final int SERVER_PORT = 7778 ; //shiva PORT production...
 
-    //    public static String SERVER_IP = "192.168vppid.43.65"; //Local Server
+
+    //    public static String SERVER_IP = "192.168.43.65"; //Local Server
     //public static final int SERVER_PORT = 8081;     //Local PORT
 
     //public static final String PUBLICKEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyzc9kBvFRFB+PwBJceFNHdvXScht9qCvOHyH6TZavVadgjxYFJAP5HQBSK/qf8zDzrwCmU2DKoTTkTtBBxr1U/B2YCAh6w/HEaY07BjSg+S4MphMTrGj5t1PwZDrbs9E6RePs+9UHN6W5Rk73le2wpciOaXT5WlEw3QJEszmnuL18rKtQ0XJpxkkpmVxA+tmNUsmgqBFlZw5DnQUVGZ8L+bwEsTHhTtsb0Uigo2aiowQxeZXCiEQaKkPhzJ1WSh6m2X+9PfHFsnDt4hZ0NzxOeOTOvz6/Qm3uwk87ANl934ul90xGe+y0BTAJnwdWqMLn72CVTz38/LpXw04kWAgAwIDAQAB";

@@ -76,7 +76,6 @@
             android:textSize="15sp"
             android:fontFamily="@font/opensans_regular"
             android:text="Query"
-
             />
     </LinearLayout>
     <LinearLayout

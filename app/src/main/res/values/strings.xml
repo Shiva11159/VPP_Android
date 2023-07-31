@@ -116,7 +116,19 @@ sharing percentage is restored as per the original slab.
         <item>Others</item>
     </string-array>
 
-    <string name="change_email"><u>Resend Otp</u></string>
+
+    <string-array name="profession_array1">
+        <item>SELECT PROFESSION</item>
+        <item>SERVICE</item>
+        <item>SELF EMPLOYED</item>
+        <item>LIC AGENT</item>
+        <item>FINANCIAL ADVISOR</item>
+        <item>MF DISTRIBUTOR</item>
+        <item>INFLUENCER</item>
+        <item>OTHERS</item>
+    </string-array>
+
+    <string name="change_email"><u>Resend OTP</u></string>
     <string name="toast_image_intent_null">Image picker option is missing!</string>
     <string name="dialog_permission_title">Grant Permissions</string>
     <string name="dialog_permission_message">This app needs permission to use this feature. You can grant them in app settings.</string>
@@ -162,11 +174,21 @@ sharing percentage is restored as per the original slab.
     <string name="second_fragment_label">Second Fragment</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
+    <string name="mobOtpverified">"Your mobile number is verified"</string>
+    <string name="emailOtpverified">"Your email id is verified"</string>
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="newuser"><font fgcolor='#191442'> New user?</font><font fgcolor='#fb9109'> Register </font></string>
+    <string name="alreadyuser"><font fgcolor='#191442'> Already partner?</font><font fgcolor='#fb9109'> Please Login </font></string>
+    <string name="alreadyuserwhite"><font fgcolor='#ffffff'> Already partner?</font><font fgcolor='#fb9109'> Please Login </font></string>
+    <string name="string_terms"><font fgcolor='#191442'>I have read and agree to the </font><font fgcolor='#fb9109'>Privacy policy.</font></string>
+    <string name="whstapp">Do you want to receive updates over<font fgcolor='#4FCE5D'> <b>whatsapp?</b> </font></string>
+    <string name="whstapp1">by signing up you agree to receive communication updates on <font fgcolor='#4FCE5D'> <b>email, sms and WhatsApp.</b> </font></string>
+    <string name="revenuesharing">I have read and agree to the Ventura Partner Program Revenue <font fgcolor='#4FCE5D'> <b>Sharing structure </b></font> w.e.f. 1st April 2023. </string>
+    <string name="revenuesharing1"><p>I have read and agree to the Ventura Partner Program Revenue <u><font fgcolor='#1957be'><b>Sharing structure </b></font></u> w.e.f. 1st April 2023..</p></string>
+    <string name="tryagain">"You have made 3 unsuccessful attempts,"<font fgcolor='#4FCE5D'> <u><b> please try after sometime.</b></u> </font></string>
 
 </resources>

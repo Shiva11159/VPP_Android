@@ -33,6 +33,7 @@ import com.application.vpp.ClientServer.SendTOServer;
 import com.application.vpp.Const.Const;
 import com.application.vpp.Datasets.ClientlistData;
 import com.application.vpp.Datasets.InserSockettLogs;
+import com.application.vpp.Datasets.NotInterestedData;
 import com.application.vpp.Interfaces.CallBack;
 import com.application.vpp.Interfaces.ConnectionProcess;
 import com.application.vpp.Interfaces.RequestSent;
@@ -48,6 +49,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.sdsmdg.tastytoast.TastyToast;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,9 +61,9 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
 
     public static Handler handlerNotInterested;
     static Gson gson;
-//    ProgressDialog ringProgressDialog;
+    //    ProgressDialog ringProgressDialog;
     RecyclerView listNotInterested;
-    ArrayList<ClientlistData> clientlistDataArrayList;
+    ArrayList<NotInterestedData> clientlistDataArrayList;
     EditText searchView;
     CallBack callBack;
     ConnectionProcess connectionProcess;
@@ -69,18 +71,18 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
     NotInterestedAdapter notInterestedAdapter;
     AlertDialog alertDialog;
     TextView tv_nodataavail;
-    LinearLayout linearnotinterest;
+//    LinearLayout linearnotinterest;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 2000;
     boolean NOCheckINTERNET = false;
     Context context;
     RelativeLayout mainlayout;
-    String data="";
+    String data = "";
     StringBuffer ssb = null;
 
-    int MaxTry=0;
-    ArrayList<InserSockettLogs>inserSockettLogsArrayList;
+    int MaxTry = 0;
+    ArrayList<InserSockettLogs> inserSockettLogsArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,11 +99,11 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
         gson = gsonBuilder.create();
         callBack = this;
         tv_nodataavail = (TextView) findViewById(R.id.tv_nodataavail);
-        linearnotinterest = (LinearLayout) findViewById(R.id.linearnotinterest);
+//        linearnotinterest = (LinearLayout) findViewById(R.id.linearnotinterest);
         searchView = (EditText) findViewById(R.id.searchView);
         mainlayout = findViewById(R.id.mainlayout);
 
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", NotInterested.this);
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", NotInterested.this);
 
 //        ringProgressDialog = ProgressDialog.show(NotInterested.this, "Please wait ...", "Loading Your Data ...", true);
 //        ringProgressDialog.setCancelable(false);
@@ -118,7 +120,24 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
                 Views.toast(this, Const.checkConnection);
             }
         }
+
+
 */
+
+        if (Connectivity.getNetworkState(getApplicationContext())) {
+            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProgressDlgConnectSocket(NotInterested.this, connectionProcess, "Server Not Available");
+//                    ConnectToserver(connectionProcess);
+                    }
+                });
+            } else {
+                sendData();
+            }
+        }
+
 //        sendData();
         searchView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -151,8 +170,10 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
     }
 
     @Override
-    public void getReason(String reason, String name, String leadNo) {
-        showPopup(reason, name, leadNo);
+    public void getReason(String reason, String name, String leadNo,String updatedDate) {
+        showPopup(reason, name, leadNo,updatedDate);
+
+        Log.e("REASON -", reason);
 //        String s = name + "/n" + reason + "/n" + leadNo;
 //        Views.ShowMsg(NotInterested.this, "", s);
     }
@@ -181,22 +202,24 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
 //        alertDialog.show();
 //    }
 
-    private void showPopup(String reason, String name, String leadNo) {
+    private void showPopup(String reason, String name, String leadNo,String updatedDate) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = LayoutInflater.from(this);
         final View dialogView = inflater.inflate(R.layout.reason_popup, null);
         builder.setView(dialogView);
-        TextView txtreason = dialogView.findViewById(R.id.txt_reason);
-        TextView txt_name = dialogView.findViewById(R.id.textview_lead_name);
-        TextView txtleadNo = dialogView.findViewById(R.id.textview_lead_no);
+        TextView txtreason = dialogView.findViewById(R.id.txtreason);
+        TextView txt_updateddate = dialogView.findViewById(R.id.txt_updateddate);
+//        TextView txt_name = dialogView.findViewById(R.id.textview_lead_name);
+//        TextView txtleadNo = dialogView.findViewById(R.id.textview_lead_no);
 
-        txt_name.setText("Name: " + name);
-        txtleadNo.setText("Lead No: " + leadNo);
-        txtreason.setText("Reason: " + reason);
-        ImageView imageViewdlg = dialogView.findViewById(R.id.imageViewdlg);
+//        txt_name.setText("Name: " + name);
+//        txtleadNo.setText("Lead No: " + leadNo);
+        txtreason.setText("Reason : " + reason);
+        txt_updateddate.setText("Updated Date : " + updatedDate);
+        TextView close = dialogView.findViewById(R.id.imageViewdlg);
 
         //  FancyButton btn_positive = dialogView.findViewById(R.id.btnIsRegYes);
-        imageViewdlg.setOnClickListener(
+        close.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -214,13 +237,11 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Log.d("NotInterested", "handleMessage: " + msg.obj);
-
             listNotInterested = (RecyclerView) findViewById(R.id.listNotInterested);
 //            if (ringProgressDialog != null) {
 //                ringProgressDialog.dismiss();
 //            }
 
-            AlertDialogClass.PopupWindowDismiss();
 
             data = "";
             data = (String) msg.obj;
@@ -234,17 +255,50 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
                 case Const.MSGFETCHLEADDETAILDEAD: {
                     if (data.equalsIgnoreCase("[]")) {
                         tv_nodataavail.setVisibility(View.VISIBLE);
-                        linearnotinterest.setVisibility(View.GONE);
+                        listNotInterested.setVisibility(View.GONE);
                         ssb.setLength(0);
+                        AlertDialogClass.PopupWindowDismiss();
+
 
                     } else {
                         tv_nodataavail.setVisibility(View.GONE);
-                        linearnotinterest.setVisibility(View.VISIBLE);
+                        listNotInterested.setVisibility(View.VISIBLE);
 
                         clientlistDataArrayList.clear();
 
-                        if(data.endsWith("]")) {
-                            clientlistDataArrayList = gson.fromJson(data, new TypeToken<ArrayList<ClientlistData>>() {
+
+                        if (data.endsWith("]")) {
+
+//                            try {
+//
+//                                JSONArray jsonArray = new JSONArray();
+//                                for (int i = 0; i < jsonArray.length(); i++) {
+//                                    JSONObject jsonObject = jsonArray.getJSONObject(i);
+//
+//                                    String Status=jsonObject.getString("Status");
+//                                    String MobileNo=jsonObject.getString("MobileNo");
+//                                    String notInterestedreason=jsonObject.getString("notInterestedreason");
+//                                    String AccountOpenedDate=jsonObject.getString("AccountOpenedDate");
+//                                    String ProductName=jsonObject.getString("ProductName");
+//                                    String LeadUpdateDate=jsonObject.getString("LeadUpdateDate");
+//                                    String VPPPAN=jsonObject.getString("VPPPAN");
+//                                    String LeadNo=jsonObject.getString("LeadNo");
+//                                    String ClientName=jsonObject.getString("ClientName");
+//                                    String ClientCode=jsonObject.getString("ClientCode");
+//                                    String CustomerName=jsonObject.getString("CustomerName");
+//                                    String LeadDate=jsonObject.getString("LeadDate");
+//                                    String BranchCode=jsonObject.getString("BranchCode");
+//
+//
+//                                    NotInterestedData notInterested=new NotInterestedData(Status, MobileNo,  notInterestedreason, AccountOpenedDate, ProductName,  LeadUpdateDate,  VPPPAN, leadNo, String clientName, String clientCode, String customerName, leadDate, branchCode);
+//                                    clientlistDataArrayList.add(notInterested);
+//
+//                                }
+//
+//                            } catch (Exception e) {
+//                            }
+
+                            clientlistDataArrayList = gson.fromJson(data, new TypeToken<ArrayList<NotInterestedData>>() {
                             }.getType());
                             notInterestedAdapter = new NotInterestedAdapter(clientlistDataArrayList, NotInterested.this, callBack);
                             if (clientlistDataArrayList != null) {
@@ -271,7 +325,7 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
                         }
 
                     }
-                 //   ssb.setLength(0);
+                    //   ssb.setLength(0);
                 }
                 break;
 
@@ -300,18 +354,12 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
 
         AlertDialogClass.PopupWindowShow(NotInterested.this, mainlayout);
 
-
         try {
 
             JSONObject jsonObject = new JSONObject();
-
             String vppid = Logics.getVppId(NotInterested.this);
-
-
-            jsonObject.put("VPPID", vppid);
-
+            jsonObject.put("VPPID", vppid);  //72891
             jsonObject.put("reportType", "DeadLeads");
-
             byte data[] = jsonObject.toString().getBytes();
 
             //   new SendTOServer(ClientList.this,ClientList.this, Const.MSGFETCHCLIENTLIST,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -354,7 +402,7 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
             @Override
             public void run() {
                 sendData();
-               // TastyToast.makeText(NotInterested.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                // TastyToast.makeText(NotInterested.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             }
         });
     }
@@ -470,19 +518,6 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
     protected void onResume() {
         connectionProcess = (ConnectionProcess) this;
 
-        if (Connectivity.getNetworkState(getApplicationContext())) {
-            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ProgressDlgConnectSocket(NotInterested.this, connectionProcess, "Server Not Available");
-//                    ConnectToserver(connectionProcess);
-                    }
-                });
-            } else {
-                sendData();
-            }
-        }
 
         ///added this lines extra by shiva ....
         handler.postDelayed(runnable = new Runnable() {
@@ -494,7 +529,7 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
                     public void run() {
                         if (!Connectivity.getNetworkState(getApplicationContext())) {
                             NOCheckINTERNET = true;   /// no net ....
-                            Log.e("run: ", "no net");
+//                            Log.e("run: ", "no net");
                             imgConnection.setImageResource((R.drawable.ic_up_and_down_arrows_symbol_red));
 //                            lineinternet.setBackgroundColor(getResources().getColor(R.color.red));
 //                            txtinternet.setText("Online");
@@ -507,7 +542,7 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
 //                            showSnackbar("Online");
 
 //                            imgConnection.setBackground(getResources().getDrawable(R.drawable.ic_up_and_down_arrows_symbol));
-                            Log.e("run: ", " net available");
+//                            Log.e("run: ", " net available");
 
                         }
 
@@ -532,7 +567,7 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -570,14 +605,14 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(NotInterested.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 
@@ -600,10 +635,10 @@ public class NotInterested extends NavigationDrawer implements RequestSent, Call
     }
 
     private void filter(String text) {
-        ArrayList<ClientlistData> filteredList = new ArrayList<>();
-        for (ClientlistData item : clientlistDataArrayList) {
+        ArrayList<NotInterestedData> filteredList = new ArrayList<>();
+        for (NotInterestedData item : clientlistDataArrayList) {
             if (item.getCustomerName() != null) {
-                if (item.getCustomerName().toUpperCase().contains(text.toUpperCase())) {
+                if (item.getCustomerName().toUpperCase().contains(text.toUpperCase())||item.getMobileNo().toUpperCase().contains(text.toUpperCase())) {
                     filteredList.add(item);
                 }
             }

@@ -12,6 +12,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 
+import com.application.vpp.ContactUsFragment.CallbackFragment;
+import com.application.vpp.ContactUsFragment.QueryFragment;
 import com.application.vpp.activity.AddLead;
 import com.application.vpp.activity.AuthenticateUpdateProfile;
 import com.application.vpp.activity.BankValidation;
@@ -20,11 +22,11 @@ import com.application.vpp.activity.CallBackDetailsList;
 import com.application.vpp.activity.ClientList;
 import com.application.vpp.activity.Dashboard;
 import com.application.vpp.activity.DiscripancyActivity;
-import com.application.vpp.activity.InProcessLeads;
 import com.application.vpp.activity.LoginScreen;
 import com.application.vpp.activity.MyLeads;
 import com.application.vpp.activity.NavigationDrawer;
 import com.application.vpp.activity.NotInterested;
+import com.application.vpp.activity.OtpLoginVerfication;
 import com.application.vpp.activity.OtpVerfication;
 import com.application.vpp.activity.PanValidation;
 import com.application.vpp.activity.Payout;
@@ -33,6 +35,7 @@ import com.application.vpp.activity.QueryStatus;
 import com.application.vpp.activity.RejectedList;
 import com.application.vpp.activity.SignupScreen;
 import com.application.vpp.activity.SignupScreen2;
+import com.application.vpp.activity.SignupScreenEmail;
 import com.application.vpp.activity.SplashScreen;
 import com.application.vpp.activity.SubPatnerActivity;
 import com.application.vpp.activity.UpdateOtpVerify;
@@ -42,7 +45,6 @@ import com.application.vpp.Const.Const;
 import com.application.vpp.ContactUsFragment.BranchLocatorFragment;
 import com.application.vpp.ContactUsFragment.ConnectFragment;
 import com.application.vpp.Interfaces.ConnectionProcess;
-import com.application.vpp.Razorpay.RazorpayActivity;
 
 import java.io.IOException;
 import java.util.Date;
@@ -386,7 +388,11 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
             case Const.MSGFETCHVPPDETAILSONLOGIN: {
-                OtpVerfication.otpVerfhandler.sendMessage(msg);
+                if (OtpVerfication.otpVerfhandler!=null){
+                    OtpVerfication.otpVerfhandler.sendMessage(msg);
+                }else {
+                    OtpLoginVerfication.otploginverifyhandler.sendMessage(msg);
+                }
                 Log.e("msg1111111", String.valueOf(msg));
             }
             break;
@@ -418,19 +424,19 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
 
-            case Const.MSGFETCHLEADINPROCESS: {
-                if (InProcessLeads.handlerInProcessLeads != null) {
-                    InProcessLeads.handlerInProcessLeads.sendMessage(msg);
-                } else {
-                    Log.e("handlerInProcessLeads", "handlerInProcessLeads");
-                }
-            }
-            break;
-
-            case Const.MSGSOCKETCONNECTEDINPROCESS: {
-                InProcessLeads.handlerInProcessLeads.sendMessage(msg);
-            }
-            break;
+//            case Const.MSGFETCHLEADINPROCESS: {
+//                if (InProcessLeads.handlerInProcessLeads != null) {
+//                    InProcessLeads.handlerInProcessLeads.sendMessage(msg);
+//                } else {
+//                    Log.e("handlerInProcessLeads", "handlerInProcessLeads");
+//                }
+//            }
+//            break;
+//
+//            case Const.MSGSOCKETCONNECTEDINPROCESS: {
+//                InProcessLeads.handlerInProcessLeads.sendMessage(msg);
+//            }
+//            break;
 
             case Const.MSGFETCHLEADREJECTED: {
                 RejectedList.handlerRejectedList.sendMessage(msg);
@@ -502,6 +508,7 @@ public class TCPClient extends Client implements TCPClientProcess {
             break;
             case Const.MSGCALLBACK: {
                 ConnectFragment.handlerConnect.sendMessage(msg);
+                Log.e("zz000", String.valueOf(ConnectFragment.handlerConnect));
             }
             break;
 
@@ -521,8 +528,20 @@ public class TCPClient extends Client implements TCPClientProcess {
             case Const.MSGAUTHENTICATE: {
                 if (Profile.handlerProfile != null) {
                     Profile.handlerProfile.sendMessage(msg);
-                } else {
+                } else if (OtpVerfication.otpVerfhandler!=null){
                     OtpVerfication.otpVerfhandler.sendMessage(msg);
+                }else if (OtpLoginVerfication.otploginverifyhandler!=null){
+                    OtpLoginVerfication.otploginverifyhandler.sendMessage(msg);
+                }
+            }
+            break;
+            case Const.MSGAUTHENTICATERESENDOTP: {
+                if (Profile.handlerProfile != null) {
+                    Profile.handlerProfile.sendMessage(msg);
+                } else if (OtpVerfication.otpVerfhandler!=null){
+                    OtpVerfication.otpVerfhandler.sendMessage(msg);
+                }else if (OtpLoginVerfication.otploginverifyhandler!=null){
+                    OtpLoginVerfication.otploginverifyhandler.sendMessage(msg);
                 }
             }
             break;
@@ -563,8 +582,8 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
             case Const.MSGQUERYLIST: {
-                QueryStatus.handlerQueryList.sendMessage(msg);
-                //QueryFragment.handlerQueryList1.sendMessage(msg);
+//                QueryStatus.handlerQueryList.sendMessage(msg);
+                QueryFragment.handlerQueryList1.sendMessage(msg);
             }
             break;
             case Const.MONTHLYLEAD: {
@@ -589,11 +608,13 @@ public class TCPClient extends Client implements TCPClientProcess {
             break;
 
             case Const.MSGMOUNT: {
-                if (RazorpayActivity.handlerrazorpay != null) {
-                    RazorpayActivity.handlerrazorpay.sendMessage(msg);
-                } else {
-                    UpiPayment.upiHandler.sendMessage(msg);
-                }
+//                if (RazorpayActivity.handlerrazorpay != null) {
+//                    RazorpayActivity.handlerrazorpay.sendMessage(msg);
+//                } else {
+//                    UpiPayment.upiHandler.sendMessage(msg);
+//                }
+                UpiPayment.upiHandler.sendMessage(msg);
+
             }
             break;
             case Const.MSG_GST: {
@@ -605,7 +626,7 @@ public class TCPClient extends Client implements TCPClientProcess {
             }
             break;
             case Const.MSGCallbackdetails: {
-                CallBackDetailsList.handlerCallback.sendMessage(msg);
+                CallbackFragment.handlerCallback.sendMessage(msg);
             }
             break;
             case Const.MSG_StateCity: {
@@ -616,10 +637,31 @@ public class TCPClient extends Client implements TCPClientProcess {
                 BankValidation.handlerbankverify.sendMessage(msg);
             }
             break;
-            case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING: {
-                NavigationDrawer.handlerNavigation.sendMessage(msg);
+
+            case Const.MSG_UPDATEACCOUNT_IFSCCODE: {
+                BankValidation.handlerbankverify.sendMessage(msg);
             }
             break;
+            case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING: {
+                Dashboard.handlerDashboard.sendMessage(msg);
+            }
+            break;
+
+            case Const.MSG_SIGNUP_OTP_NEW: {
+
+                Log.e("checkNULL", String.valueOf(SignupScreen.handlerSignup));
+                if (SignupScreen.handlerSignup!=null){
+                    SignupScreen.handlerSignup.sendMessage(msg);
+                }else {
+                    SignupScreenEmail.handlerSignup.sendMessage(msg);
+                }
+            }
+            break;
+
+            case Const.MSG_POSTREVENUESHARING: {
+                if (Dashboard.handlerDashboard != null) {
+                    Dashboard.handlerDashboard.sendMessage(msg);
+                }            }
         }
     }
 }

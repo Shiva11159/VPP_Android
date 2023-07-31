@@ -21,10 +21,14 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ScrollView;
@@ -35,6 +39,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -50,7 +55,10 @@ import com.application.vpp.ReusableLogics.Logics;
 import com.application.vpp.ReusableLogics.Methods;
 import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Utility.AlertDialogClass;
+import com.application.vpp.Utility.SnackBar;
 import com.application.vpp.Views.Views;
+import com.goodiebag.pinview.Pinview;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -71,6 +79,7 @@ import okhttp3.Response;
 public class LoginScreen extends AppCompatActivity implements View.OnClickListener, RequestSent, TextWatcher, ConnectionProcess {
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
+    TextView txt_version;
     static EditText edtPanNo;
 
     FancyButton btnLogin;
@@ -83,8 +92,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     boolean isSignup = false;
     String deviceID = Const.simNumber;
     String simNumber = Const.simNumber;
-//    ProgressDialog ringProgressDialog;
-    TextInputLayout text_input_pan_no;
+    //    ProgressDialog ringProgressDialog;
     AlertDialog.Builder builder;
     RadioGroup indexationRd;
     RadioButton rdemail;
@@ -99,20 +107,21 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     public int verifyMobile = 0, updateContact = 0, updateEmail = 0;
     ImageView imgLogoIcon;
     String osversion;
-    ScrollView mainlayout;
+    CoordinatorLayout mainlayout;
     TextView txt_SignUp;
     private static final int REQ_CODE_VERSION_UPDATE = 530;
     private static final String TAG = "Sample";
 
     int e = 0;
     int m = 0;
-    int MaxTry=0;
+    int MaxTry = 0;
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
+
     //    private InAppUpdateManager inAppUpdateManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login_screen);
+        setContentView(R.layout.activity_login_screen1);
 
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
@@ -122,19 +131,29 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 
         handlerLogin = new ViewHandler();
 
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", LoginScreen.this);
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", LoginScreen.this);
 
 
         btnLogin = (FancyButton) findViewById(R.id.btn_login);
         edtPanNo = (EditText) findViewById(R.id.edt_pan_no);
-        text_input_pan_no = (TextInputLayout) findViewById(R.id.text_input_pan_no);
+        txt_version = findViewById(R.id.txt_version);
+
+        txt_version.setText("v" + Methods.getVersionInfo(LoginScreen.this));
 
         txt_SignUp = (TextView) findViewById(R.id.txt_SignUp);
 
 
         btnLogin.setOnClickListener(this);
 
-        mainlayout = (ScrollView) findViewById(R.id.mainlayout);
+        mainlayout = (CoordinatorLayout) findViewById(R.id.mainlayout);
+
+        txt_SignUp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LoginScreen.this, SignupScreen.class);
+                startActivity(intent);
+            }
+        });
 //
     }
 
@@ -146,20 +165,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         switch (id) {
             case R.id.btn_login: {
                 if (Connectivity.getNetworkState(LoginScreen.this)) {
-                    SharedPref.savePreferences(getApplicationContext(),Const.FromUpdate,"");
+                    SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
                     btnLogin.setEnabled(false);
                     validation();
-//
                 } else
-
-//                    if(Connectivity.getNetworkState(LoginScreen.this)){
-//                        if(Const.isSocketConnected) {
-//                        }
-//                    }else {
-//
-                    Views.toast(this, Const.checkConnection);
-//                    }
-
+                    TastyToast.makeText(getApplicationContext(), Const.checkConnection, TastyToast.LENGTH_LONG, TastyToast.ERROR);
             }
 
             break;
@@ -167,44 +177,43 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         }
     }
 
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
+    }
+
 
     private void validation() {
 
         strPan = edtPanNo.getText().toString().toUpperCase().trim();
-        SharedPref.savePreferences(LoginScreen.this,"DPAN",strPan);
+        SharedPref.savePreferences(LoginScreen.this, "DPAN", strPan);
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         if (strPan.matches("")) {
-            TastyToast.makeText(getApplicationContext(), "Fields cannot be empty", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+            edtPanNo.setError("Please enter PAN No");
             btnLogin.setEnabled(true);
+            edtPanNo.setAnimation(shakeError());
 
         } else if ((!strPan.matches("[A-Z]{5}[0-9]{4}[A-Z]{1}"))) {
-            TastyToast.makeText(getApplicationContext(), "Invalid PAN No.", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+            edtPanNo.setError("Invalid PAN No");
             btnLogin.setEnabled(true);
+            edtPanNo.setAnimation(shakeError());
+
 
         } else {
-
 
             JSONObject jsonObject = new JSONObject();
             try {
                 Logics.setLoginPan(LoginScreen.this, strPan);
-//                ringProgressDialog = ProgressDialog.show(LoginScreen.this, "Please wait ...", "Loading Your Data ...", true);
-//                ringProgressDialog.setCancelable(true);
-//                ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
-                // jsonObject.put("imei",deviceID );
-                //  jsonObject.put("ip", simNumber);
-
-                AlertDialogClass.PopupWindowShow(LoginScreen.this,mainlayout);
-
+                AlertDialogClass.PopupWindowShow(LoginScreen.this, mainlayout);
                 String version = getVersionInfo();
                 jsonObject.put("pan_no", strPan);
                 jsonObject.put("versionName", version);
-
                 Log.e("version", version);
                 byte[] data = jsonObject.toString().getBytes();
-
                 new SendTOServer(this, this, Const.MSGLOGIN, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -253,9 +262,6 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
             super.handleMessage(msg);
 
             Log.e("handleMessageLogin:", (String) msg.obj);
-//            if (ringProgressDialog != null) {
-//                ringProgressDialog.dismiss();
-//            }
 
             AlertDialogClass.PopupWindowDismiss();
             int status = 2;
@@ -347,19 +353,11 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             int isdeactivated = jsonObject.getInt("isDeactivated");
                             String message = jsonObject.getString("message");
 
+                            Snackbar.make(mainlayout, message, Snackbar.LENGTH_LONG).show();
                             TastyToast.makeText(getApplicationContext(), message, TastyToast.LENGTH_LONG, TastyToast.INFO);
-                            //  Views.toast(LoginScreen.this, message);
-                            if (isdeactivated == 0) {
-                                txt_SignUp.setVisibility(View.VISIBLE);
-                                txt_SignUp.setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View v) {
-                                        Intent intent = new Intent(LoginScreen.this, SignupScreen.class);
-                                        startActivity(intent);
-                                    }
-                                });
 
-                            }
+                            Intent intent = new Intent(LoginScreen.this, SignupScreen.class);
+                            startActivity(intent);
 
 
                         } else if (status == 3) {
@@ -382,10 +380,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                             int reg_page_num = jsonObject.getInt("reg_page_num");
                             int isRegister = jsonObject.getInt("isRegistered");
 
-                            Logics.setmobileNo(LoginScreen.this,mobileNum);  //save mble no ..
+                            Logics.setmobileNo(LoginScreen.this, mobileNum);  //save mble no ..
+                            Logics.setContact(LoginScreen.this, mobileNum);  //save mble no ..
 
+                            //here save mobile and email for resend otp ...
 
-                            Intent intent = new Intent(LoginScreen.this, OtpVerfication.class);
+                            SharedPref.savePreferences1(LoginScreen.this,"mobileNo",mobileNum);
+                            SharedPref.savePreferences1(LoginScreen.this,"emailId",email);
+
+                            Intent intent = new Intent(LoginScreen.this, OtpLoginVerfication.class);
+
                             intent.putExtra("isSignup", 1);
                             intent.putExtra("strOtp", mobileOTP);
                             intent.putExtra("mobileNum", mobileNum);
@@ -408,7 +412,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                         FirebaseCrashlytics.getInstance().recordException(e);
                         btnLogin.setEnabled(true);
 
-                        Log.e( "handleMessage: ",e.getMessage() );
+                        Log.e("handleMessage: ", e.getMessage());
 
                     }
 
@@ -602,17 +606,16 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                 } catch (Exception e) {
                     Toast.makeText(LoginScreen.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
-
             }
-
         }
-
 
         AlertDialogClass.PopupWindowDismiss();
         //        AlertDailog.ProgressDlgDiss();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+
+                btnLogin.setEnabled(true);
                 validation();
                 //TastyToast.makeText(LoginScreen.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             }
@@ -674,7 +677,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
                                 runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                       ProgressDlgConnectSocket(LoginScreen.this, connectionProcess, "Server Not Available");
+                                        ProgressDlgConnectSocket(LoginScreen.this, connectionProcess, "Server Not Available");
 //                                        ConnectToserver(connectionProcess);
                                     }
                                 });
@@ -732,61 +735,61 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
     }
 
 
-    public void DlgCnfrtmn(String mobilestr, String emailstr) {
-        builder = new AlertDialog.Builder(this);
-        LayoutInflater inflater = this.getLayoutInflater();
-        final View dialogView = inflater.inflate(R.layout.verify_update_loginpan, null);
-        builder.setView(dialogView);
-        indexationRd = dialogView.findViewById(R.id.indexationRd);
-        indexationRd.setOnCheckedChangeListener(checkChange);
-        RadioGroup radioGroup = dialogView.findViewById(R.id.myRadioGroup);
-        rdemail = dialogView.findViewById(R.id.email);
-        rdmobile = dialogView.findViewById(R.id.mobile);
-        TextView textViewChange = dialogView.findViewById(R.id.textViewChange);
-        TextView textviewContinue = dialogView.findViewById(R.id.textviewContinue);
-        spnrlayout = dialogView.findViewById(R.id.spnrlayout);
-        txt_mobile = dialogView.findViewById(R.id.txt_mobile);
-        txt_email = dialogView.findViewById(R.id.txt_email);
-        int selectedRadioButtonID = radioGroup.getCheckedRadioButtonId();
-        rdemail.setText(emailstr);
-        rdmobile.setText(mobilestr);
-
-        Logics.setEmail(getApplicationContext(),emailstr);
-        Logics.setContact(getApplicationContext(),mobilestr);
-
-
-        txt_email.setText("Email : " + emailstr);
-        txt_mobile.setText("Mobile : " + mobilestr);
-
-        textViewChange.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                spnrlayout.setVisibility(View.VISIBLE);
-            }
-        });
-
-//        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//    public void DlgCnfrtmn(String mobilestr, String emailstr) {
+//        builder = new AlertDialog.Builder(this);
+//        LayoutInflater inflater = this.getLayoutInflater();
+//        final View dialogView = inflater.inflate(R.layout.verify_update_loginpan, null);
+//        builder.setView(dialogView);
+//        indexationRd = dialogView.findViewById(R.id.indexationRd);
+//        indexationRd.setOnCheckedChangeListener(checkChange);
+//        RadioGroup radioGroup = dialogView.findViewById(R.id.myRadioGroup);
+//        rdemail = dialogView.findViewById(R.id.email);
+//        rdmobile = dialogView.findViewById(R.id.mobile);
+//        TextView textViewChange = dialogView.findViewById(R.id.textViewChange);
+//        TextView textviewContinue = dialogView.findViewById(R.id.textviewContinue);
+//        spnrlayout = dialogView.findViewById(R.id.spnrlayout);
+//        txt_mobile = dialogView.findViewById(R.id.txt_mobile);
+//        txt_email = dialogView.findViewById(R.id.txt_email);
+//        int selectedRadioButtonID = radioGroup.getCheckedRadioButtonId();
+//        rdemail.setText(emailstr);
+//        rdmobile.setText(mobilestr);
+//
+//        Logics.setEmail(getApplicationContext(), emailstr);
+//        Logics.setContact(getApplicationContext(), mobilestr);
+//
+//
+//        txt_email.setText("Email : " + emailstr);
+//        txt_mobile.setText("Mobile : " + mobilestr);
+//
+//        textViewChange.setOnClickListener(new View.OnClickListener() {
 //            @Override
-//            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-//                if (i == R.id.email) {
-//                    SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, Const.FromPanLogin);
-//                    e = 1;
-//                    m = 0;
-//                    sendData(1, 0);
-//                } else if (i == R.id.mobile) {
-//                    m = 1;
-//                    e = 0;
-//                    SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, Const.FromPanLogin);
-//                    sendData(0, 1);
-//                }
+//            public void onClick(View view) {
+//                spnrlayout.setVisibility(View.VISIBLE);
 //            }
 //        });
-
-        builder.setCancelable(true);
-        alertDialog = builder.show();
-        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
-    }
+//
+////        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+////            @Override
+////            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+////                if (i == R.id.email) {
+////                    SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, Const.FromPanLogin);
+////                    e = 1;
+////                    m = 0;
+////                    sendData(1, 0);
+////                } else if (i == R.id.mobile) {
+////                    m = 1;
+////                    e = 0;
+////                    SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, Const.FromPanLogin);
+////                    sendData(0, 1);
+////                }
+////            }
+////        });
+//
+//        builder.setCancelable(true);
+//        alertDialog = builder.show();
+//        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//
+//    }
 
     private RadioGroup.OnCheckedChangeListener checkChange = new RadioGroup.OnCheckedChangeListener() {
         @Override
@@ -819,7 +822,7 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -857,14 +860,14 @@ public class LoginScreen extends AppCompatActivity implements View.OnClickListen
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(LoginScreen.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 

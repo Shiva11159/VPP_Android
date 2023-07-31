@@ -9,16 +9,22 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ScrollView;
@@ -70,31 +76,35 @@ import javax.mail.internet.MimeMessage;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import mehdi.sakout.fancybuttons.FancyButton;
 
-public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener ,View.OnClickListener, RequestSent, ConnectionProcess {
+public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnItemSelectedListener, View.OnClickListener, RequestSent, ConnectionProcess {
     EditText edtHouseNo;
     EditText edtArea;
-    EditText edtCity;
+    AlertDialog alertDialog;
+
+    //    EditText edtCity;
+
     EditText edtPin;
     static EditText edtDob;
     EditText edtProf;
     EditText edtlandmark;
     AutoCompleteTextView edtState;
-    String city="";
+    String city = "";
     String houseNum, area, pin, Dob, landmark;
     String state_str = "";
     TextView imgerror;
 
-    TextInputLayout text_input_profession;
+    //    TextInputLayout text_input_profession;
     ScrollView mainlayout;
     String mysqlDateFormat = "";
     String profession;
     int selectedDay, selectedMonth, selectedYear;
     int currDay, currMonth, currYear;
     public static Handler signupHandler;
-    FancyButton submit;
+    Button submit;
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
     byte[] data;
+    byte[] data1;
     private Spinner spinnerStateName;
     private Spinner spinnercityName;
     public static DateFormat dateFormat = new SimpleDateFormat("dd-MMM-yy");
@@ -104,20 +114,23 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
     List<String> CityName;
     List<String> StateId;
     List<String> CityId;
-    String str_stateID="";
+    String str_stateID = "";
     private Spinner StateSpinner;
 
-    String opt="";
+    String opt = "";
 
     StringBuffer stringBuffer;
-    Spinner spinnerprofession ;
+    Spinner spinnerprofession;
 
-    int MaxTry=0;
+    int MaxTry = 0;
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
+
+    String email, mobile, vppPanName, pan;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signup_screen2);
+        setContentView(R.layout.activity_signup_screen3);
         context = getApplicationContext();
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
@@ -127,15 +140,17 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
         spinnerStateName = (Spinner) findViewById(R.id.spinnerstate);
         spinnercityName = (Spinner) findViewById(R.id.spinnercity);
 
+        //SS();
+
         spinnerprofession = findViewById(R.id.spinnerprofession);
-        edtCity = findViewById(R.id.edtCity);
+//        edtCity = findViewById(R.id.edtCity);
         edtPin = findViewById(R.id.edtPincode);
         edtState = findViewById(R.id.edtState);
         edtDob = findViewById(R.id.edtDob);
         edtProf = findViewById(R.id.edtCurrProf);
-        text_input_profession = findViewById(R.id.text_input_profession);
+//        text_input_profession = findViewById(R.id.text_input_profession);
         submit = findViewById(R.id.btn_signup_submit2);
-        imgerror = (TextView) findViewById(R.id.imgerror);
+        //imgerror = (TextView) findViewById(R.id.imgerror);
         mainlayout = (ScrollView) findViewById(R.id.mainlayout);
 
 
@@ -145,9 +160,9 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 
         stringBuffer = new StringBuffer();
 
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", SignupScreen2.this);
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", SignupScreen2.this);
 
-        
+
         edtDob.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean b) {
@@ -162,11 +177,11 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
+
         //create adapter
         ArrayAdapter<CharSequence> adapter =
-                ArrayAdapter.createFromResource(this,
-                        R.array.profession_array,
-                        android.R.layout.simple_spinner_item);
+                ArrayAdapter.createFromResource(this, R.array.profession_array1,
+                        android.R.layout.simple_spinner_dropdown_item);
 
         //how the spinner will look when it drop downs on click
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -182,10 +197,10 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 
                 mainlayout.scrollTo(0, mainlayout.getBottom());
 
-                if (profession.equalsIgnoreCase("Others")){
-                    text_input_profession.setVisibility(View.VISIBLE);
-                }else {
-                    text_input_profession.setVisibility(View.GONE);
+                if (profession.equalsIgnoreCase("Others")) {
+                    edtProf.setVisibility(View.VISIBLE);
+                } else {
+                    edtProf.setVisibility(View.GONE);
                 }
             }
 
@@ -195,78 +210,72 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             }
         });
 
-
         ///////////-----------------------
 
-        StateSpinner=(Spinner)findViewById(R.id.spinnerstate);
-        StateName=new ArrayList<>();
-        CityName=new ArrayList<>();
-        StateId=new ArrayList<>();
-        CityId=new ArrayList<>();
+        StateSpinner = (Spinner) findViewById(R.id.spinnerstate);
+        StateName = new ArrayList<>();
+        CityName = new ArrayList<>();
+        StateId = new ArrayList<>();
+        CityId = new ArrayList<>();
 
-        opt=Const.StateMaster;
-        sendDataStateCity(opt,"","");
+        opt = Const.StateMaster;
+        sendDataStateCity(opt, "", "");
     }
 
     private void validation() {
-        houseNum = edtHouseNo.getText().toString().toUpperCase().trim();
-        area = edtArea.getText().toString().toUpperCase().trim();
-        pin = edtPin.getText().toString().toUpperCase().trim();
-        landmark = edtlandmark.getText().toString().toUpperCase().trim();
-        String dob = edtDob.getText().toString().toUpperCase().trim();
 
-        int i=0;
-        if (houseNum.length() < 1 || houseNum.equalsIgnoreCase("")) {
+        boolean check = false;
+//        houseNum = edtHouseNo.getText().toString().toUpperCase().trim();
+//        area = edtArea.getText().toString().toUpperCase().trim();
+//        pin = edtPin.getText().toString().toUpperCase().trim();
+//        landmark = edtlandmark.getText().toString().toUpperCase().trim();
+//        String dob = edtDob.getText().toString().toUpperCase().trim();
+
+        if (edtHouseNo.getText().toString().length() < 1 || edtHouseNo.getText().toString().equalsIgnoreCase("")) {
             edtHouseNo.setError("Enter Valid House No./Wing/ Name of the Bldg.");
-          //  imgerror.setVisibility(View.VISIBLE);
-//            submit.setEnabled(false);
-            i=1;
-        } else if (area.length() < 3) {
+            edtHouseNo.startAnimation(shakeError());
+            check = true;
+        } else if (edtArea.getText().toString().length() < 3) {
             edtArea.setError("Enter Valid Area");
-           // imgerror.setVisibility(View.VISIBLE);
-//            submit.setEnabled(false);
-            i=1;
+            edtHouseNo.startAnimation(shakeError());
+            check = true;
+
+        } else if (state_str.equalsIgnoreCase("") || state_str.equalsIgnoreCase("Select State")) {
+            spinnerStateName.startAnimation(shakeError());
+            check = true;
+
         } else if (city.equalsIgnoreCase("")) {
-            edtCity.setError("Enter Valid City");
-           // imgerror.setVisibility(View.VISIBLE);
-          //  Toast.makeText(context, "Enter Valid City", Toast.LENGTH_SHORT).show();
-//            submit.setEnabled(false);
-            i=1;
-        } else if (state_str.equalsIgnoreCase("")) {
-         //   imgerror.setVisibility(View.VISIBLE);
-//            submit.setEnabled(false);
-            i=1;
-        }
-        else if (pin.length() != 6) {
+            spinnercityName.startAnimation(shakeError());
+            check = true;
+
+        } else if (edtPin.getText().toString().length() != 6) {
             edtPin.setError("Enter Valid Pin");
-          //  imgerror.setVisibility(View.VISIBLE);
-//            submit.setEnabled(false);
-            i=1;
-        } else if (dob == null || dob.equalsIgnoreCase("")) {
+            check = true;
+
+            edtPin.startAnimation(shakeError());
+        } else if (edtDob.getText().toString() == null || edtDob.getText().toString().equalsIgnoreCase("")) {
             edtDob.setError("Enter Valid DOB");
-           // imgerror.setVisibility(View.VISIBLE);
-//            submit.setEnabled(true);
-            i=1;
-        }else if (profession.equalsIgnoreCase("Others")){
-            edtDob.setError("Enter Profession");
-            i=1;
-        } else  {
-//            submit.setEnabled(true);
+            edtDob.startAnimation(shakeError());
+            check = true;
 
-            if (i==0){
-                sendData();
+        } else if (profession.equalsIgnoreCase("Others")) {
+            if (edtProf.getText().toString().equalsIgnoreCase("")) {
+                edtProf.setError("Enter Profession");
+                edtProf.startAnimation(shakeError());
+                check = true;
+
             }
+        }
 
+        if (check == false) {
+            sendData();
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         }
-
-        sendData();
-
     }
 
     private void sendData() {
-        AlertDialogClass.PopupWindowShow(SignupScreen2.this,mainlayout);
+        AlertDialogClass.PopupWindowShow(SignupScreen2.this, mainlayout);
         String imei = Logics.getDeviceID(this);
         String ip = Logics.getSimId(this);
         if (android.os.Build.VERSION.SDK_INT >= 29) {
@@ -274,31 +283,51 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             ip = "12345";
         }
         Dob = edtDob.getText().toString().toUpperCase().trim();
-         profession = edtProf.getText().toString().toUpperCase().trim();
+        profession = edtProf.getText().toString().toUpperCase().trim();
 
-        String pan = Logics.getPan(SignupScreen2.this);
-        String vppPanName = Logics.getPanName(SignupScreen2.this);
+        // pan validation.
+//        String pan = Logics.getPan(SignupScreen2.this);
+        pan = SharedPref.getPreferences1(SignupScreen2.this, "panNo");
+//        String vppPanName = Logics.getPanName(SignupScreen2.this);
+        vppPanName = SharedPref.getPreferences1(SignupScreen2.this, "panName");
+
 
         String namearr[] = Logics.getfml(SignupScreen2.this);
         String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
 
         String ref = Logics.getRef(SignupScreen2.this);
         String refCode = Logics.getRefCode(SignupScreen2.this);
-        String mobile = Logics.getMobile_1(SignupScreen2.this);
-        String email = Logics.getEmail_1(SignupScreen2.this);
-        int isMobileV = Logics.getisMobile_V(SignupScreen2.this);
-        int isEmailV = Logics.getisEmail_V(SignupScreen2.this);
-        int isBankV = Logics.getisBankVerified(SignupScreen2.this);
-        String accNo = Logics.getBankAccNo(SignupScreen2.this);
-        String ifsc = Logics.getBankIfsc(SignupScreen2.this);
-        String vppBankName = Logics.getVppBankName(SignupScreen2.this);
-        JSONObject jsonObject = new JSONObject();
 
+        // signup 1
+//        String mobile = Logics.getMobile_1(SignupScreen2.this);
+        mobile = SharedPref.getPreferences(SignupScreen2.this, "mobileNo");
+
+//        int isMobileV = Logics.getisMobile_V(SignupScreen2.this);
+        String isMobileV = SharedPref.getPreferences(SignupScreen2.this, "isMobile");
+
+
+        // signup 2
+//        String email = Logics.getEmail_1(SignupScreen2.this);
+        email = SharedPref.getPreferences(SignupScreen2.this, "email");
+
+//        int isEmailV = Logics.getisEmail_V(SignupScreen2.this);
+        String isEmailV = SharedPref.getPreferences(SignupScreen2.this, "isEmail");
+
+
+        // bank details.
+        int isBankV = Logics.getisBankVerified(SignupScreen2.this); // not changed..
+        String accNo = Logics.getBankAccNo(SignupScreen2.this); // not changed..
+        String ifsc = Logics.getBankIfsc(SignupScreen2.this); // not changed..
+        String vppBankName = Logics.getVppBankName(SignupScreen2.this); // not changed..
+
+        //
+
+        JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("imei", imei);
             //  jsonObject.put("ip","1234566666");
             jsonObject.put("ip", ip);
-            jsonObject.put("name", name);
+            jsonObject.put("name", vppPanName);
             jsonObject.put("ref", ref);
             jsonObject.put("refCode", refCode);
             jsonObject.put("mobile", mobile);
@@ -312,44 +341,46 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             jsonObject.put("Ifsc", ifsc);
             jsonObject.put("vppbankname", vppBankName);
             jsonObject.put("houseNum", edtHouseNo.getText().toString().toUpperCase().trim());
-
             jsonObject.put("area", edtArea.getText().toString().toUpperCase().trim());
-            jsonObject.put("city", edtCity.getText().toString().toUpperCase().trim());
+            jsonObject.put("city", city);
             jsonObject.put("pin", edtPin.getText().toString().toUpperCase().trim());
             jsonObject.put("state", state_str);
             //jsonObject.put("dob", DTToN(dd+"-"+MMM+"-"+yy));
             jsonObject.put("dob", DTToN(Dob));
             jsonObject.put("prof", profession);
-            jsonObject.put("landmuserark",  edtlandmark.getText().toString().toUpperCase().trim());
+            jsonObject.put("landmuserark", edtlandmark.getText().toString().toUpperCase().trim());
             jsonObject.put("regpegno", 4);
-
-            data = jsonObject.toString().getBytes();
             Log.e("sendData: ", jsonObject.toString());
-            new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+            //data = jsonObject.toString().getBytes();
+
+            data1="{\"area\":\"YERWADA\",\"vppbankname\":\"SACHIN SHAMRAO PATIL\",\"city\":\"PUNE CITY\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"8149142766\",\"isBankV\":0,\"bankaccno\":\"636701500806\",\"prof\":\"\",\"Ifsc\":\"ICIC0006367\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"NEAR MENTAL HOSPITAL\",\"pin\":\"411006\",\"dob\":-100915200,\"name\":\"SHRI SAHIL PEERMOHAMMAD SHAIKH\",\"state\":\"MADHYA PRADESH\",\"pan\":\"AXHPS3405P\",\"vpppanname\":\"SHRI SAHIL PEERMOHAMMAD SHAIKH\",\"email\":\"sahilshk2014@gmail.com\",\"houseNum\":\"HUSAINSHAHBABANAGAR\"}".getBytes();
+            new SendTOServer(this, this, Const.MSGSIGNUP2, data1, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
-            AlertDialogClass.ShowMsg(SignupScreen2.this,e.getMessage());
+            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
         }
 
 
 //        try {
+//            JSONObject jsonObject = new JSONObject();
 //            jsonObject.put("imei", "dfsafd");
 //            //  jsonObject.put("ip","1234566666");
 //            jsonObject.put("ip", "dfsf");
-//            jsonObject.put("name", "Shivakumar Tumma");
+//            jsonObject.put("name", "Dummy");
 //            jsonObject.put("ref", "dfsf");
 //            jsonObject.put("refCode", "dfsf");
-//            jsonObject.put("mobile", "9867328538");
-//            jsonObject.put("email", "shiva.tumma@ventura1.com");
+//            jsonObject.put("mobile", "9890871432");
+//            jsonObject.put("email", "tumma9867328538@gmail.com");
 //            jsonObject.put("isMobileV", "0");
 //            jsonObject.put("isEmailV", "1");
-//            jsonObject.put("pan", "AZTPT4416B");
-//            jsonObject.put("vpppanname", "dfsf");
+//            jsonObject.put("pan", "ALZPT6417A");
+//            jsonObject.put("vpppanname", "shiva");
 //            jsonObject.put("isBankV", "5345345435");
 //            jsonObject.put("bankaccno", "423423342");
-//            jsonObject.put("Ifsc", "dfsf");
-//            jsonObject.put("vppbankname", "dfsf");
+//            jsonObject.put("Ifsc", "shiva");
+//            jsonObject.put("vppbankname", "shiva");
 //            jsonObject.put("houseNum", "dfsf");
 //            jsonObject.put("area", "dfsf");
 //            jsonObject.put("city", "mumbai");
@@ -367,14 +398,15 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //        } catch (JSONException e) {
 ////            e.printStackTrace();
 //            FirebaseCrashlytics.getInstance().recordException(e);
-//            AlertDialogClass.ShowMsg(SignupScreen2.this,e.getMessage());
+//            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
 //        }
 
 
     }
-    private void sendDataStateCity(String statecity,String Stateid,String SearchText) {
 
-        AlertDialogClass.PopupWindowShow(SignupScreen2.this,mainlayout);
+    private void sendDataStateCity(String statecity, String Stateid, String SearchText) {
+
+        AlertDialogClass.PopupWindowShow(SignupScreen2.this, mainlayout);
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -386,7 +418,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             new SendTOServer(this, this, Const.MSG_StateCity, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
             FirebaseCrashlytics.getInstance().recordException(e);
-            AlertDialogClass.ShowMsg(SignupScreen2.this,e.getMessage());
+            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
         }
 
     }
@@ -406,9 +438,15 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             final Calendar calendar = Calendar.getInstance();
+
+            calendar.set(2005, 11, 30);//Year,Mounth -1,Day
+
+            //
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+            //
             DatePickerDialog dpd = new DatePickerDialog(getActivity(),
                     AlertDialog.THEME_HOLO_LIGHT, this, year, month, day);
             calendar.add(Calendar.DATE, 1);
@@ -416,6 +454,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             calendar.add(Calendar.YEAR, -100);
             dpd.getDatePicker().setMinDate(calendar.getTimeInMillis());
             return dpd;
+
         }
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
@@ -425,7 +464,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             Date chosenDate = cal.getTime();
 
             // HERE IS AGE LIMIT ....
-            Calendar userAge = new GregorianCalendar(year,month, day);
+            Calendar userAge = new GregorianCalendar(year, month, day);
             Calendar minAdultAge = new GregorianCalendar();
             minAdultAge.add(Calendar.YEAR, -18);
 
@@ -459,14 +498,14 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //                sendData();
 
                 if (Connectivity.getNetworkState(getApplicationContext()))
-                    if (state_str.equalsIgnoreCase("") || state_str.equalsIgnoreCase("Select State")) {
+                    //if (state_str.equalsIgnoreCase("") || state_str.equalsIgnoreCase("Select State")) {
 //                        Toast.makeText(this, "select state", Toast.LENGTH_SHORT).show();
-                        TastyToast.makeText(SignupScreen2.this, "Please select state", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+                    //  TastyToast.makeText(SignupScreen2.this, "Please select state", TastyToast.LENGTH_LONG, TastyToast.ERROR);
 
-                    } else {
-                        //submit.setEnabled(false);
-                        validation();
-                    }
+                    //} else {
+                    //submit.setEnabled(false);
+                    validation();
+                    //}
 
                     // sendData();
 //                if (state_str.equalsIgnoreCase(edtState.getText().toString().toUpperCase())) {
@@ -506,17 +545,21 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //                        ringProgressDialog.dismiss();
 
                         String data = (String) msg.obj;
-                        Log.d("Message", "handleMessagePan: " + data);
+                        Log.e("MessageResponse", data);
                         JSONObject jsonObject = null;
                         jsonObject = new JSONObject(data);
 
                         int status = jsonObject.getInt("status");
                         if (status == 0) {
                             String Message = jsonObject.getString("message");
+                            if (Message.contains("PAN number already")) {
+                                alert(Message);
+                            } else {
+                                alert(Message);
+                            }
 //                            Toast.makeText(SignupScreen2.this, Message, Toast.LENGTH_LONG).show();
                             TastyToast.makeText(getApplicationContext(), Message, TastyToast.LENGTH_LONG, TastyToast.INFO);
-                        }
-                        if (status != 0) {
+                        } else if (status == 1) {
                             String VppId = jsonObject.getString("vppcode");
                             //  Logics.setVppCode(SignupScreen2.this,VppId);
                             Date today = new Date();
@@ -524,14 +567,20 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
                             String curdate = dateFormat.format(today);
                             Logics.setDate(SignupScreen2.this, curdate);
 
+                            Logics.setVppDetails(SignupScreen2.this, vppPanName, mobile, email, city, VppId, pan);
+
+                            SharedPref.savePreferences1(SignupScreen2.this, "New", "1");
+                            //existing users showing popup ... revenue sharing ..
+
                             Intent intent = new Intent(SignupScreen2.this, com.application.vpp.activity.Welcome.class);
                             intent.putExtra("issignup", 1);
                             startActivity(intent);
+
                         }
 
                     } catch (JSONException e) {
                         e.printStackTrace();
-                        AlertDialogClass.ShowMsg(SignupScreen2.this,e.getMessage());
+                        AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
 
                     }
                 }
@@ -542,49 +591,62 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
                     String data = (String) msg.obj;
                     Log.e("MSG_StateCity", data);
 
-                    if (opt.equalsIgnoreCase(Const.StateMaster)){
+                    if (opt.equalsIgnoreCase(Const.StateMaster)) {
                         AlertDialogClass.PopupWindowDismiss();
                         StateName.clear();
                         StateId.clear();
+
+                        StateName.add("Select State");
+
                         // StateName.add("Select State");
                         //StateId.add("Select State");
                         try {
-                            JSONArray jsonArray=new JSONArray(data);
-                            for (int i=0;i<jsonArray.length();i++){
-                                JSONObject jsonObject=jsonArray.getJSONObject(i);
-                                String StateName_=jsonObject.getString("StateName");
-                                String StateId_=jsonObject.getString("StateId");
+                            JSONArray jsonArray = new JSONArray(data);
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                                String StateName_ = jsonObject.getString("StateName");
+                                String StateId_ = jsonObject.getString("StateId");
                                 StateName.add(StateName_);
                                 StateId.add(StateId_);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            AlertDialogClass.ShowMsg(SignupScreen2.this,e.getMessage());
+                            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
 
                         }
-
 
                         Log.e("NAME", String.valueOf(StateName.size()));
                         Log.e("ID", String.valueOf(StateId.size()));
 
-                        ArrayAdapter<String> adapter = new ArrayAdapter<>(SignupScreen2.this, android.R.layout.simple_spinner_dropdown_item, StateName);
+                        ArrayAdapter<String> adapter = new ArrayAdapter<>(SignupScreen2.this, android.R.layout.simple_spinner_item, StateName);
                         spinnerStateName.setAdapter(adapter);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                         spinnerStateName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                             @Override
                             public void onItemSelected(AdapterView<?> adapter, View v, int position, long id) {
                                 // On selecting a spinner item
 //                            ((TextView) adapter.getChildAt(0)).setTextColor(Color.BLACK);
-                                str_stateID = StateId.get(position);
-                                state_str = StateName.get(position);
 
-                                Log.e("str_stateID", str_stateID);
+                                if (!StateName.get(position).equalsIgnoreCase("Select State")) {
+                                    str_stateID = StateId.get(position - 1);
+                                    state_str = StateName.get(position - 1);
 
-                                SharedPref.savePreferences(getApplicationContext(), SharedPref.state, state_str);
+                                    Log.e("str_stateID", str_stateID);
+                                    Log.e("state_str", state_str);
 
-                                opt=Const.CityMaster;
+                                    SharedPref.savePreferences(getApplicationContext(), SharedPref.state, state_str);
 
-                                sendDataStateCity(opt,str_stateID,"");
+                                    spinnercityName.setVisibility(View.VISIBLE);
+                                    opt = Const.CityMaster;
+
+                                    sendDataStateCity(opt, str_stateID, "");
+
+                                } else {
+                                    state_str = "";
+                                    spinnercityName.setVisibility(View.GONE);
+                                }
                             }
 
                             @Override
@@ -598,10 +660,10 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
                         AlertDialogClass.PopupWindowDismiss();
                         CityName.clear();
                         CityId.clear();
-                        // CityName.add("Select City");
+//                         CityName.add("Select City");
                         //CityId.add("Select City");
 
-                        data=String.valueOf(stringBuffer.append(data));
+                        data = String.valueOf(stringBuffer.append(data));
 
                         if (data.endsWith("]")) {
                             try {
@@ -627,6 +689,8 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 
                         ArrayAdapter<String> adapter = new ArrayAdapter<>(SignupScreen2.this, android.R.layout.simple_spinner_dropdown_item, CityName);
                         spinnercityName.setAdapter(adapter);
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
                         spinnercityName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
                             @Override
@@ -636,8 +700,8 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
                                 // str_stateID = CityId.get(position);
                                 city = CityName.get(position);
 
-                              //  Toast.makeText(SignupScreen2.this, city, Toast.LENGTH_SHORT).show();
-                                opt=Const.CityMaster;
+                                //  Toast.makeText(SignupScreen2.this, city, Toast.LENGTH_SHORT).show();
+                                opt = Const.CityMaster;
 
 //                                sendDataStateCity(opt,str_stateID,"");
 
@@ -687,7 +751,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
                             Methods.getlogsDateTime(), "SignupScreen2",
                             Connectivity.getNetworkState(getApplicationContext()),
                             SignupScreen2.this);
-                    ;
+
                 } catch (Exception e) {
                     Toast.makeText(SignupScreen2.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
@@ -701,7 +765,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                sendDataStateCity(opt,str_stateID,"");
+                sendDataStateCity(opt, str_stateID, "");
 
 
                 /*else if (checksaverequest){
@@ -713,7 +777,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //                else if (checkbalance){
 //                    CALLAMOUNT();
 //                }
-               // TastyToast.makeText(SignupScreen2.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                // TastyToast.makeText(SignupScreen2.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             }
         });
     }
@@ -822,12 +886,13 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             }
         });
     }
+
     @SuppressLint("LongLogTag")
     public void ProgressDlgConnectSocket(Context context, final ConnectionProcess connectionProcess, String msg) {
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -857,7 +922,7 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             if (!SignupScreen2.this.isFinishing()) {
                 sweetAlertDialog.show();
             } else {
-               // Toast.makeText(SignupScreen2.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(SignupScreen2.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
             }
             sweetAlertDialog.setCancelable(false);
 
@@ -865,14 +930,14 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(SignupScreen2.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 
@@ -887,10 +952,9 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //                })
 //                .show();
     }
-    public static long DTToN(String strDate)
-    {
-        try
-        {
+
+    public static long DTToN(String strDate) {
+        try {
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yy");
             sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date date = sdf.parse(strDate);
@@ -904,11 +968,56 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             seconds = seconds - prevDate.getTime() / 1000;
 
             return seconds;
-        }
-        catch(ParseException pe) {
+        } catch (ParseException pe) {
             pe.printStackTrace();
         }
         return 0;
     }
+
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
+    }
+
+
+    private void alert(String msg) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.
+                verify_update, null);
+        builder.setView(dialogView);
+
+        TextView txtMsg = dialogView.findViewById(R.id.txtMsg);
+        txtMsg.setText(msg);
+        TextView txtclose = dialogView.findViewById(R.id.txtclose);
+        txtclose.setText("please Login");
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                alertDialog.cancel();
+
+                startActivity(new Intent(SignupScreen2.this, LoginScreen.class));
+
+            }
+        });
+
+        builder.setCancelable(true);
+        alertDialog = builder.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+    }
+
+    //    String dayOfTheWeek = (String) DateFormat.format("EEEE", date); // Thursday
+//    String day          = (String) DateFormat.format("dd",   date); // 20
+//    String monthString  = (String) DateFormat.format("MMM",  date); // Jun
+//    String monthNumber  = (String) DateFormat.format("MM",   date); // 06
+//    String year         = (String) DateFormat.format("yyyy", date); // 2013
+
+
 }
+
 

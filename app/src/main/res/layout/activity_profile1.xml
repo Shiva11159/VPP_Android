@@ -183,11 +183,62 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/graph_indicator" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dp"
+                    android:id="@+id/linearEmail"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="Email Id "
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:id="@+id/txtProfileEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/img_edt_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/ic_edit_18" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
+                    android:id="@+id/linearContact"
                     android:padding="10dp"
                     tools:context=".Activity">
 
@@ -277,6 +328,56 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:background="@color/graph_indicator" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/linearBank"
+                    android:padding="10dp"
+                    tools:context=".Activity">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="left"
+                        android:text="Bank Account No "
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"
+                        android:id="@+id/txt_accNo"
+                        android:fontFamily="@font/opensans_light"
+                        android:gravity="right"
+                        android:text=""
+                        android:textColor="@color/black"
+                        android:textSize="12dp" />
+
+                    <ImageView
+                        android:id="@+id/img_edt_accNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:background="@drawable/ic_edit_18" />
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -322,56 +423,7 @@
                     android:background="@color/graph_indicator" />
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="10dp"
-                    tools:context=".Activity">
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="match_parent"
-                        android:background="@color/black" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/opensans_light"
-                        android:gravity="left"
-                        android:text="Email Id "
-                        android:textColor="@color/black"
-                        android:textSize="12dp" />
-
-                    <TextView
-                        android:id="@+id/txtProfileEmail"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/opensans_light"
-                        android:gravity="right"
-                        android:text=""
-                        android:textColor="@color/black"
-                        android:textSize="12dp" />
-
-                    <ImageView
-                        android:id="@+id/img_edt_email"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:background="@drawable/ic_edit_18" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/graph_indicator" />
 
 
                <LinearLayout

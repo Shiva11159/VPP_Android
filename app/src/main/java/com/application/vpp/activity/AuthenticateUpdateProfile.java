@@ -25,6 +25,7 @@ import com.application.vpp.Const.Const;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.Logics;
+import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Utility.AlertDialogClass;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -146,8 +147,8 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
         imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         strMobOtp = edt_mob_otp.getText().toString().toUpperCase();
         if (strMobOtp.matches(mobileOtp)) {
-            //  Toast.makeText(AuthenticateUpdateProfile.this, " Mobile Otp Verified", Toast.LENGTH_LONG).show();
-            TastyToast.makeText(getApplicationContext(), "Mobile Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            //  Toast.makeText(AuthenticateUpdateProfile.this, " Mobile number verified", Toast.LENGTH_LONG).show();
+            TastyToast.makeText(getApplicationContext(), "Mobile number verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
             txt_resend_mob.setVisibility(View.VISIBLE);
             txt_resend_mob.setText("Your mobile number is verified");
@@ -159,7 +160,6 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
             textView1.setVisibility(View.GONE);
             //   linearemail.setVisibility(View.VISIBLE);
             if(updateEmail==0){
-
                 btn_proceed.setVisibility(View.VISIBLE);
             }
             verifyMobile = 1;
@@ -178,7 +178,8 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
 
         _imgerror.setVisibility(View.GONE);
 
-        if(edtEmail==1){
+        if(SharedPref.getPreferences(AuthenticateUpdateProfile.this,"click").equalsIgnoreCase("email")){
+//        if(updateEmail==1){
             _newEmail = _edtProfileEmail.getText().toString().toUpperCase().trim();
 
             if (!isValidEmail(_newEmail)){
@@ -192,7 +193,7 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
             }
 
         }
-        else if(edtMob==1){
+        else {
             _newContact = _edtProfileContact.getText().toString().toUpperCase().trim();
 
             if (_newContact.length()!=10){
@@ -224,7 +225,6 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
 
         JSONObject jsonObject = new JSONObject();
         _isSignup = 3;
-
 
         //18-10-19 check for change in profile (Contact, email)
         if(_existingContact.equals(_newContact) && _existingEmail.equals(_newEmail)){
@@ -318,7 +318,7 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
         strEmailOtp = edt_email_otp.getText().toString().toUpperCase();
         if (strEmailOtp.matches(emailOtp)) {
             //   Toast.makeText(AuthenticateUpdateProfile.this, " Email Id Otp Verified", Toast.LENGTH_LONG).show();
-            TastyToast.makeText(getApplicationContext(), "Email Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            TastyToast.makeText(getApplicationContext(), "Email id verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
             txt_email_resend.setVisibility(View.VISIBLE);
             txt_email_resend.setText("Your New Email Id is verified");
@@ -330,7 +330,6 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
             textView3.setVisibility(View.GONE);
             //   linearemail.setVisibility(View.VISIBLE);
             if(updateContact==0){
-
                 btn_proceed.setVisibility(View.VISIBLE);
             }
             verifyEmail = 1;
@@ -343,51 +342,57 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
 
     }
     private void proceed() {
-        if(verifyMobile==1 &&updateContact==1 &&updateEmail==0){
+//        if(verifyMobile==1 &&updateContact==1 &&updateEmail==0){ //
+        if(SharedPref.getPreferences(AuthenticateUpdateProfile.this,"click").equalsIgnoreCase("mobile")){ //
             //Intent intent = new Intent(AuthenticateUpdateProfile.this, UpdateProfile.class);
             //  startActivity(intent);
             nestedscrollview.setVisibility(View.VISIBLE);
+            layout_mob.setVisibility(View.VISIBLE);
+            _edtProfileContact.setText(_existingContact);
             linearlayout_main_otp_screen.setVisibility(View.GONE);
 
             String vppId = Logics.getVppId(this);
             _existingContact = Logics.getContact(this);
             _existingEmail = Logics.getEmail(this);
             _txtProfileVPPId.setText(vppId);
-            if(edtMob==1){
-                layout_mob.setVisibility(View.VISIBLE);
-                _edtProfileContact.setText(_existingContact);
-
-            }
-            else if(edtEmail==1){
-                layout_email.setVisibility(View.VISIBLE);
-                _edtProfileEmail.setText(_existingEmail);
-
-            }
+//            if(edtMob==1){
+//                layout_mob.setVisibility(View.VISIBLE);
+//                _edtProfileContact.setText(_existingContact);
+//
+//            }
+//            else if(edtEmail==1){
+//                layout_email.setVisibility(View.VISIBLE);
+//                _edtProfileEmail.setText(_existingEmail);
+//
+//            }
 
 
         }
-        else if(verifyEmail==1 &&updateContact==0 &&updateEmail==1){
+        else if(SharedPref.getPreferences(AuthenticateUpdateProfile.this,"click").equalsIgnoreCase("email")){
             // Intent intent = new Intent(AuthenticateUpdateProfile.this, UpdateProfile.class);
             // startActivity(intent);
             nestedscrollview.setVisibility(View.VISIBLE);
+            layout_email.setVisibility(View.VISIBLE);
+            _edtProfileEmail.setText(_existingEmail);
+
             linearlayout_main_otp_screen.setVisibility(View.GONE);
 
             String vppId = Logics.getVppId(this);
             _existingContact = Logics.getContact(this);
             _existingEmail = Logics.getEmail(this);
             _txtProfileVPPId.setText(vppId);
-            if(edtMob==1){
-                layout_mob.setVisibility(View.VISIBLE);
-
-
-                _edtProfileContact.setText(_existingContact);
-
-            }
-            else if(edtEmail==1){
-                layout_email.setVisibility(View.VISIBLE);
-                _edtProfileEmail.setText(_existingEmail);
-
-            }
+//            if(edtMob==1){
+//                layout_mob.setVisibility(View.VISIBLE);
+//
+//
+//                _edtProfileContact.setText(_existingContact);
+//
+//            }
+//            else if(edtEmail==1){
+//                layout_email.setVisibility(View.VISIBLE);
+//                _edtProfileEmail.setText(_existingEmail);
+//
+//            }
         }
     }
 
@@ -550,41 +555,41 @@ public class AuthenticateUpdateProfile extends NavigationDrawer implements TextW
                     break;
                 }
 
-                case Const.MSGAUTHENTICATE: {
-
-                    try {
-                        jsonObject = new JSONObject(data);
-                        int status = jsonObject.getInt("status"); //3
-                        if (status == 1) {
-                            int updateContact = jsonObject.getInt("updateContact");
-                            int updateEmail = jsonObject.getInt("updateEmail");
-                            if (updateContact == 1) {
-                                mobileOtp = jsonObject.getString("mobileotp");
-                                String mobile = jsonObject.getString("mobile");
-
-                            } else if (updateEmail == 1) {
-                                emailOtp = jsonObject.getString("emailotp");
-                                String email = jsonObject.getString("email");
-
-                            }
-
-                        }else{
-
-
-                            String mesg = jsonObject.getString("message");
-                            AlertDialogClass.ShowMsg(AuthenticateUpdateProfile.this,mesg);
-
-                            ///
-
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        FirebaseCrashlytics.getInstance().recordException(e);
-                        AlertDialogClass.ShowMsg(AuthenticateUpdateProfile.this,e.getMessage());
-                    }
-                    break;
-                }
+//                case Const.MSGAUTHENTICATE: {
+//
+//                    try {
+//                        jsonObject = new JSONObject(data);
+//                        int status = jsonObject.getInt("status"); //3
+//                        if (status == 1) {
+//                            int updateContact = jsonObject.getInt("updateContact");
+//                            int updateEmail = jsonObject.getInt("updateEmail");
+//                            if (updateContact == 1) {
+//                                mobileOtp = jsonObject.getString("mobileotp");
+//                                String mobile = jsonObject.getString("mobile");
+//
+//                            } else if (updateEmail == 1) {
+//                                emailOtp = jsonObject.getString("emailotp");
+//                                String email = jsonObject.getString("email");
+//
+//                            }
+//
+//                        }else{
+//
+//
+//                            String mesg = jsonObject.getString("message");
+//                            AlertDialogClass.ShowMsg(AuthenticateUpdateProfile.this,mesg);
+//
+//                            ///
+//
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        FirebaseCrashlytics.getInstance().recordException(e);
+//                        AlertDialogClass.ShowMsg(AuthenticateUpdateProfile.this,e.getMessage());
+//                    }
+//                    break;
+//                }
                 case Const.MSGAUTHENTICATERESEND: {
 
                     try {

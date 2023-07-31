@@ -1,9 +1,12 @@
 package com.application.vpp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 /**
@@ -51,7 +55,7 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         //Log.e("onLayout___", clientlistDataArrayList.get(position).AccountOpenedDate);
 
@@ -68,22 +72,40 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
 //                }
 //            });
 
+//            holder.txtClientCode.setText(clientlistDataArrayList.get(position).ClientCode);
+            String name =capitizeString(clientlistDataArrayList.get(position).ClientName.toLowerCase(Locale.ROOT));
+            holder.txtName.setText(name);
+            holder.txtProduct.setText(clientlistDataArrayList.get(position).ProductName);
+            holder.txtMobileNo.setText(clientlistDataArrayList.get(position).MobileNo);
+            holder.txtDate.setText(clientlistDataArrayList.get(position).AccountOpenedDate);
             holder.txtClientCode.setText(clientlistDataArrayList.get(position).ClientCode);
-            holder.txtClientName.setText(clientlistDataArrayList.get(position).ClientName);
-            holder.txtClientPlan.setText(clientlistDataArrayList.get(position).ProductName);
-            holder.txtClientRegDate.setText(clientlistDataArrayList.get(position).AccountOpenedDate);
+
+
+            holder.txtMobileNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:"+clientlistDataArrayList.get(position).MobileNo.trim()));
+//                startActivity(intent);
+                    context.startActivity(intent);
+                }
+            });
+
 
             // Log.e( "AccountOpenedDate: ",clientlistDataArrayList.get(position).AccountOpenedDate);
-
-            StringTokenizer stringTokenizer=new StringTokenizer(clientlistDataArrayList.get(position).AccountOpenedDate," ");
-            holder.date.setText(stringTokenizer.nextToken());
-            holder.month.setText(stringTokenizer.nextToken());
-            holder.year.setText(stringTokenizer.nextToken());
+//
+//            StringTokenizer stringTokenizer=new StringTokenizer(clientlistDataArrayList.get(position).AccountOpenedDate," ");
+//            holder.date.setText(stringTokenizer.nextToken());
+//            holder.month.setText(stringTokenizer.nextToken());
+//            holder.year.setText(stringTokenizer.nextToken());
 
             if ((position + 1) == clientlistDataArrayList.size()) {
                 Log.e("onLayout", "process done 11");
             }
-            Log.e("onLayout", clientlistDataArrayList.get(position).AccountOpenedDate);
+
+            AlertDialogClass.PopupWindowDismiss();
+
+//            Log.e("onLayout", clientlistDataArrayList.get(position).AccountOpenedDate);
 
 
 
@@ -99,21 +121,18 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
     }
 
 
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtClientCode, txtClientName, txtClientRegDate, txtClientPlan,date,month,year;
+        TextView txtDate, txtName, txtMobileNo, txtProduct,txtClientCode;
 
         public ViewHolder(View itemView) {
             super(itemView);
             try {
+                txtDate = (TextView) itemView.findViewById(R.id.txtDate);
+                txtName = (TextView) itemView.findViewById(R.id.txtName);
+                txtMobileNo = (TextView) itemView.findViewById(R.id.txtMobileNo);
+                txtProduct = (TextView) itemView.findViewById(R.id.txtProduct);
                 txtClientCode = (TextView) itemView.findViewById(R.id.txtClientCode);
-                txtClientName = (TextView) itemView.findViewById(R.id.txtClientName);
-                txtClientPlan = (TextView) itemView.findViewById(R.id.txtProductClient);
-                txtClientRegDate = (TextView) itemView.findViewById(R.id.txtClientRegDate);
-                date = (TextView) itemView.findViewById(R.id.date);///
-                month = (TextView) itemView.findViewById(R.id.month);
-                year = (TextView) itemView.findViewById(R.id.year);
             }catch (Exception e){
                 AlertDialogClass.ShowMsg(context,e.getMessage());
             }
@@ -155,4 +174,11 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
         notifyDataSetChanged();
     }
 
+    private String capitizeString(String name){
+        String captilizedString="";
+        if(!name.trim().equals("")){
+            captilizedString = name.substring(0,1).toUpperCase() + name.substring(1);
+        }
+        return captilizedString;
+    }
 }

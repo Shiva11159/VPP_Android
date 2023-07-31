@@ -14,7 +14,11 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -23,10 +27,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
 
 import com.application.vpp.ClientServer.ConnectTOServer;
 import com.application.vpp.ClientServer.Connectivity;
@@ -44,7 +51,9 @@ import com.application.vpp.ReusableLogics.Logics;
 import com.application.vpp.ReusableLogics.Methods;
 import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Utility.AlertDialogClass;
+import com.application.vpp.Utility.SnackBar;
 import com.application.vpp.Views.Views;
+import com.goodiebag.pinview.Pinview;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -63,6 +72,8 @@ import mehdi.sakout.fancybuttons.FancyButton;
 
 public class AddLead extends NavigationDrawer implements ConnectionProcess, View.OnClickListener, RequestSent, AdapterView.OnItemSelectedListener, CompoundButton.OnCheckedChangeListener, TextWatcher {
 
+    AlertDialog alertDialog;
+
     boolean clicktrue = false;
     public static Handler handlerAddProspect;
     ConnectionProcess connectionProcess;
@@ -70,6 +81,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     FancyButton btnSubmit;
     Button btn1;
     EditText edtName, edtEmail, edtMobile, edtCity, edtdate, edtTime, edtComments;
+    TextView txtselectproduct;
     TextInputLayout txtInputDate, txtInputTime;
     //    ProgressDialog ringProgressDialog;
     String mysqlDateFormat = "";
@@ -95,7 +107,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     String[] listItems;
     boolean[] checkedItems;
     ArrayList<Integer> mProducts = new ArrayList<>();
-//    ArrayList<Integer> selectedprodids = new ArrayList<>();
+    //    ArrayList<Integer> selectedprodids = new ArrayList<>();
     String[] outputStrArr;
     Handler handler = new Handler();
     Runnable runnable;
@@ -127,6 +139,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         checkedItems = new boolean[arrayList.size()];
         prodlist = (TextView) findViewById(R.id.list_prod);
 //        btn1 = findViewById(R.id.btn1);
+        txtselectproduct = findViewById(R.id.txtselectproduct);
         mainLayout = findViewById(R.id.lytMain);
         apiService1 = new APIClient().getClientsocketConn(AddLead.this).create(APiValidateAccount.class);
 
@@ -379,7 +392,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
             break;
             case R.id.btn_submit: {
                 submitbtnPressed = true;
-                btnSubmit.setEnabled(false);
+//                btnSubmit.setEnabled(false);
                 validation();
             }
             break;
@@ -404,31 +417,42 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
             // mobile = mobile.substring(mobile.length() - 10);
         }
         if (name.length() < 4) {
-            btnSubmit.setEnabled(true);
+            //btnSubmit.setEnabled(true);
 
-            TastyToast.makeText(
-                    getApplicationContext(),
-                    "Name should be greater than 4 characters",
-                    TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR
-            );
+            edtName.setError("Name should be greater than 4 characters");
+            edtName.setAnimation(shakeError());
+
 
         } else if (mobile.contains("-") || mobile.contains("*") || mobile.contains("#") || mobile.contains("+")) {
-            Views.toast(this, "Enter mobile number without '+91 & special characters -,@,#'");
-            btnSubmit.setEnabled(true);
+//            Views.toast(this, "Enter mobile number without '+91 & special characters -,@,#'");
+            //btnSubmit.setEnabled(true);
+            edtMobile.setAnimation(shakeError());
+            edtMobile.setError("Enter mobile number without '+91 & special characters -,@,#'");
 
         } else if (mobile.length() != 10) {
-            Views.toast(this, "Enter 10 digit mobile number");
-            btnSubmit.setEnabled(true);
+//            Views.toast(this, "Enter 10 digit mobile number");
+            // btnSubmit.setEnabled(true);
+            edtMobile.setError("Enter 10 digit mobile number");
+            edtMobile.setAnimation(shakeError());
 
 //            TastyToast.makeText(AddLead.this,"",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-        } else if (city.length() < 3) {
-            TastyToast.makeText(
-                    getApplicationContext(),
-                    "City Name should be more than 3 characters.",
-                    TastyToast.LENGTH_LONG,
-                    TastyToast.ERROR);
-            btnSubmit.setEnabled(true);
+        } /*else if (edtEmail.getText().toString().equalsIgnoreCase("")) {
+//            Views.toast(this, "Enter 10 digit mobile number");
+            // btnSubmit.setEnabled(true);
+            edtEmail.setError("Enter Email Id");
+            edtEmail.setAnimation(shakeError());
+
+//            TastyToast.makeText(AddLead.this,"",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+        }*/ else if (city.length() < 3) {
+//            TastyToast.makeText(
+//                    getApplicationContext(),
+//                    "City Name should be more than 3 characters.",
+//                    TastyToast.LENGTH_LONG,
+//                    TastyToast.ERROR);
+            //btnSubmit.setEnabled(true);
+
+            edtCity.setAnimation(shakeError());
+            edtCity.setError("City Name should be more than 3 characters.");
 
 
         } else {
@@ -499,7 +523,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //
         }
 
-        Log.d("item", "onItemSelected: " + selectedProductId + selectedLeadStatus);
+        Log.e("onItemSelected: ", String.valueOf(selectedProductId + selectedLeadStatus));
 
     }
 
@@ -630,7 +654,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //                        }
 //
 
-                        btnSubmit.setEnabled(true);
+                        //btnSubmit.setEnabled(true);
                         AlertDialogClass.PopupWindowDismiss();
 
                         JSONObject jsonObject1 = new JSONObject(message);
@@ -722,7 +746,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                         e.printStackTrace();
                         FirebaseCrashlytics.getInstance().recordException(e);
                         AlertDialogClass.ShowMsg(AddLead.this, e.getMessage());
-                        btnSubmit.setEnabled(true);
+                        //btnSubmit.setEnabled(true);
 
                     }
 
@@ -743,7 +767,40 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
         }
     }
 
-    void showPopup(String s) {
+
+    private void showPopup(final String s) {
+
+        ViewGroup viewGroup = findViewById(android.R.id.content);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.addleadpop_layout, viewGroup, false);
+        TextView msg = (TextView) dialogView.findViewById(R.id.msg);
+        TextView close = (TextView) dialogView.findViewById(R.id.close);
+        msg.setText(s);
+
+        close.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                alertDialog.cancel();
+                Intent intent = new Intent(AddLead.this, AddLead.class).putExtra("from", "");
+                startActivity(intent);
+            }
+        });
+
+        TranslateAnimation animation = new TranslateAnimation(100.0f, 0.0f, 100.0f, 0.0f);
+        animation.setDuration(1000);  // animation duration
+        animation.setRepeatCount(0);  // animation repeat count
+
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(dialogView);
+        alertDialog = builder.create();
+        alertDialog.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
+        alertDialog.setCancelable(false);
+        alertDialog.show();
+    }
+
+
+    void showPopup1(String s) {
         sweetAlertDialog = new SweetAlertDialog(AddLead.this, SweetAlertDialog.NORMAL_TYPE);
         sweetAlertDialog.setTitleText("")
                 .setContentText(s + "                          ")
@@ -753,8 +810,8 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     @Override
                     public void onClick(SweetAlertDialog sDialog) {
                         sDialog.dismissWithAnimation();
-                        Intent intent = new Intent(AddLead.this, AddLead.class).putExtra("from", "");
-                        startActivity(intent);
+//                        Intent intent = new Intent(AddLead.this, AddLead.class).putExtra("from", "");
+//                        startActivity(intent);
                     }
                 })
                 .show();
@@ -778,6 +835,8 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 for (int j = 0; j < mProducts.size(); j++) {
                     JSONObject jsonObject = new JSONObject();
                     selectedProductId = mProducts.get(j);
+
+                    Log.e("selectedProductId", String.valueOf(selectedProductId));
 //
                     String vppid = Logics.getVppId(AddLead.this);
                     jsonObject.put("lead_name", name);
@@ -787,12 +846,11 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                     jsonObject.put("product_id", selectedProductId);
                     jsonObject.put("appoint_datetime", mysqlDateFormat + time);
                     jsonObject.put("remark1", remark1 + "," + remark2 + "," + comments);
-                    jsonObject.put("remark2", "");
+                    jsonObject.put("remark2", "App");
                     jsonObject.put("VPPID", vppid);
                     jsonObject.put("vpp_name", Logics.getVppName(AddLead.this));
                     jsonObject.put("lead_status", selectedLeadStatus);
                     jsonArray.put(jsonObject);
-
                 }
 
                 JSONObject json = new JSONObject();
@@ -807,7 +865,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 } else {
                     AlertDialogClass.PopupWindowDismiss();
                     Views.SweetAlert_NoDataAvailble(AddLead.this, "Connect internet !");
-                    btnSubmit.setEnabled(true);
+                    //btnSubmit.setEnabled(true);
 
                 }
             } catch (Exception e) {
@@ -815,13 +873,18 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
                 Views.toast(this, e.getMessage());
                 FirebaseCrashlytics.getInstance().recordException(e);
                 AlertDialogClass.ShowMsg(AddLead.this, e.getMessage());
-                btnSubmit.setEnabled(true);
+                //btnSubmit.setEnabled(true);
 
             }
         } else {
             AlertDialogClass.PopupWindowDismiss();
-            Views.toast(this, "Please Select Product");
-            btnSubmit.setEnabled(true);
+//            Views.toast(this, "Please Select Product");
+
+            txtselectproduct.setAnimation(shakeError());
+            txtselectproduct.setError("Please Select Product");
+
+
+            //btnSubmit.setEnabled(true);
 
         }
 
@@ -843,7 +906,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //            ringProgressDialog.dismiss();
 //            ringProgressDialog.cancel();
 //        }
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         if (inserSockettLogsArrayList != null) {
             if (inserSockettLogsArrayList.size() > 0) {
@@ -935,7 +998,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //            ringProgressDialog.dismiss();
 //            ringProgressDialog.cancel();
 //        }
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         AlertDialogClass.PopupWindowDismiss();
 
@@ -962,7 +1025,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //            ringProgressDialog.dismiss();
 //            ringProgressDialog.cancel();
 //        }
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         AlertDialogClass.PopupWindowDismiss();
 
@@ -980,7 +1043,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 
     @Override
     public void ConnectToserver(final ConnectionProcess connectionProcess) {
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
 //        if (ringProgressDialog != null) {
 //            ringProgressDialog.dismiss();
@@ -1024,7 +1087,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     @Override
     protected void onResume() {
 
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         connectionProcess = (ConnectionProcess) this;
         Log.e("called: ", "onResume");
@@ -1136,7 +1199,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //            ringProgressDialog.dismiss();
 //            ringProgressDialog.cancel();
 //        }
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         AlertDialogClass.PopupWindowDismiss();
 
@@ -1160,7 +1223,7 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
     public void ProgressDlgConnectSocket(Context context, final ConnectionProcess connectionProcess, String msg) {
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
-        btnSubmit.setEnabled(true);
+        //btnSubmit.setEnabled(true);
 
         Log.e("DlgConnectSocket", "called");
         MaxTry++;
@@ -1379,6 +1442,13 @@ public class AddLead extends NavigationDrawer implements ConnectionProcess, View
 //
 //        Log.e("kkkkkkkkk ", String.valueOf(mExampleList.size()));
 //    }
+
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
+    }
 
 
 }

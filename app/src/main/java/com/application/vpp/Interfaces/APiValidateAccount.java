@@ -7,10 +7,15 @@ import com.application.vpp.Datasets.UploadFileResponse;
 import com.application.vpp.ReusableLogics.Validate_Signature_Class;
 import com.google.gson.JsonObject;
 
+import java.util.Map;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.Header;
+import retrofit2.http.HeaderMap;
 import retrofit2.http.Headers;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -29,8 +34,8 @@ public interface APiValidateAccount {
             "Accept: application/json",
             "Content-Type: application/json"
     })
+
     @POST("PennyDropApi/penny")
-//Call<JsonObject>getbackdetails(@Body JsonObject bean);
     Call<BankValidateData> getbackdetails(@Body JsonObject bean);
 
     @POST("createOrderObj")
@@ -42,25 +47,17 @@ public interface APiValidateAccount {
     @POST("SaveCheckout")
     Call<String> SaveCheckout(@Body RazorpayCheckoutReqRes checkoutReqRes);
 
-    //    @Multipart
-//    @POST
-//    Observable<BaseModel> sendTrunkMultiPart(
-//            @Url String url
-//
-//            , @Part("param1") RequestBody param1
-//            , @Part("param2") RequestBody param2
-//            , @Part List<MultipartBody.Part> files
-
-//    @Multipart
-//    @POST("uploadFile")
-//    Call<String> uploadVideoToServer(@Part MultipartBody.Part video, @Body String body);
-////    );
 
     @Multipart
     @POST("uploadFile")
-    Call<UploadFileResponse>UploadVideo(@Part MultipartBody.Part file, @Part("vpp_id") RequestBody vpp_id,@Part("proof_type") RequestBody proof_type);
+    Call<UploadFileResponse> UploadVideo(@Part MultipartBody.Part file, @Part("vpp_id") RequestBody vpp_id, @Part("proof_type") RequestBody proof_type);
 
     @POST("insertsocketlogs")
     Call<JsonObject> SendSocketLogs(@Query("ispojo") String insertLogs);
 
+
+    @Headers("OCRAPIKey: OPSID1:e5EPWugygD_Wsdfsfsdfsdsc2wWHoC1D")
+//    @FormUrlEnzcoded
+    @POST("OPS/GetEMPBranchCode")
+    Call<JsonObject> SendOps(@Body String vppid);
 }

@@ -6,45 +6,53 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.application.vpp.Datasets.ClientlistData;
 import com.application.vpp.Datasets.InProcessDataset;
+import com.application.vpp.Datasets.NotInterestedData;
 import com.application.vpp.Interfaces.CallBack;
 import com.application.vpp.R;
+import com.application.vpp.Utility.AlertDialogClass;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 /**
  * Created by bpandey on 28-06-2018.
  */
 
-public class NotInterestedAdapter extends RecyclerView.Adapter<NotInterestedAdapter.ViewHolder>{
+public class NotInterestedAdapter extends RecyclerView.Adapter<NotInterestedAdapter.ViewHolder> {
 
-    ArrayList<ClientlistData>clientlistDataArrayList;
+    ArrayList<NotInterestedData> clientlistDataArrayList;
     Context context;
     AlertDialog alertDialog;
     CallBack callBack;
 
-    ArrayList<ClientlistData> detailsFiltered;
-    public NotInterestedAdapter(ArrayList<ClientlistData>clientlistDataArrayList, Context context,CallBack callBack){
+    ArrayList<NotInterestedData> detailsFiltered;
+
+    public NotInterestedAdapter(ArrayList<NotInterestedData> clientlistDataArrayList, Context context, CallBack callBack) {
         this.clientlistDataArrayList = clientlistDataArrayList;
         this.context = context;
         this.callBack = callBack;
         detailsFiltered = new ArrayList<>(clientlistDataArrayList);
     }
+
     @NonNull
     @Override
     public NotInterestedAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_not_interested1,null);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_not_interested1, null);
 
         ViewHolder viewHolder = new ViewHolder(view);
 
@@ -54,48 +62,47 @@ public class NotInterestedAdapter extends RecyclerView.Adapter<NotInterestedAdap
     @Override
     public void onBindViewHolder(@NonNull final NotInterestedAdapter.ViewHolder holder, final int i) {
 
-        holder.txtLeadNumber.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).LeadNo);
-        holder.txtLeadName.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).CustomerName);
-//        holder.txtleadDate.setText(clientlistDataArrayList.get(position).LeadDate);
+//        holder.txtLeadNumber.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).getLeadNo());
 
-        Log.e( "onBindViewHolder: ", clientlistDataArrayList.get(holder.getAdapterPosition()).LeadDate);
+        String name = capitizeString(clientlistDataArrayList.get(holder.getAdapterPosition()).getCustomerName()).toLowerCase(Locale.ROOT);
+        holder.txtName.setText(clientlistDataArrayList.get(i).getCustomerName());
+        holder.txtDate.setText(clientlistDataArrayList.get(i).getLeadDate());
+        holder.txtProduct.setText(clientlistDataArrayList.get(i).getProductName());
+        holder.txtMobileNo.setText(clientlistDataArrayList.get(i).getMobileNo());
 
-        StringTokenizer stringTokenizer = new StringTokenizer(clientlistDataArrayList.get(holder.getAdapterPosition()).LeadDate, " ");
-        holder.date.setText(stringTokenizer.nextToken());
-        holder.mon_yr.setText(stringTokenizer.nextToken() + " " + stringTokenizer.nextToken());
-        holder.time.setText(stringTokenizer.nextToken());
-     //   holder.notInterestedReason.setText(clientlistDataArrayList.get(position).notInterestedreason);
-        holder.notInterestedReason.setOnClickListener(new View.OnClickListener() {
+
+        holder.txtMobileNo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                callBack.getReason(clientlistDataArrayList.get(holder.getAdapterPosition()).notInterestedreason,clientlistDataArrayList.get(holder.getAdapterPosition()).CustomerName,clientlistDataArrayList.get(holder.getAdapterPosition()).LeadNo);
-              //  PopupMenu popup = new PopupMenu(holder.notInterestedReason.getContext(), itemView);
-//                AlertDialog.Builder builder = new AlertDialog.Builder(context.getApplicationContext());
-//                LayoutInflater inflater = LayoutInflater.from(context.getApplicationContext());
-//                final View dialogView = inflater.inflate(R.layout.reason_popup, null);
-//                builder.setView(dialogView);
-//                TextView txtreason=dialogView.findViewById(R.id.txt_reason);
-//                txtreason.setText(clientlistDataArrayList.get(position).notInterestedreason);
-//                FancyButton btn_positive = dialogView.findViewById(R.id.btnIsRegYes);
-//                btn_positive.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        alertDialog.dismiss();
-//
-//
-//
-//                    }
-//                });
-//                builder.setCancelable(true);
-//
-//
-//                alertDialog = builder.show();
-//
-//
-//                alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-//
-}
-       });
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+clientlistDataArrayList.get(i).getMobileNo().trim()));
+//                startActivity(intent);
+                context.startActivity(intent);
+            }
+        });
+
+
+
+
+//        holder.txtleadDate.setText(clientlistDataArrayList.get(position).LeadDate);
+
+//        Log.e("onBindViewHolder: ", clientlistDataArrayList.get(holder.getAdapterPosition()).getLeadDate());
+
+//        StringTokenizer stringTokenizer = new StringTokenizer(clientlistDataArrayList.get(holder.getAdapterPosition()).getLeadDate(), " ");
+//        holder.date.setText(stringTokenizer.nextToken());
+//        holder.mon_yr.setText(stringTokenizer.nextToken() + " " + stringTokenizer.nextToken());
+//        holder.time.setText(stringTokenizer.nextToken());
+//        //   holder.notInterestedReason.setText(clientlistDataArrayList.get(position).notInterestedreason);
+
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.getReason(clientlistDataArrayList.get(holder.getAdapterPosition()).getNotInterestedreason(), clientlistDataArrayList.get(holder.getAdapterPosition()).getCustomerName(), clientlistDataArrayList.get(holder.getAdapterPosition()).getLeadNo(),clientlistDataArrayList.get(holder.getAdapterPosition()).getLeadUpdateDate());
+            }
+        });
+
+        AlertDialogClass.PopupWindowDismiss();
 
     }
 
@@ -104,29 +111,24 @@ public class NotInterestedAdapter extends RecyclerView.Adapter<NotInterestedAdap
         return clientlistDataArrayList.size();
     }
 
-//    @Override
-//    public Filter getFilter() {
-//        return dataFilter;
-//    }
-
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtLeadNumber,txtLeadName,txtleadDate,notInterestedReason,date, mon_yr, time;;
+        TextView txtDate, txtName, txtMobileNo, txtProduct;
+        LinearLayout linearLayout;
+
         public ViewHolder(View itemView) {
             super(itemView);
 
-            txtLeadNumber = (TextView)itemView.findViewById(R.id.txtLeadNumber);
-            txtLeadName = (TextView)itemView.findViewById(R.id.txtLeadName);
-//            txtleadDate = (TextView)itemView.findViewById(R.id.txtleadDate);
-            notInterestedReason = (TextView)itemView.findViewById(R.id.reason);
-            date = (TextView) itemView.findViewById(R.id.date);
-            mon_yr = (TextView) itemView.findViewById(R.id.mon_yr);
-            time = (TextView) itemView.findViewById(R.id.time);
+            txtMobileNo = (TextView) itemView.findViewById(R.id.txtMobileNo);
+            txtDate = (TextView) itemView.findViewById(R.id.txtDate);
+            txtName = (TextView) itemView.findViewById(R.id.txtName);
+            txtProduct = (TextView) itemView.findViewById(R.id.txtProduct);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
         }
 
     }
 
-//    private Filter dataFilter = new Filter() {
+    //    private Filter dataFilter = new Filter() {
 //        @Override
 //        protected FilterResults performFiltering(CharSequence constraint) {
 //            List<ClientlistData> filterlist = new ArrayList<>();
@@ -158,9 +160,17 @@ public class NotInterestedAdapter extends RecyclerView.Adapter<NotInterestedAdap
 //            notifyDataSetChanged();
 //        }
 //    };
-    public void filterList(ArrayList<ClientlistData> filteredList) {
+    public void filterList(ArrayList<NotInterestedData> filteredList) {
         clientlistDataArrayList = filteredList;
         notifyDataSetChanged();
+    }
+
+    private String capitizeString(String name) {
+        String captilizedString = "";
+        if (!name.trim().equals("")) {
+            captilizedString = name.substring(0, 1).toUpperCase() + name.substring(1);
+        }
+        return captilizedString;
     }
 
 }

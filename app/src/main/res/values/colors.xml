@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">@color/appcolor</color>
     <color name="colorPrimaryDark">@color/appcolor</color>
+    <color name="colorPrimaryDarkD">#EC8705</color>
     <color name="colorAccent">#1957be</color>
     <color name="red">#ff0000</color>
     <color name="green">#00ff00</color>
@@ -23,6 +24,7 @@
     <color name="bordercolordark">#8c8c8c</color>
     <color name="blue">#2772fd</color>
     <color name="black">#000</color>
+    <color name="venturanew">#191442</color>
     <color name="textColor">#414140</color>
     <color name="divider">#eeebeb</color>
     <color name="disable">#F2F2F2</color>
@@ -32,6 +34,7 @@
     <color name="slider_background">#1d2838</color>
    <!-- <color name="card_textColor">#4d4d4d</color>-->
     <color name="card_textColor">#666666</color>
+    <color name="silver">#cfcfcf</color>
 
     <color name="btn_active">#7ab800</color>
     <color name="btn_inactive">#ddff99</color>
@@ -56,6 +59,7 @@
     <color name="transperent">#b9000000</color>
     <color name="ventura_color">#F2651F</color>
     <color name="ventura_colorlight">#F8ECE7</color>
+    <color name="ventura_colorlight100">#FAE9E2</color>
 
     <color name="searchBackground">#e0e0e0</color>
     <color name="searchHint">#616161</color>
@@ -65,6 +69,7 @@
 
     <color name="text_secondary">#78787d</color>
     <color name="text_primary">#f5f5ff</color>
+    <color name="report_heading_color">#B3B3B3</color>
 
 
 </resources>

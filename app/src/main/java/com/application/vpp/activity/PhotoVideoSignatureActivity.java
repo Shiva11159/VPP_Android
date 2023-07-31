@@ -56,7 +56,6 @@ import com.application.vpp.Interfaces.Uploadfilecallback;
 import com.application.vpp.Listener.UploadCallbacks;
 import com.application.vpp.NetworkCall.APIClient;
 import com.application.vpp.NetworkCall.ProgressRequestBody;
-import com.application.vpp.NetworkCall.UploadFile;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.ImagePickerActivity;
 import com.application.vpp.ReusableLogics.Logics;
@@ -628,7 +627,7 @@ public class PhotoVideoSignatureActivity extends AppCompatActivity implements Up
                 android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                 null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
         cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
+        @SuppressLint("Range") String path = cursor.getString(cursor.getColumnIndex(MediaStore.Video.Media.DATA));
         cursor.close();
 
         return path;
@@ -1248,32 +1247,32 @@ public class PhotoVideoSignatureActivity extends AppCompatActivity implements Up
         }
     }
 
-    private void loadProfile(Bitmap bitmap, String strurl, ImageView UploadImage) {
-
-        Log.e("xxxxxx000", String.valueOf(byteSizeOf(bitmap)));
-
-        String VppId = Logics.getVppId(PhotoVideoSignatureActivity.this);
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 80, baos);
-        byte[] b = baos.toByteArray();
-        String urlimg = Base64.encodeToString(b, Base64.DEFAULT);
-        UploadImage.setImageBitmap(bitmap);
-        UploadImage.setScaleType(ImageView.ScaleType.FIT_XY);
-
-        Log.e("xxxxxx111", String.valueOf(byteSizeOf(bitmap)));
-//        BitmapFactory.Options Options = new BitmapFactory.Options();
-//        Options.inSampleSize = 4;
-//        Options.inJustDecodeBounds = false;
-//        Bitmap action_bitmap = BitmapFactory.decodeFile(urlimg, Options);
-
-        AlertDialogClass.PopupWindowShow(PhotoVideoSignatureActivity.this, mainlayout);
-
-//        progressDialog = ProgressDialog.show(PhotoVideoSignatureActivity.this, "Please wait ...", "Uploading ..", true);
-//        progressDialog.setCancelable(false);
-//        progressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
-        new UploadFile(getApplicationContext(), uploadfilecallback, strurl).execute(urlimg, strurl, VppId);
-//        imgAdd.setColorFilter(Cont/extCompat.getColor(this, android.R.color.transparent));
-    }
+//    private void loadProfile(Bitmap bitmap, String strurl, ImageView UploadImage) {
+//
+//        Log.e("xxxxxx000", String.valueOf(byteSizeOf(bitmap)));
+//
+//        String VppId = Logics.getVppId(PhotoVideoSignatureActivity.this);
+//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 80, baos);
+//        byte[] b = baos.toByteArray();
+//        String urlimg = Base64.encodeToString(b, Base64.DEFAULT);
+//        UploadImage.setImageBitmap(bitmap);
+//        UploadImage.setScaleType(ImageView.ScaleType.FIT_XY);
+//
+//        Log.e("xxxxxx111", String.valueOf(byteSizeOf(bitmap)));
+////        BitmapFactory.Options Options = new BitmapFactory.Options();
+////        Options.inSampleSize = 4;
+////        Options.inJustDecodeBounds = false;
+////        Bitmap action_bitmap = BitmapFactory.decodeFile(urlimg, Options);
+//
+//        AlertDialogClass.PopupWindowShow(PhotoVideoSignatureActivity.this, mainlayout);
+//
+////        progressDialog = ProgressDialog.show(PhotoVideoSignatureActivity.this, "Please wait ...", "Uploading ..", true);
+////        progressDialog.setCancelable(false);
+////        progressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
+//        new UploadFile(getApplicationContext(), uploadfilecallback, strurl).execute(urlimg, strurl, VppId);
+////        imgAdd.setColorFilter(Cont/extCompat.getColor(this, android.R.color.transparent));
+//    }
 
 //    private void loadProfileVideo() {
 //

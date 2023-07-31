@@ -1,24 +1,31 @@
 package com.application.vpp.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AlertDialogLayout;
 
@@ -39,6 +46,8 @@ import com.application.vpp.ReusableLogics.Methods;
 import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Utility.AlertDialogClass;
 import com.application.vpp.Views.Views;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -73,10 +82,16 @@ import retrofit2.Retrofit;
 
 public class BankValidation extends AppCompatActivity implements View.OnClickListener, RequestSent, ConnectionProcess {
 
-    EditText edtAccNo, edtIfscCode;
+
+    AlertDialog alertDialog;
+
+    //    TextInputLayout text_input_AccNoOld;
+    EditText edtAccNo, edtIfscCode,edtAccNoOld;
+    TextView txtAccNoOld;
     RelativeLayout layName;
     TextView txtAccountValidateNote;
-    FancyButton btnSubmit, btnProceed, btnsubmitName;
+    Button  btnProceed, btn_verify_AccNo;
+    Button btn_Submit_AccNo;
     private int resCode;
     private String resMsg;
     public static Handler handlerBank, handlerbankverify;
@@ -88,11 +103,12 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     int MaxTry=0;
     String err="";
 
+    TextView txtACC,txtIFSC;
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_validation);
+        setContentView(R.layout.activity_bank_validation1);
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
         try {
@@ -106,253 +122,278 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         }
 
 
+
         layName = (RelativeLayout) findViewById(R.id.lay_name);
+        edtAccNoOld = findViewById(R.id.edtAccNoOld);
+        txtAccNoOld = findViewById(R.id.txtAccNoOld);
+
+
+        txtIFSC= findViewById(R.id.txtIFSC);
+        txtACC = findViewById(R.id.txtACC);
+
+//        text_input_AccNoOld = findViewById(R.id.text_input_AccNoOld);
         edtAccNo = findViewById(R.id.edtAccNo);
         edtIfscCode = findViewById(R.id.edtIfscCode);
-        btnSubmit = findViewById(R.id.btn_Submit_AccNo);
+        btn_verify_AccNo = findViewById(R.id.btn_verify_AccNo);
         btnProceed = findViewById(R.id.btn_bankProceed);
         //  btnEdtName=findViewById(R.id.btn_edt_name);
         txtAccountValidateNote = findViewById(R.id.txtNote3);
         mainlayout = (ScrollView) findViewById(R.id.mainlayout);
 
-        btnSubmit.setOnClickListener(this);
+        btn_verify_AccNo.setOnClickListener(this);
         //btnEdtName.setOnClickListener(this);
         btnProceed.setOnClickListener(this);
         handlerBank = new ViewHandler();
         handlerbankverify= new ViewHandler();
 
+
+//        if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
+//            edtAccNoOld.setVisibility(View.VISIBLE);
+//            txtAccNoOld.setVisibility(View.VISIBLE);
+//            edtAccNoOld.setText(getIntent().getStringExtra("acc"));
+//
+//            txtACC.setText("New Account Number");
+//            txtIFSC.setText("New IFSC code");
+//        }else {
+//            txtACC.setText("Account Number");
+//            txtIFSC.setText("IFSC code");
+//
+//            edtAccNoOld.setVisibility(View.GONE);
+//            txtAccNoOld.setVisibility(View.GONE);
+//        }
+
         inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", BankValidation.this);
 
     }
 
-    private void fetchBankResponse() {
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-//        ringProgressDialog = ProgressDialog.show(BankValidation.this, "Please wait ...", "Loading Your Data ...", true);
-//        ringProgressDialog.setCancelable(true);
-//        ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
-
-        AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
-
-        String strAccNo = edtAccNo.getText().toString().trim().toUpperCase();
-
-        String strIfsc = edtIfscCode.getText().toString().trim().toUpperCase();
-
-        final JsonObject jsonObject = new JsonObject();
-
-        try {
-
-            jsonObject.addProperty("ifsc", strIfsc);
-            jsonObject.addProperty("acc_no", strAccNo);
-            jsonObject.addProperty("login_id", "VPPAPP");
-            Context context = BankValidation.this;
-            Retrofit retrofit = APIClient.getClient(context);
-
-            APiValidateAccount aPiValidateAccount = retrofit.create(APiValidateAccount.class);
-
-            Call<BankValidateData> call = aPiValidateAccount.getbackdetails(jsonObject);
-
-            call.enqueue(new Callback<BankValidateData>() {
-
-                @Override
-                public void onResponse(Call<BankValidateData> call, Response<BankValidateData> response) {
-                    btnSubmit.setEnabled(true);
-
-
-
-                    if ((response.body()!=null) || (!response.body().toString().equalsIgnoreCase("null"))){
-                        if (response.isSuccessful()) {
-                            Log.e("onResponse11: ", String.valueOf(response.body()));
-
-                            Log.e("resmsge", String.valueOf(response.body().getNwrespmessg()));
-                            Log.e("resp", String.valueOf(response.body().getResponse()));
-                            Log.e("code", String.valueOf(response.body().getNwrespcode()));
-                            Log.e("txt", String.valueOf(response.body().getTxnid()));
-                            Log.e("getRespcode", String.valueOf(response.body().getRespcode()));
-                            Log.e("getC_name", String.valueOf(response.body().getC_name()));
-
-                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
-                            //Log.d("response", "onResponse: "+response.body().getC_name());
-                            //  Log.e("response", "onResponse: "+response.body().toString());
-//                    ringProgressDialog.dismiss();
-                            AlertDialogClass.PopupWindowDismiss();
-                            // String name = response.body().getC_name().toString();
-                            BankValidateData bk = response.body();
-
-                            if (bk != null) {
-                                String networkrepcode = bk.getNwrespcode();
-                                String responsecode = bk.getRespcode();
-                                if (responsecode.equals("00")) {
-
-                                    Log.e("onResponse: ", "one");
-                                    String AccNo = bk.getAcc_no();
-                                    String Ifsc = bk.getIfsc();
-                                    String vppBkname = bk.getC_name();
-                                    String txnId = bk.getTxnid();
-                                    String respCode = bk.getRespcode();
-                                    String resp = bk.getResponse();
-                                    String nwResmsg = bk.getNwrespmessg();
-                                    String nwtxnField = bk.getNwtxnrefid();
-                                    Logics.setVppBankDetails(BankValidation.this, AccNo, Ifsc, vppBkname, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 1);
-                                    btnProceed.setVisibility(View.VISIBLE);
-                                    layName.setVisibility(View.VISIBLE);
-                                    txtAccountValidateNote.setText(bk.getC_name());
-                                    btnSubmit.setVisibility(View.INVISIBLE);
-                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
-                                } else if (responsecode.equals("99")) {
-                                    Log.e("onResponse: ", "two");
-
-                                    if (!networkrepcode.equalsIgnoreCase("M5") || !!networkrepcode.equalsIgnoreCase("52")) {
-                                        String AccNo = bk.getAcc_no();
-                                        String Ifsc = bk.getIfsc();
-                                        String vppBkname = bk.getC_name();
-                                        String txnId = bk.getTxnid();
-                                        String respCode = bk.getRespcode();
-                                        String resp = bk.getResponse();
-                                        String nwResmsg = bk.getNwrespmessg();
-                                        String nwtxnField = bk.getNwtxnrefid();
-
-                                        String namearr[] = Logics.getfml(BankValidation.this);
-                                        String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
-
-                                        Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString(), edtIfscCode.getText().toString(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                        btnProceed.setVisibility(View.VISIBLE);
-                                        layName.setVisibility(View.VISIBLE);
-                                        txtAccountValidateNote.setText(bk.getC_name());
-                                        btnSubmit.setVisibility(View.INVISIBLE);
-                                    } else {
-                                        // Toast.makeText(BankValidation.this, "" + "null", Toast.LENGTH_SHORT).show();
-//                                TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
-
-                                        AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
-
-                                    }
-                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
-                                } else if (responsecode.equals("01")) {
-                                    Log.e("onResponse: ", "three");
-
-                                    String AccNo = bk.getAcc_no();
-                                    String Ifsc = bk.getIfsc();
-                                    String vppBkname = bk.getC_name();
-                                    String txnId = bk.getTxnid();
-                                    String respCode = bk.getRespcode();
-                                    String resp = bk.getResponse();
-                                    String nwResmsg = bk.getNwrespmessg();
-                                    String nwtxnField = bk.getNwtxnrefid();
-
-                                    String namearr[] = Logics.getfml(BankValidation.this);
-                                    String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
-
-                                    Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                    btnProceed.setVisibility(View.VISIBLE);
-                                    layName.setVisibility(View.VISIBLE);
-                                    txtAccountValidateNote.setText(bk.getC_name());
-                                    btnSubmit.setVisibility(View.INVISIBLE);
-                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
-                                } else if (responsecode.equals("02")) {
-                                    Log.e("onResponse: ", "four");
-
-                                    String AccNo = bk.getAcc_no();
-                                    String Ifsc = bk.getIfsc();
-                                    String vppBkname = bk.getC_name();
-                                    String txnId = bk.getTxnid();
-                                    String respCode = bk.getRespcode();
-                                    String resp = bk.getResponse();
-                                    String nwResmsg = bk.getNwrespmessg();
-                                    String nwtxnField = bk.getNwtxnrefid();
-
-                                    String namearr[] = Logics.getfml(BankValidation.this);
-                                    String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
-
-                                    Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString(), edtIfscCode.getText().toString(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                    btnProceed.setVisibility(View.VISIBLE);
-                                    layName.setVisibility(View.VISIBLE);
-                                    txtAccountValidateNote.setText(bk.getC_name());
-                                    btnSubmit.setVisibility(View.INVISIBLE);
-                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
-                                } else {
-                                    // Toast.makeText(BankValidation.this, "" + "null", Toast.LENGTH_SHORT).show();
-//                            TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
-
-                                    AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
-                                    AlertDialogClass.PopupWindowDismiss();
-
-
-                                }
-
-
-                            } else {
-                                // Toast.makeText(BankValidation.this, "Failed To Connect Server Try again", Toast.LENGTH_LONG).show();
-//                        TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
-
-                                AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
-                                AlertDialogClass.PopupWindowDismiss();
-
-                            }
-                        }else {
-
-                            switch (response.code()) {
-
-                                case 404:
-
-//                            Toast.makeText(context, "not found", Toast.LENGTH_SHORT).show();
-                                    err = "Server Not Found";
-                                    break;
-                                case 500:
-
-//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
-                                    err = "Server Unavailable";
-                                    break;
-                                case 503:
-
-//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
-                                    err = "Server Overloaded try after sometime";
-                                    break;
-                                default:
-
-                                    err = String.valueOf(response.code());
-                                    err = "Something went wrong try again.";
-//                            Toast.makeText(context, "unknown error", Toast.LENGTH_SHORT).show();
-                                    break;
-                            }
-                            AlertDialogClass.ShowMsg(BankValidation.this, err+  "  Something went wrong please try after sometime.");
-                        }
-                    }else
-                        AlertDialogClass.ShowMsg(BankValidation.this,"we are not getting response from server.");
-                }
-                @Override
-                public void onFailure(Call<BankValidateData> call, Throwable t) {
-                    btnSubmit.setEnabled(true);
-
-//                    Log.e("failure",   "onFailure: " + t.toString());
-
-                    AlertDialogClass.ShowMsg(BankValidation.this,t.getMessage());
-                    AlertDialogClass.PopupWindowDismiss();
-
-                }
-            });
-
-
-         /*   new Thread(new Runnable() {
-                @Override
-                public void run() {
-
-                    getHTTPS_ResponseFromUrl(Const.URL_VerifyAccount,jsonObject.toString());
-
-                }
-            }).start();
-*/
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            FirebaseCrashlytics.getInstance().recordException(e);
-//            AlertDialogClass.ShowMsg(BankValidation.this, e.getMessage());
-            btnSubmit.setEnabled(true);
-            AlertDialogClass.ShowMsg(BankValidation.this, "Something went wrong please try after sometime.");
-        }
-    }
+//    private void fetchBankResponse() {
+//        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//        imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+////        ringProgressDialog = ProgressDialog.show(BankValidation.this, "Please wait ...", "Loading Your Data ...", true);
+////        ringProgressDialog.setCancelable(true);
+////        ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
+//
+//        AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
+//
+//        String strAccNo = edtAccNo.getText().toString().trim().toUpperCase();
+//
+//        String strIfsc = edtIfscCode.getText().toString().trim().toUpperCase();
+//
+//        final JsonObject jsonObject = new JsonObject();
+//
+//        try {
+//
+//            jsonObject.addProperty("ifsc", strIfsc);
+//            jsonObject.addProperty("acc_no", strAccNo);
+//            jsonObject.addProperty("login_id", "VPPAPP");
+//            Context context = BankValidation.this;
+//            Retrofit retrofit = APIClient.getClient(context);
+//
+//            APiValidateAccount aPiValidateAccount = retrofit.create(APiValidateAccount.class);
+//
+//            Call<BankValidateData> call = aPiValidateAccount.getbackdetails(jsonObject);
+//
+//            call.enqueue(new Callback<BankValidateData>() {
+//
+//                @Override
+//                public void onResponse(Call<BankValidateData> call, Response<BankValidateData> response) {
+//                    btnSubmit.setEnabled(true);
+//
+//
+//
+//                    if ((response.body()!=null) || (!response.body().toString().equalsIgnoreCase("null"))){
+//                        if (response.isSuccessful()) {
+//                            Log.e("onResponse11: ", String.valueOf(response.body()));
+//
+//                            Log.e("resmsge", String.valueOf(response.body().getNwrespmessg()));
+//                            Log.e("resp", String.valueOf(response.body().getResponse()));
+//                            Log.e("code", String.valueOf(response.body().getNwrespcode()));
+//                            Log.e("txt", String.valueOf(response.body().getTxnid()));
+//                            Log.e("getRespcode", String.valueOf(response.body().getRespcode()));
+//                            Log.e("getC_name", String.valueOf(response.body().getC_name()));
+//
+//                            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                            imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
+//                            //Log.d("response", "onResponse: "+response.body().getC_name());
+//                            //  Log.e("response", "onResponse: "+response.body().toString());
+////                    ringProgressDialog.dismiss();
+//                            AlertDialogClass.PopupWindowDismiss();
+//                            // String name = response.body().getC_name().toString();
+//                            BankValidateData bk = response.body();
+//
+//                            if (bk != null) {
+//                                String networkrepcode = bk.getNwrespcode();
+//                                String responsecode = bk.getRespcode();
+//                                if (responsecode.equals("00")) {
+//
+//                                    Log.e("onResponse: ", "one");
+//                                    String AccNo = bk.getAcc_no();
+//                                    String Ifsc = bk.getIfsc();
+//                                    String vppBkname = bk.getC_name();
+//                                    String txnId = bk.getTxnid();
+//                                    String respCode = bk.getRespcode();
+//                                    String resp = bk.getResponse();
+//                                    String nwResmsg = bk.getNwrespmessg();
+//                                    String nwtxnField = bk.getNwtxnrefid();
+//                                    Logics.setVppBankDetails(BankValidation.this, AccNo, Ifsc, vppBkname, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 1);
+//                                    btnProceed.setVisibility(View.VISIBLE);
+//                                    layName.setVisibility(View.VISIBLE);
+//                                    txtAccountValidateNote.setText(bk.getC_name());
+//                                    btnSubmit.setVisibility(View.INVISIBLE);
+//                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
+//                                } else if (responsecode.equals("99")) {
+//                                    Log.e("onResponse: ", "two");
+//
+//                                    if (!networkrepcode.equalsIgnoreCase("M5") || !!networkrepcode.equalsIgnoreCase("52")) {
+//                                        String AccNo = bk.getAcc_no();
+//                                        String Ifsc = bk.getIfsc();
+//                                        String vppBkname = bk.getC_name();
+//                                        String txnId = bk.getTxnid();
+//                                        String respCode = bk.getRespcode();
+//                                        String resp = bk.getResponse();
+//                                        String nwResmsg = bk.getNwrespmessg();
+//                                        String nwtxnField = bk.getNwtxnrefid();
+//
+//                                        String namearr[] = Logics.getfml(BankValidation.this);
+//                                        String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
+//
+//                                        Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString(), edtIfscCode.getText().toString(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
+//                                        btnProceed.setVisibility(View.VISIBLE);
+//                                        layName.setVisibility(View.VISIBLE);
+//                                        txtAccountValidateNote.setText(bk.getC_name());
+//                                        btnSubmit.setVisibility(View.INVISIBLE);
+//                                    } else {
+//                                        // Toast.makeText(BankValidation.this, "" + "null", Toast.LENGTH_SHORT).show();
+////                                TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+//
+//                                        AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
+//
+//                                    }
+//                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
+//                                } else if (responsecode.equals("01")) {
+//                                    Log.e("onResponse: ", "three");
+//
+//                                    String AccNo = bk.getAcc_no();
+//                                    String Ifsc = bk.getIfsc();
+//                                    String vppBkname = bk.getC_name();
+//                                    String txnId = bk.getTxnid();
+//                                    String respCode = bk.getRespcode();
+//                                    String resp = bk.getResponse();
+//                                    String nwResmsg = bk.getNwrespmessg();
+//                                    String nwtxnField = bk.getNwtxnrefid();
+//
+//                                    String namearr[] = Logics.getfml(BankValidation.this);
+//                                    String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
+//
+//                                    Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
+//                                    btnProceed.setVisibility(View.VISIBLE);
+//                                    layName.setVisibility(View.VISIBLE);
+//                                    txtAccountValidateNote.setText(bk.getC_name());
+//                                    btnSubmit.setVisibility(View.INVISIBLE);
+//                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
+//                                } else if (responsecode.equals("02")) {
+//                                    Log.e("onResponse: ", "four");
+//
+//                                    String AccNo = bk.getAcc_no();
+//                                    String Ifsc = bk.getIfsc();
+//                                    String vppBkname = bk.getC_name();
+//                                    String txnId = bk.getTxnid();
+//                                    String respCode = bk.getRespcode();
+//                                    String resp = bk.getResponse();
+//                                    String nwResmsg = bk.getNwrespmessg();
+//                                    String nwtxnField = bk.getNwtxnrefid();
+//
+//                                    String namearr[] = Logics.getfml(BankValidation.this);
+//                                    String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
+//
+//                                    Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString(), edtIfscCode.getText().toString(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
+//                                    btnProceed.setVisibility(View.VISIBLE);
+//                                    layName.setVisibility(View.VISIBLE);
+//                                    txtAccountValidateNote.setText(bk.getC_name());
+//                                    btnSubmit.setVisibility(View.INVISIBLE);
+//                                    //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
+//                                } else {
+//                                    // Toast.makeText(BankValidation.this, "" + "null", Toast.LENGTH_SHORT).show();
+////                            TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+//
+//                                    AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
+//                                    AlertDialogClass.PopupWindowDismiss();
+//
+//
+//                                }
+//
+//
+//                            } else {
+//                                // Toast.makeText(BankValidation.this, "Failed To Connect Server Try again", Toast.LENGTH_LONG).show();
+////                        TastyToast.makeText(getApplicationContext(), bk.getNwrespmessg(), TastyToast.LENGTH_LONG, TastyToast.WARNING);
+//
+//                                AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
+//                                AlertDialogClass.PopupWindowDismiss();
+//
+//                            }
+//                        }else {
+//
+//                            switch (response.code()) {
+//
+//                                case 404:
+//
+////                            Toast.makeText(context, "not found", Toast.LENGTH_SHORT).show();
+//                                    err = "Server Not Found";
+//                                    break;
+//                                case 500:
+//
+////                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+//                                    err = "Server Unavailable";
+//                                    break;
+//                                case 503:
+//
+////                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+//                                    err = "Server Overloaded try after sometime";
+//                                    break;
+//                                default:
+//
+//                                    err = String.valueOf(response.code());
+//                                    err = "Something went wrong try again.";
+////                            Toast.makeText(context, "unknown error", Toast.LENGTH_SHORT).show();
+//                                    break;
+//                            }
+//                            AlertDialogClass.ShowMsg(BankValidation.this, err+  "  Something went wrong please try after sometime.");
+//                        }
+//                    }else
+//                        AlertDialogClass.ShowMsg(BankValidation.this,"we are not getting response from server.");
+//                }
+//                @Override
+//                public void onFailure(Call<BankValidateData> call, Throwable t) {
+//                    btnSubmit.setEnabled(true);
+//
+////                    Log.e("failure",   "onFailure: " + t.toString());
+//
+//                    AlertDialogClass.ShowMsg(BankValidation.this,t.getMessage());
+//                    AlertDialogClass.PopupWindowDismiss();
+//
+//                }
+//            });
+//
+//
+//         /*   new Thread(new Runnable() {
+//                @Override
+//                public void run() {
+//
+//                    getHTTPS_ResponseFromUrl(Const.URL_VerifyAccount,jsonObject.toString());
+//
+//                }
+//            }).start();
+//*/
+//
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            FirebaseCrashlytics.getInstance().recordException(e);
+////            AlertDialogClass.ShowMsg(BankValidation.this, e.getMessage());
+//            btnSubmit.setEnabled(true);
+//            AlertDialogClass.ShowMsg(BankValidation.this, "Something went wrong please try after sometime.");
+//        }
+//    }
 
     private void call_bankvarification(){
     try {
@@ -374,6 +415,31 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    private void call_bankUpdateAccountIfsc(){
+        try {
+            AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
+            JSONObject jsonObject = new JSONObject();
+
+            String AccNo = Logics.getBankAccNo(BankValidation.this);
+            String Ifsc = Logics.getBankIfsc(BankValidation.this);
+            String vppBkname = Logics.getVppBankName(BankValidation.this);
+            jsonObject.put("vpp_id", Logics.getVppId(BankValidation.this));
+            jsonObject.put("bank_acc_no", AccNo);
+            jsonObject.put("ifsc", Ifsc);
+            jsonObject.put("micr_no", "");
+            jsonObject.put("bank_name", vppBkname);
+            jsonObject.put("branch_name", "");
+            jsonObject.put("branch_address", "");
+            jsonObject.put("bank_acc_no_old", getIntent().getStringExtra("acc")); // new params added
+            jsonObject.put("ifsc_old", ""); // new params added
+
+            byte[] data = jsonObject.toString().getBytes();
+            Log.e("splashScreen", "connected: " + jsonObject.toString());
+            new SendTOServer(BankValidation.this, BankValidation.this, Const.MSG_UPDATEACCOUNT_IFSCCODE, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
 
 
     private String getHTTPS_ResponseFromUrl(String url, String jsonObject) {
@@ -446,16 +512,31 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.btn_Submit_AccNo: {
+            case R.id.btn_verify_AccNo: {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
-                    btnSubmit.setEnabled(false);
+//                    btn_verify_AccNo.setEnabled(false);
                     if(edtAccNo.getText().toString().equalsIgnoreCase("")){
-                        TastyToast.makeText(BankValidation.this,"Enter Account number",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-                        btnSubmit.setEnabled(true);
 
+                        edtAccNo.setError("Enter Account number.");
+
+                        edtAccNo.startAnimation(shakeError());
+//                        TastyToast.makeText(BankValidation.this,"Enter Account number",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+//                        btn_verify_AccNo.setEnabled(true);
                     }else if (edtIfscCode.getText().toString().equalsIgnoreCase("")){
-                        TastyToast.makeText(BankValidation.this,"Enter IFSC code",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-                        btnSubmit.setEnabled(true);
+//                        TastyToast.makeText(BankValidation.this,"Enter IFSC code",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+
+                        edtIfscCode.setError("Enter IFSC code.");
+
+                        edtIfscCode.startAnimation(shakeError());
+
+                        //                        btn_verify_AccNo.setEnabled(true);
+                    }else if(!Methods.isValidIFSCCode(edtIfscCode.getText().toString().trim())){
+
+                        edtIfscCode.setError("Enter Valid IFSC code.");
+                        edtIfscCode.startAnimation(shakeError());
+//                        TastyToast.makeText(BankValidation.this,"Enter Valid IFSC code",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+//                        btn_verify_AccNo.setEnabled(true);
+
                     }else {
 //                    fetchBankResponse();
                         call_bankvarification();
@@ -473,9 +554,11 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //            break;
             case R.id.btn_bankProceed: {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
-
                     btnProceed.setEnabled(false);
                     saveBankDetails();
+                    //call_bankUpdateAccountIfsc();
+
+
                 } else {
                     TastyToast.makeText(BankValidation.this, "No Internet", TastyToast.LENGTH_LONG, TastyToast.ERROR);
                 }
@@ -492,9 +575,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
     private void saveBankDetails() {
 
-
         AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
-
         String AccNo = Logics.getBankAccNo(BankValidation.this);
         String Ifsc = Logics.getBankIfsc(BankValidation.this);
         String vppBkname = Logics.getVppBankName(BankValidation.this);
@@ -508,8 +589,6 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
         JSONObject jsonObject = new JSONObject();
         try {
-
-
             // jsonObject.put("pan_no",pan_no);
             jsonObject.put("accno", AccNo);
             jsonObject.put("ifsc", Ifsc);
@@ -550,34 +629,35 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
             switch (msg.arg1) {
 
 
-                case Const.MSGUPDATENAMEBANK: {
-                    try {
-//                        ringProgressDialog.dismiss();
-                        AlertDialogClass.PopupWindowDismiss();
-
-                        String data = (String) msg.obj;
-                        Log.d("Message", "handleMessagePan: " + data);
-                        JSONObject jsonObject = null;
-                        jsonObject = new JSONObject(data);
-                        int status = jsonObject.getInt("status");
-                        String message = jsonObject.getString("message");
-                        if (status != 0) {
-                            Toast.makeText(BankValidation.this, "Name Update :" + message, Toast.LENGTH_SHORT).show();
-
-
-                            //  btnEdtName.setVisibility(View.GONE);
-
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                        FirebaseCrashlytics.getInstance().recordException(e);
-                        AlertDialogClass.ShowMsg(BankValidation.this,e.getMessage());
-
-                    }
-                }
-                break;
+//                case Const.MSGUPDATENAMEBANK: {
+//                    try {
+////                        ringProgressDialog.dismiss();
+//                        AlertDialogClass.PopupWindowDismiss();
+//
+//                        String data = (String) msg.obj;
+//                        Log.d("Message", "handleMessagePan: " + data);
+//                        JSONObject jsonObject = null;
+//                        jsonObject = new JSONObject(data);
+//                        int status = jsonObject.getInt("status");
+//                        String message = jsonObject.getString("message");
+//                        if (status != 0) {
+//                            Toast.makeText(BankValidation.this, "Name Update :" + message, Toast.LENGTH_SHORT).show();
+//
+//
+//                            //  btnEdtName.setVisibility(View.GONE);
+//
+//                        }
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        FirebaseCrashlytics.getInstance().recordException(e);
+//                        AlertDialogClass.ShowMsg(BankValidation.this,e.getMessage());
+//
+//                    }
+//                }
+//                break;
                 case Const.MSGSAVEBANKDETAILS: {
                     try {
+
 //                        ringProgressDialog.dismiss();
                         AlertDialogClass.PopupWindowDismiss();
                         btnProceed.setEnabled(true);
@@ -588,8 +668,13 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                         jsonObject = new JSONObject(data);
                         int status = jsonObject.getInt("status");
                         if (status == 1) {
-                            Intent intent = new Intent(BankValidation.this, SignupScreen2.class);
-                            startActivity(intent);
+                            if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
+                                call_bankUpdateAccountIfsc();
+                            }else
+                            {
+                                Intent intent = new Intent(BankValidation.this, SignupScreen2.class);
+                                startActivity(intent);
+                            }
 
                         }else {
                             String Message=jsonObject.getString("Message");
@@ -610,6 +695,8 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                     Log.d("Message", "handleMessagePan: " + data);
                     Log.e("data", data);
                     JSONObject jsonObject = null;
+
+                    Methods.hideKeyboard(BankValidation.this,mainlayout);
                     try {
                         jsonObject = new JSONObject(data);
 
@@ -634,13 +721,12 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                                 String nwtxnField = bk.getNwtxnrefid();
                                 String namearr[] = Logics.getfml(BankValidation.this);
                                 String name = namearr[0] + " " + namearr[1] + " " + namearr[2];
-                                btnProceed.setVisibility(View.VISIBLE);
                                 layName.setVisibility(View.VISIBLE);
                                 txtAccountValidateNote.setText(bk.getC_name());
-                                btnSubmit.setVisibility(View.INVISIBLE);
-
 
                                 if (responsecode.equals("00")) {
+                                    btnProceed.setVisibility(View.VISIBLE);
+                                    btn_verify_AccNo.setVisibility(View.INVISIBLE);
 
                                     Logics.setVppBankDetails(BankValidation.this, AccNo, Ifsc, vppBkname, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 1);
 
@@ -685,7 +771,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
                         }else {
                             TastyToast.makeText(BankValidation.this,""+jsonObject.getString("message"),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-                            btnSubmit.setEnabled(true);
+                          //  btn_verify_AccNo.setEnabled(true);
                         }
 
                     } catch (JSONException e) {
@@ -704,13 +790,48 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                     }
                 }
                 break;
+                case Const.MSG_UPDATEACCOUNT_IFSCCODE:{
+                    String data = (String) msg.obj;
+                    Log.e("ACCOUNT_IFSCCODE", data);
+                    JSONObject jsonObject = null;
+
+                    Methods.hideKeyboard(BankValidation.this,mainlayout);
+                    try {
+                        jsonObject = new JSONObject(data);
+
+                        if(jsonObject.getString("status").equalsIgnoreCase("1")) {
+                            AlertDialogClass.PopupWindowDismiss();
+                            alert(jsonObject.getString("mesage"),1);
+                            TastyToast.makeText(getApplicationContext(), jsonObject.getString("mesage"), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+
+                        }else {
+                            TastyToast.makeText(BankValidation.this,""+jsonObject.getString("message"),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+//                            btn_verify_AccNo.setEnabled(true);
+                            alert(jsonObject.getString("mesage"),0);
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        AlertDialogClass.PopupWindowDismiss();
+                        AlertDialogClass.ShowMsg(BankValidation.this, "Opps!! something went wrong please contact to customer support team");
+                        Log.e("onResponse: ", "four");
+
+                    }
+
+                }
+                break;
             }
         }
     }
 
     @Override
     public void onBackPressed() {
-        //  super.onBackPressed();
+
+        if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
+              super.onBackPressed();
+
+        }
     }
 
 
@@ -762,7 +883,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //        }
 
         btnProceed.setEnabled(true);
-        btnSubmit.setEnabled(true);
+//        btn_verify_AccNo.setEnabled(true);
 
 
         AlertDialogClass.PopupWindowDismiss();
@@ -788,7 +909,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //            ringProgressDialog.dismiss();
 //        }
         btnProceed.setEnabled(true);
-        btnSubmit.setEnabled(true);
+//        btnSubmit.setEnabled(true);
         AlertDialogClass.PopupWindowDismiss();
 
 
@@ -845,7 +966,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //            ringProgressDialog.dismiss();
 //        }
         btnProceed.setEnabled(true);
-        btnSubmit.setEnabled(true);
+//        btnSubmit.setEnabled(true);
         AlertDialogClass.PopupWindowDismiss();
 
         Log.e("SocketDisconnected11: ", "SocketDisconnected");
@@ -929,4 +1050,50 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     }
 
 
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
+    }
+
+
+    private void alert(String msg,int i) {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        LayoutInflater inflater = this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.
+                verify_update1, null);
+        builder.setView(dialogView);
+
+        TextView txtMsg = dialogView.findViewById(R.id.txtMsg);
+        TextView txtMsg1 = dialogView.findViewById(R.id.txtMsg1);
+
+        if (i==1){
+            txtMsg.setVisibility(View.VISIBLE);
+            txtMsg1.setVisibility(View.GONE);
+        }else {
+            txtMsg.setVisibility(View.GONE);
+            txtMsg1.setVisibility(View.VISIBLE);
+
+        }
+        txtMsg.setText(msg);
+        ImageView txtclose = dialogView.findViewById(R.id.forgot_closeimage);
+
+
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                alertDialog.dismiss();
+                alertDialog.cancel();
+
+                startActivity(new Intent(BankValidation.this, Profile.class).putExtra("from", "").addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+
+            }
+        });
+
+        builder.setCancelable(true);
+        alertDialog = builder.show();
+        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+    }
 }

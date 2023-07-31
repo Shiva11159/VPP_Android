@@ -64,7 +64,7 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
     TextView tv_nodataavail;
-    LinearLayout linearclientlist;
+//    LinearLayout linearclientlist;
     Handler handler = new Handler();
     Runnable runnable;
     int delay = 2000;
@@ -89,19 +89,42 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
             gson = gsonBuilder.create();
             searchView = (EditText) findViewById(R.id.searchView);
             tv_nodataavail = (TextView) findViewById(R.id.tv_nodataavail);
-            linearclientlist = (LinearLayout) findViewById(R.id.linearclientlist);
+//            linearclientlist = (LinearLayout) findViewById(R.id.linearclientlist);
             mainLayout = findViewById(R.id.mainLayout);
 
 
             listClient = (RecyclerView) findViewById(R.id.listClient);
 
+
+            listClient.setHasFixedSize(true);
             tv_nodataavail.setVisibility(View.GONE);
             searchView.setVisibility(View.GONE);
-            linearclientlist.setVisibility(View.GONE);
+//            linearclientlist.setVisibility(View.GONE);
 
             ssb = new StringBuffer();
             inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", ClientList.this);
             searchView.setVisibility(View.GONE);
+
+
+            try {
+                if (Connectivity.getNetworkState(getApplicationContext())) {
+                    if (Const.isServerConnected == true && Const.isSocketConnected == false) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                ProgressDlgConnectSocket(ClientList.this, connectionProcess, "Server Not Available");
+                            }
+                        });
+                    } else {
+                        sendData();
+                    }
+                }
+
+            } catch (Exception e) {
+
+                AlertDialogClass.ShowMsg(ClientList.this, e.getMessage());
+            }
+
 
         } catch (Exception e) {
             AlertDialogClass.ShowMsg(ClientList.this, e.getMessage());
@@ -195,8 +218,10 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
                     try {
                         if (data.equalsIgnoreCase("[]")) {
                             tv_nodataavail.setVisibility(View.VISIBLE);
-                            linearclientlist.setVisibility(View.GONE);
+                            listClient.setVisibility(View.GONE);
                             ssb.setLength(0);
+                            AlertDialogClass.PopupWindowDismiss();
+
 
                         } else {
                             if (data.endsWith("]")) {
@@ -204,7 +229,7 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
 //                                    clientlistDataArrayList.clear();
                                     tv_nodataavail.setVisibility(View.GONE);
                                     searchView.setVisibility(View.VISIBLE);
-                                    linearclientlist.setVisibility(View.VISIBLE);
+                                    listClient.setVisibility(View.VISIBLE);
                                     clientlistDataArrayList.clear();
                                     JSONArray jsonArray = new JSONArray(data);
 
@@ -221,8 +246,9 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
                                         String LeadNo = jsonObject.getString("LeadNo");
                                         String CustomerName = jsonObject.getString("CustomerName");
                                         String LeadDate = jsonObject.getString("LeadDate");
+                                        String MobileNo = jsonObject.getString("MobileNo");
 
-                                        ClientlistData clientlistData = new ClientlistData(ClientCode, ClientName, ProductName, AccountOpenedDate,LeadNo,CustomerName,LeadDate,"");
+                                        ClientlistData clientlistData = new ClientlistData(MobileNo,ClientCode, ClientName, ProductName, AccountOpenedDate,LeadNo,CustomerName,LeadDate,"");
 
                                         clientlistDataArrayList.add(clientlistData);
                                     }
@@ -235,6 +261,9 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
                                     listClient.setVisibility(View.VISIBLE);
                                     listClient.setLayoutManager(new LinearLayoutManager(ClientList.this));
                                     listClient.setAdapter(clientListAdapter);
+                                    //clientListAdapter.setHasStableIds(true);
+
+//                                    clientListAdapter.notifyDataSetChanged();
                                     ssb.setLength(0);
 
                                 } catch (Exception e) {
@@ -246,7 +275,7 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
 
 
                         if (listClient.getVisibility() == View.VISIBLE || tv_nodataavail.getVisibility()==View.VISIBLE) {
-                            AlertDialogClass.PopupWindowDismiss();
+                            //AlertDialogClass.PopupWindowDismiss();
 
                         }
 
@@ -439,24 +468,6 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
     protected void onResume() {
         connectionProcess = (ConnectionProcess) this;
 
-        try {
-            if (Connectivity.getNetworkState(getApplicationContext())) {
-                if (Const.isServerConnected == true && Const.isSocketConnected == false) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            ProgressDlgConnectSocket(ClientList.this, connectionProcess, "Server Not Available");
-                        }
-                    });
-                } else {
-                    sendData();
-                }
-            }
-
-        } catch (Exception e) {
-
-            AlertDialogClass.ShowMsg(ClientList.this, e.getMessage());
-        }
         ///added this lines extra by shiva ....
         handler.postDelayed(runnable = new Runnable() {
             @Override
@@ -578,7 +589,7 @@ public class ClientList extends NavigationDrawer implements RequestSent, Connect
     private void filter(String text) {
         ArrayList<ClientlistData> filteredList = new ArrayList<>();
         for (ClientlistData item : clientlistDataArrayList) {
-            if (item.ClientName.toLowerCase().contains(text.toLowerCase())) {
+            if (item.ClientName.toLowerCase().contains(text.toLowerCase())||item.MobileNo.toLowerCase().contains(text.toLowerCase())) {
                 filteredList.add(item);
             }
         }

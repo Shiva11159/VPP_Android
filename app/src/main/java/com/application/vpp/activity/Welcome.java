@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.TextView;
@@ -24,6 +25,7 @@ import com.application.vpp.Interfaces.ConnectionProcess;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.Logics;
+import com.application.vpp.ReusableLogics.Methods;
 import com.application.vpp.SharedPref.SharedPref;
 import com.application.vpp.Views.Views;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
@@ -35,21 +37,22 @@ import org.json.JSONObject;
 import mehdi.sakout.fancybuttons.FancyButton;
 
 public class Welcome extends AppCompatActivity implements RequestSent, ConnectionProcess {
-    TextView txtName, txtMobile, txtVppId, txtCity, txtProfilePan, txtProfileEmail, txt_Dob;
+    TextView txtName, txt_version, txtMobile, txtVppId, txtCity, txtProfilePan, txtProfileEmail, txt_Dob;
     public static Handler handlerWelcome;
     int isSignup;
     byte[] data = null;
     ProgressDialog ringProgressDialog;
     CheckBox chkIagree;
-    FancyButton btnStartReferring;
+    Button btnStartReferring;
     TextView txtTermsConditions;
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
     public static final String PREFS_NAME = "LoginPrefs";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_welcome);
+        setContentView(R.layout.activity_welcome1);
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
 
@@ -58,21 +61,23 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
         if (getIntent().getExtras() != null) {
             isSignup = getIntent().getExtras().getInt("issignup", 0);
             SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-            SharedPreferences.Editor editor  = settings.edit();
+            SharedPreferences.Editor editor = settings.edit();
             editor.putString("logged", "logged").apply();
             editor.commit();
         }
 
+        txt_version = (TextView) findViewById(R.id.txt_version);
+        txt_version.setText("v"+Methods.getVersionInfo(Welcome.this));
         txtName = (TextView) findViewById(R.id.txtProfileName);
         txtVppId = (TextView) findViewById(R.id.txtVppId);
         txtMobile = (TextView) findViewById(R.id.txtMobile);
         txtProfileEmail = (TextView) findViewById(R.id.txtProfileEmail);
         //txtCity = (TextView)findViewById(R.id.txtProfileCity);
         txtProfilePan = (TextView) findViewById(R.id.txtProfilePan);
-        chkIagree = (CheckBox) findViewById(R.id.imgCheckTerms);
-        btnStartReferring = (FancyButton) findViewById(R.id.btnStartReferring);
-        txtTermsConditions = (TextView) findViewById(R.id.txtIagree);
-        //  txt_Dob=(TextView)findViewById(R.id.txt_Dob);
+//        chkIagree = (CheckBox) findViewById(R.id.imgCheckTerms);
+        btnStartReferring = (Button) findViewById(R.id.btnStartReferring);
+//        txtTermsConditions = (TextView) findViewById(R.id.txtIagree);
+//        //  txt_Dob=(TextView)findViewById(R.id.txt_Dob);
 //        btnStartReferring.setClickable(false);
 //        btnStartReferring.setEnabled(false);
 
@@ -117,7 +122,6 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
                         //  Intent intent = new Intent(Welcome.this,DashoboardDesign.class);
                         startActivity(intent);
                     } else if (isSignup == 1) {
-
                         Intent intent = new Intent(Welcome.this, UploadDocScreen.class);
                         //  Intent intent = new Intent(Welcome.this,DashoboardDesign.class);
                         intent.putExtra("from","");
@@ -133,7 +137,10 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
 //        ringProgressDialog.setCancelable(false);
 //        ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
 
-        sendData();
+
+        if (Logics.getVppId(Welcome.this)==null){
+         //   sendData();
+        }
 
 //        if (Connectivity.getNetworkState(this)) {
 //            if (Const.isSocketConnected) {
@@ -143,6 +150,19 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
 //
 //            }
 //        }
+
+
+
+      String  mobile = SharedPref.getPreferences(Welcome.this,"mobileNo");
+
+       String email = SharedPref.getPreferences(Welcome.this,"email");
+
+       txtVppId.setText(Logics.getVppId(Welcome.this));
+        txtName.setText(Logics.getVppName(Welcome.this));
+        //  txtCity.setText(city);
+        txtMobile.setText(mobile);
+        txtProfilePan.setText(Logics.getPanNo(Welcome.this));
+        txtProfileEmail.setText(email);
 
     }
 
@@ -168,6 +188,7 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
                     String data = (String) msg.obj;
                     Log.e("vppDetails", "handleMessage: " + data);
                     try {
+
                         JSONObject jsonObject = new JSONObject(data);
                         String name = jsonObject.getString("name");
                         String city = jsonObject.getString("city");
@@ -177,6 +198,9 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
                         String pan_no = jsonObject.getString("pan_no");
 
                         Logics.setVppDetails(Welcome.this, name, mobile, email, city, vppid, pan_no);
+
+                        Logics.setmobileNo(Welcome.this, mobile);  //save mble no ..
+
 
                         txtVppId.setText(vppid);
                         txtName.setText(name);
@@ -218,38 +242,38 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
         }
     }
 
-    private void sendData() {
-
-        ringProgressDialog = ProgressDialog.show(Welcome.this, "Please wait ...", "Loading Your Data ...", true);
-        ringProgressDialog.setCancelable(true);
-        ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
-        try {
-
-            String imei = Logics.getDeviceID(this);
-            String ip = Logics.getSimId(this);
-            if (android.os.Build.VERSION.SDK_INT >= 29) {
-                imei = Logics.getTokenID(Welcome.this);
-                ip = "12345";
-            }
-            String pan = Logics.getLoginPan(Welcome.this);
-            JSONObject jsonObject = new JSONObject();
-//            jsonObject.put("imei",imei);
-//            jsonObject.put("page",1);
-//            jsonObject.put("size",10);
-//            jsonObject.put("imei",imei);//change here pan no in req
-            jsonObject.put("pannum", pan);
-            //  jsonObject.put("simNo","1111111111111111111111");
-
-            byte data[] = jsonObject.toString().getBytes();
-
-            //   new SendTOServer(ClientList.this,ClientList.this, Const.MSGFETCHCLIENTLIST,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-            new SendTOServer(Welcome.this, Welcome.this, Const.MSGFETCHVPPDETAILS, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        } catch (JSONException e) {
-            e.printStackTrace();
-            FirebaseCrashlytics.getInstance().recordException(e);
-        }
-
-    }
+//    private void sendData() {
+//
+//        ringProgressDialog = ProgressDialog.show(Welcome.this, "Please wait ...", "Loading Your Data ...", true);
+//        ringProgressDialog.setCancelable(true);
+//        ringProgressDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
+//        try {
+//
+//            String imei = Logics.getDeviceID(this);
+//            String ip = Logics.getSimId(this);
+//            if (android.os.Build.VERSION.SDK_INT >= 29) {
+//                imei = Logics.getTokenID(Welcome.this);
+//                ip = "12345";
+//            }
+//            String pan = Logics.getLoginPan(Welcome.this);
+//            JSONObject jsonObject = new JSONObject();
+////            jsonObject.put("imei",imei);
+////            jsonObject.put("page",1);
+////            jsonObject.put("size",10);
+////            jsonObject.put("imei",imei);//change here pan no in req
+//            jsonObject.put("pannum", pan);
+//            //  jsonObject.put("simNo","1111111111111111111111");
+//
+//            byte data[] = jsonObject.toString().getBytes();
+//
+//            //   new SendTOServer(ClientList.this,ClientList.this, Const.MSGFETCHCLIENTLIST,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//            new SendTOServer(Welcome.this, Welcome.this, Const.MSGFETCHVPPDETAILS, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//            FirebaseCrashlytics.getInstance().recordException(e);
+//        }
+//
+//    }
 
     @Override
     public void connected() {
@@ -257,17 +281,17 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
             ringProgressDialog.dismiss();
         }
         //        AlertDailog.ProgressDlgDiss();
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (Connectivity.getNetworkState(getApplicationContext()))
-                    sendData();
-            }
-            //    else
-//                    Views.SweetAlert_NoDataAvailble(Welcome.this,"No Internet");
-                   // TastyToast.makeText(Welcome.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
-         //   }
-        });
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (Connectivity.getNetworkState(getApplicationContext()))
+//                    sendData();
+//            }
+//            //    else
+////                    Views.SweetAlert_NoDataAvailble(Welcome.this,"No Internet");
+//            // TastyToast.makeText(Welcome.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+//            //   }
+//        });
     }
 
     @Override
@@ -324,7 +348,7 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
-                        if (Const.dismiss==true){
+                        if (Const.dismiss == true) {
                             if (Const.isServerConnected == true && Const.isSocketConnected == false) {
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -335,7 +359,7 @@ public class Welcome extends AppCompatActivity implements RequestSent, Connectio
                             }
                         }
                     }
-                },1000);
+                }, 1000);
             }
         });
     }

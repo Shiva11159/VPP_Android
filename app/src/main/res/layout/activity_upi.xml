@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:id="@+id/relative1"
     xmlns:fancy="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relative1"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.application.vpp.activity.Dashboard">
 
     <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/toolbar"
+        android:visibility="gone"
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
@@ -28,14 +30,13 @@
                 android:background="@null"
                 android:backgroundTint="@color/white"
                 android:src="@drawable/rupee"
-                app:tint="@color/white">
-            </ImageButton>
+                app:tint="@color/white"></ImageButton>
 
             <TextView
                 android:id="@+id/toolbartextviewfrom_to"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Registration Fees"
+                android:text="Registration Fee"
                 android:textColor="@color/white"
                 android:textSize="@dimen/dimen_20dp"
                 android:textStyle="bold" />
@@ -49,6 +50,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar"
+        android:layout_margin="5dp"
+        app:cardElevation="1dp"
 
         >
 
@@ -75,6 +78,31 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/txt_version"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:text=""
+                        android:gravity="right"
+                        android:textColor="@color/gray900"
+                        android:layout_margin="10dp"
+                        android:fontFamily="@font/lreg"
+
+                        android:layout_gravity="left"
+                        android:layout_marginTop="50dp"
+                        ></TextView>
+
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="35dp"
+                        android:id="@+id/image"
+                        android:layout_gravity="left"
+                        android:src="@drawable/alertlogo">
+                    </ImageView>
+
+
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -100,9 +128,22 @@
                                 android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:background="@color/gray50" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:id="@+id/txt_title"
+                                android:textColor="@color/venturanew"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:textStyle="bold"
+                                android:fontFamily="@font/lbold"
+                                android:textSize="15dp"
+                                android:text=""/>
+
+
 
                             <TextView
-                                android:id="@+id/txt_title"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -127,16 +168,17 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
+                    app:cardBackgroundColor="@color/gray200"
+
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/toolbar"
-                    android:background="@color/white"
                     app:cardElevation="5dp">
 
                     <LinearLayout
                         android:id="@+id/lin1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
+                        android:layout_margin="1dp"
                         android:background="@color/white"
                         android:orientation="horizontal">
 
@@ -147,13 +189,14 @@
                             android:layout_margin="5dp"
                             android:orientation="vertical">
 
-                            <EditText android:textAllCaps="true"
+                            <EditText
                                 android:id="@+id/editText_Vppid"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:background="@color/white"
                                 android:hint="Enter VPPID"
                                 android:padding="10dp"
+                                android:textAllCaps="true"
                                 android:visibility="gone">
 
                             </EditText>
@@ -176,10 +219,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="10dp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/opensans_light"
                                     android:gravity="left"
+                                    android:fontFamily="@font/lreg"
                                     android:text="UPI ID :"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -190,7 +233,7 @@
                                     android:layout_alignParentEnd="true"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="VENTURA72924@ICICI"
                                     android:textColor="@color/black"
@@ -221,9 +264,10 @@
                                     android:layout_height="wrap_content"
                                     android:layout_marginLeft="7dp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/opensans_light"
+
+                                    android:fontFamily="@font/lreg"
                                     android:text="BENEFICIARY NAME:"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
 
                                     android:textSize="12dp" />
 
@@ -234,7 +278,7 @@
                                     android:layout_gravity="right"
                                     android:layout_marginRight="7dp"
                                     android:layout_weight="1"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="VENTURA SECURITIES LTD"
                                     android:textColor="@color/black"
@@ -264,9 +308,9 @@
                                     android:id="@+id/bank"
                                     style="@style/lumpsumLeft"
                                     android:layout_weight="0.5"
-                                    android:fontFamily="@font/opensans_light"
                                     android:text="BANK ACC NO :"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
+                                    android:fontFamily="@font/lreg"
 
                                     android:textSize="12dp" />
 
@@ -277,7 +321,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="2.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="000405072924"
                                     android:textColor="@color/black"
@@ -308,9 +352,9 @@
                                     android:id="@+id/ifsc"
                                     style="@style/lumpsumLeft"
                                     android:layout_weight="0.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:text="IFSC CODE :"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
 
                                     android:textSize="12dp" />
 
@@ -321,7 +365,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="2.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="ICIC0000004"
                                     android:textColor="@color/black"
@@ -353,9 +397,9 @@
                                     android:id="@+id/bank_name"
                                     style="@style/lumpsumLeft"
                                     android:layout_weight="0.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:text="BANK NAME :"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
 
                                     android:textSize="12dp" />
 
@@ -366,7 +410,7 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="2.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="ICICI BANK LTD"
                                     android:textColor="@color/black"
@@ -397,9 +441,9 @@
                                     android:id="@+id/barnch_name"
                                     style="@style/lumpsumLeft"
                                     android:layout_weight="0.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:text="BRANCH :"
-                                    android:textColor="@color/black"
+                                    android:textColor="@color/venturanew"
                                     android:textSize="12dp" />
 
                                 <TextView
@@ -409,57 +453,187 @@
                                     android:layout_marginLeft="10dp"
                                     android:layout_marginRight="10dp"
                                     android:layout_weight="2.5"
-                                    android:fontFamily="@font/opensans_light"
+                                    android:fontFamily="@font/lreg"
                                     android:gravity="right"
                                     android:text="NARIMAN POINT"
                                     android:textColor="@color/black"
                                     android:textSize="12dp" />
 
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/linearpromo"
+                                android:background="@drawable/rect"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/dimen_10"
+                                android:orientation="vertical"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp"
+                                    tools:context=".Activity">
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/black" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/catarena"
+                                        android:gravity="left"
+                                        android:text="Registration fee"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/venturanew"
+                                        android:textSize="14dp" />
+
+                                    <TextView
+                                        android:id="@+id/tx_actualfare"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/catarena"
+                                        android:gravity="right"
+                                        android:text="1233333"
+                                        android:textColor="@color/green900"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:orientation="horizontal"
+                                    android:padding="5dp"
+                                    tools:context=".Activity">
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="match_parent"
+                                        android:background="@color/black" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/catarena"
+                                        android:gravity="left"
+                                        android:text="Promocode"
+                                        android:textAllCaps="true"
+                                        android:textColor="@color/venturanew"
+                                        android:textSize="14dp" />
+
+                                    <TextView
+                                        android:id="@+id/tx_discountfare"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentTop="true"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginRight="10dp"
+                                        android:layout_weight="1"
+                                        android:fontFamily="@font/catarena"
+                                        android:gravity="right"
+                                        android:text="1211"
+                                        android:textColor="@color/red"
+                                        android:textSize="14dp" />
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="1dp"
+                                    android:background="@color/gray300" />
+
+                                <TextView
+                                    android:id="@+id/tx_finalfare"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:fontFamily="@font/lreg"
+                                    android:gravity="right"
+                                    android:text="@string/alreadyuserwhite"
+                                    android:padding="8dp"
+                                    android:textColor="@color/green600"
+                                    android:textSize="14dp"
+                                    android:visibility="visible" />
 
                             </LinearLayout>
-                           <LinearLayout
-                               android:visibility="gone"
-                               android:layout_width="match_parent"
-                               android:orientation="horizontal"
-                               android:layout_marginTop="10dp"
-                               android:layout_height="wrap_content">
 
-                               <EditText
-                                   android:id="@+id/et_promocode"
-                                   android:padding="10dp"
-                                   android:layout_weight="1"
-                                   android:background="@drawable/rect"
-                                   android:layout_width="match_parent"
-                                   android:layout_height="wrap_content"
-                                   android:hint="Enter Promocode" />
-
-                               <TextView
-                                   android:layout_weight="3"
-                                   android:id="@+id/txt_apply"
-                                   android:layout_width="match_parent"
-                                   android:layout_gravity="center"
-                                   android:gravity="center|right"
-                                   android:layout_marginRight="10dp"
-                                   android:layout_height="wrap_content"
-                                   android:text="Apply"
-                                   android:textSize="20dp"
-                                   android:fontFamily="@font/opensans_semibold"
-                                   android:textColor="@color/ventura_color"
-                                   android:visibility="visible" />
-
-                           </LinearLayout>
-                            <TextView
+                            <LinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_gravity="center"
-                                android:gravity="left"
                                 android:layout_height="wrap_content"
-                                android:text="Promocodes applied successfully."
-                                android:layout_marginTop="5dp"
-                                android:textSize="15dp"
-                                android:fontFamily="@font/opensans_regular"
-                                android:textColor="@color/green500"
+                                android:layout_marginTop="15dp"
+                                android:orientation="horizontal"
+                                android:visibility="gone">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:orientation="horizontal">
+
+                                    <EditText
+                                        android:id="@+id/et_promocode"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="@dimen/dimen_40"
+                                        android:layout_gravity="center"
+                                        android:layout_weight="1"
+                                        android:textColor="@color/green900"
+                                        android:background="@drawable/selector"
+                                        android:fontFamily="@font/lreg"
+                                        android:hint="Enter Promocode"
+                                        android:textSize="15dp" />
+                                </LinearLayout>
+
+
+                                <TextView
+                                    android:id="@+id/txt_apply"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_weight="3"
+                                    android:fontFamily="@font/lbold"
+                                    android:gravity="center|right"
+                                    android:text="APPLY"
+                                    android:textAllCaps="true"
+                                    android:textColor="@color/ventura_color"
+                                    android:textSize="12dp"
+                                    android:visibility="visible" />
+
+
+                            </LinearLayout>
+
+                            <ProgressBar
+                                android:id="@+id/progress_bar"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
                                 android:visibility="gone" />
 
+                            <TextView
+                                android:id="@+id/tx_promotext"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="15dp"
+                                android:background="@drawable/roundback"                                android:fontFamily="@font/opensans_regular"
+                                android:gravity="left"
+                                android:padding="8dp"
+                                android:text="Promocodes applied successfully."
+                                android:textColor="@color/green500"
+                                android:textSize="13dp"
+                                android:visibility="gone" />
                         </LinearLayout>
 
                     </LinearLayout>
@@ -530,7 +704,7 @@
                 android:fontFamily="sans-serif-condensed"
                 android:gravity="center"
                 android:padding="5dp"
-                android:text="One time Registration fees \n to become Partner Rs.2124/-"
+                android:text="One time Registration fee \n to become Partner Rs.2124/-"
                 android:textColor="@color/black"
                 android:textSize="15dp" />
 
@@ -548,25 +722,24 @@
         android:orientation="vertical">
 
         <CheckBox
-            android:layout_width="wrap_content"
             android:id="@+id/checkbox_gst"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_20"
-            android:layout_marginBottom="@dimen/dimen_20"
-            android:text="would you like to claim GST ?"
-            android:fontFamily="@font/opensans_light"
-            android:layout_height="wrap_content"></CheckBox>
+            android:fontFamily="@font/lreg"
+            android:text="would you like to claim GST ?"></CheckBox>
 
         <mehdi.sakout.fancybuttons.FancyButton
             android:id="@+id/buttonRazorpay1"
             android:layout_width="match_parent"
-            android:layout_margin="15dp"
-
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
 
+            android:layout_alignParentBottom="true"
+            android:layout_margin="15dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="25dp"
+
+            android:layout_marginRight="10dp"
             android:paddingLeft="20dp"
             android:paddingTop="10dp"
             android:paddingRight="20dp"
@@ -586,9 +759,9 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_20dp"
             android:layout_marginRight="@dimen/dimen_20dp"
-            android:layout_weight="1"
-
             android:layout_marginBottom="10dp"
+
+            android:layout_weight="1"
             android:background="@drawable/buttonback1"
             android:fontFamily="@font/opensans_light"
             android:textColor="@color/white"
@@ -617,9 +790,9 @@
             android:fontFamily="@font/opensans_light"
             android:gravity="center"
             android:text="Pay Later"
-            android:visibility="gone"
             android:textColor="@color/black"
             android:textSize="15dp"
+            android:visibility="gone"
 
             />
 

@@ -96,7 +96,7 @@ public class UpdateOtpVerify extends AppCompatActivity implements RequestSent, V
     public void VerifyMoblieOtp() {
         strMobOtp = edt_mob_otp.getText().toString().toUpperCase();
         if (strMobOtp.matches(mobileOtp)) {
-            Toast.makeText(UpdateOtpVerify.this, " Mobile Otp Verified", Toast.LENGTH_LONG).show();
+            Toast.makeText(UpdateOtpVerify.this, " Mobile number verified", Toast.LENGTH_LONG).show();
             txt_resend_mob.setVisibility(View.VISIBLE);
             txt_resend_mob.setText("Your mobile number is verified");
             txt_resend_mob.setTextColor(getResources().getColor(R.color.btn_active));
@@ -122,7 +122,7 @@ public class UpdateOtpVerify extends AppCompatActivity implements RequestSent, V
     public void VerifyEmailOtp() {
         strEmailOtp = edt_email_otp.getText().toString().toUpperCase();
         if (strEmailOtp.matches(emailOtp)) {
-            Toast.makeText(UpdateOtpVerify.this, " Email Otp Verified", Toast.LENGTH_LONG).show();
+            Toast.makeText(UpdateOtpVerify.this, " Email id verified", Toast.LENGTH_LONG).show();
             txt_email_resend.setVisibility(View.VISIBLE);
             txt_email_resend.setText("Your Email id is verified");
             txt_email_resend.setTextColor(getResources().getColor(R.color.btn_active));

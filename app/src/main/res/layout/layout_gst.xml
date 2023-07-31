@@ -54,8 +54,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:textStyle="bold"
-                android:fontFamily="sans-serif-condensed"
-                android:textSize="25dp"
+                android:fontFamily="@font/lreg"
+                android:textSize="@dimen/dimen_20"
                 android:text="Enter GST Details"/>
 
         </LinearLayout>
@@ -63,14 +63,15 @@
         <EditText
             android:id="@+id/et_gstNo"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/dimen_40"
             android:singleLine="true"
             android:paddingLeft="15dp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/rect1"
             android:textSize="15dp"
             android:maxLength="15"
-            android:textColorHint="@color/black"
-            android:fontFamily="@font/opensans_light"
+            android:textColorHint="@color/gray700"
+            android:fontFamily="@font/opensans_regular"
             android:hint="Enter GST number *"
             android:inputType="text"
             android:textColor="@color/black" />
@@ -80,13 +81,15 @@
             android:textSize="15dp"
             android:id="@+id/et_gstName"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/dimen_40"
             android:singleLine="true"
             android:paddingLeft="10dp"
             android:maxLength="100"
-            android:layout_marginTop="20dp"
-            android:textColorHint="@color/black"
-            android:fontFamily="@font/opensans_light"
+            android:background="@drawable/rect1"
+
+            android:layout_marginTop="15dp"
+            android:textColorHint="@color/gray700"
+            android:fontFamily="@font/opensans_regular"
             android:hint="Company name *"
             android:inputType="text"
             android:textColor="@color/black" />
@@ -96,12 +99,14 @@
             android:textSize="15dp"
             android:id="@+id/et_gstAddress"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/dimen_40"
             android:singleLine="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:paddingLeft="10dp"
-            android:fontFamily="@font/opensans_light"
-            android:textColorHint="@color/black"
+            android:background="@drawable/rect1"
+
+            android:fontFamily="@font/opensans_regular"
+            android:textColorHint="@color/gray700"
             android:hint="Company address * "
             android:maxLength="250"
             android:textColor="@color/black" />
@@ -113,9 +118,9 @@
             android:gravity="center"
             android:layout_marginTop="20dp"
             android:layout_gravity="center"
-            android:background="@drawable/buttonback1"
+            android:background="@drawable/button_"
             android:text="Proceed"
-            android:fontFamily="@font/opensans_light"
+            android:fontFamily="@font/opensans_regular"
             android:textStyle="bold"
             android:textColor="@color/white"/>
 

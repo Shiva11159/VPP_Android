@@ -54,7 +54,7 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
     RequestSent requestSent;
     public static Handler handlerSubpartner;
     TextView tv_nodataavail;
-    LinearLayout linearsubcategory;
+//    LinearLayout linearsubcategory;
     EditText searchView;
 //    ProgressDialog ringProgressDialog;
     SubPartnerAdapter subPartnerAdapter;
@@ -78,7 +78,7 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
         tv_nodataavail = (TextView) findViewById(R.id.tv_nodataavail);
-        linearsubcategory = (LinearLayout) findViewById(R.id.linearsubcategory);
+//        linearsubcategory = (LinearLayout) findViewById(R.id.linearsubcategory);
         searchView = (EditText) findViewById(R.id.searchView);
         listsubcategory = (RecyclerView) findViewById(R.id.listsubcategory);
         mainlayout =  findViewById(R.id.mainlayout);
@@ -132,7 +132,6 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
 //        ringProgressDialog = Views.showDialog(this);
         AlertDialogClass.PopupWindowShow(SubPatnerActivity.this, mainlayout);
 
-
         try {
 
 //            String imei;
@@ -150,10 +149,10 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
 //            jsonObject.put("page",1);
 //            jsonObject.put("size",10);
 
-            //String vppid = Logics.getVppId(SubPatnerActivity.this);
+//            String vppid = Logics.getVppId(SubPatnerActivity.this);
 
+//            jsonObject.put("VPPID", vppid);   /*72686*/
             jsonObject.put("VPPID", vppid);   /*72686*/
-//            jsonObject.put("VPPID", "72686");   /*72686*/
             jsonObject.put("reportType", "SubPartner");
 
             byte data[] = jsonObject.toString().getBytes();
@@ -359,10 +358,10 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
                     try {
                         if (data.equalsIgnoreCase("[]")) {
                             tv_nodataavail.setVisibility(View.VISIBLE);
-                            linearsubcategory.setVisibility(View.GONE);
+                            listsubcategory.setVisibility(View.GONE);
                         } else {
                             tv_nodataavail.setVisibility(View.GONE);
-                            linearsubcategory.setVisibility(View.VISIBLE);
+                            listsubcategory.setVisibility(View.VISIBLE);
                             JSONArray jsonArray = new JSONArray(data);
                             for (int i = 0; i < jsonArray.length(); i++) {
 

@@ -19,18 +19,22 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.CycleInterpolator;
+import android.view.animation.TranslateAnimation;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
 import com.application.vpp.ClientServer.ConnectTOServer;
@@ -86,7 +90,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     boolean checkcreateorder = false;
     boolean checkamount = false;
     JSONObject jsonObjectresponse, jsonObjectrequest;
-    String amount_str = "", creatorderid, order_id, paymentId, orderId, signature;
+    String amount_str = "", amount_strActual = "", creatorderid, order_id, paymentId, orderId, signature;
     FragmentManager fm = getSupportFragmentManager();
 
     @BindView(R.id.pay_later)
@@ -103,6 +107,9 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
     @BindView(R.id.btnTechprocess)
     Button btnTechprocess;
+
+    @BindView(R.id.progress_bar)
+    ProgressBar progress_bar;
 
     @BindView(R.id.linearlayout_upipayment)
     LinearLayout linearlayout_upipayment;
@@ -122,6 +129,25 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     @BindView(R.id.txt_apply)
     TextView txt_apply;
 
+    @BindView(R.id.tx_promotext)
+    TextView tx_promotext;
+
+    @BindView(R.id.linearpromo)
+    LinearLayout linearpromo;
+
+    @BindView(R.id.tx_actualfare)
+    TextView tx_actualfare;
+
+    @BindView(R.id.tx_discountfare)
+    TextView tx_discountfare;
+
+    @BindView(R.id.tx_finalfare)
+    TextView tx_finalfare;
+
+//
+//
+//
+//
 
     ConfirmPayment confirmPayment;
     //private static final int TEZ_REQUEST_CODE = 123;
@@ -236,6 +262,51 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
         // v = BigDecimal.valueOf(Long.valueOf(SharedPref.getPreferences(UpiPayment.this,"amount")),2);
         //String totalamount = String.format("%.2f",v);
 
+
+        txt_apply.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (txt_apply.getText().toString().trim().equalsIgnoreCase("APPLY")) {
+                    if (et_promocode.getText().toString().equalsIgnoreCase("")) {
+                        TastyToast.makeText(getApplicationContext(), "Please enter promocode.", TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                        et_promocode.startAnimation(shakeError());
+                        tx_promotext.setVisibility(View.GONE);
+                    } else {
+                        CALL_Promocode(et_promocode.getText().toString());
+                        tx_promotext.setVisibility(View.GONE);
+                    }
+
+                    linearpromo.setVisibility(View.GONE);
+
+                    //FareMethod(amount_strActual);
+
+                } else {
+                    txt_apply.setText("APPLY");
+                    tx_promotext.setText("Promocode removed");
+                    tx_promotext.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    txt_apply.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.main_green_color));
+                    tx_promotext.setVisibility(View.VISIBLE);
+                    FareMethod(amount_strActual);
+
+                    //promo linear.
+                    linearpromo.setVisibility(View.VISIBLE);
+                    tx_actualfare.setText(Integer.parseInt(amount_str)/100+"");
+                    tx_discountfare.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                    tx_discountfare.setText("removed");
+                    tx_finalfare.setText("Payable fee : "+Integer.parseInt(amount_str)/100+"");
+
+
+                }
+            }
+        });
+
+    }
+
+    public TranslateAnimation shakeError() {
+        TranslateAnimation shake = new TranslateAnimation(0, 10, 0, 0);
+        shake.setDuration(500);
+        shake.setInterpolator(new CycleInterpolator(7));
+        return shake;
     }
 
     //only for android 11
@@ -259,21 +330,11 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     public void onClick(View view) {
         int id = view.getId();
         switch (id) {
-            case R.id.et_promocode: {
-                linearlayout_upipayment.setVisibility(View.VISIBLE);
-            }
-            break;
+//            case R.id.et_promocode: {
+//                linearlayout_upipayment.setVisibility(View.VISIBLE);
+//            }
+//            break;
 
-            case R.id.txt_apply: {
-                linearlayout_upipayment.setVisibility(View.VISIBLE);
-
-                if (et_promocode.getText().toString().equalsIgnoreCase("")) {
-
-                } else {
-
-                }
-            }
-            break;
 
             case R.id.button: {
                 linearlayout_upipayment.setVisibility(View.VISIBLE);
@@ -749,6 +810,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 //        //intent.putExtra("isPaymentDone",1);
 //        startActivity(intent);
 
+        SharedPref.savePreferences(getApplicationContext(), SharedPref.UPIPayment1, SharedPref.UPIPaymentDONE);
+
         if (Logics.getEsignStatus(UpiPayment.this).equalsIgnoreCase("0")) {
             Intent intent = new Intent(UpiPayment.this, PhotoVideoSignatureActivity.class);
             startActivity(intent);
@@ -824,13 +887,14 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                             callamount = true;
                             amount_str = jsonObject.getString("amount");
 //                            amount_str = "100";
-                            SharedPref.savePreferences(UpiPayment.this, SharedPref.amount, amount_str);
-                            txt_title.setText("One time Registration fees \n to become Partner Rs." + Integer.parseInt(amount_str) / 100);
-                            //btnTechprocess.setVisibility(View.VISIBLE);
+                            amount_strActual = amount_str;
 
+                            FareMethod(amount_str);
+
+                            //btnTechprocess.setVisibility(View.VISIBLE);
                         } else {
                             callamount = false;
-                            Toast.makeText(UpiPayment.this, "amount fetch falied..", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(UpiPayment.this, "amount fetch failed..", Toast.LENGTH_SHORT).show();
                         }
 
                     } catch (Exception e) {
@@ -838,6 +902,7 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                         FirebaseCrashlytics.getInstance().recordException(e);
                         Toast.makeText(UpiPayment.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
                     }
+
                     break;
 
                 case Const.MSGCallPromocode:
@@ -845,24 +910,62 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                        /* pDialog.dismiss();
                         pDialog.cancel();*/
 
-                        AlertDialogClass.PopupWindowDismiss();
+                        Methods.hideKeyboard(UpiPayment.this, tx_promotext);
+                        progress_bar.setVisibility(View.GONE);
                         checkamount = true;
 
                         Log.e("promoResponse", data);
                         JSONObject jsonObject = new JSONObject(data);
 
-
                         if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                             Log.e("promoResponse", "success");
-
-                            JSONArray jsonArray = jsonObject.getJSONArray("promocodedata");
-                            JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                            String jsonArray = jsonObject.getString("promocodedata");
+                            JSONArray jsonArray1 = new JSONArray(jsonArray);
+                            JSONObject jsonObject1 = jsonArray1.getJSONObject(0);
                             String discount = jsonObject1.getString("discount");
                             String is_active = jsonObject1.getString("is_active");
-                            String message = jsonObject1.getString("message");
+
+                            Log.e("discountAmount: ", discount);
+
+                            // need to add discount method here..
+
+                            if (is_active.trim().equalsIgnoreCase("Y")) {
+                                tx_promotext.setText("Promocode applied successfully");
+                                tx_promotext.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.main_green_color));
+                                txt_apply.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                                txt_apply.setText("REMOVE");
+                                tx_promotext.setVisibility(View.VISIBLE);
+
+                                int discountfinalfare = Integer.parseInt(amount_str) - Integer.parseInt(discount);
+                                FareMethod(String.valueOf(discountfinalfare));
+
+                                //promo linear ..
+                                linearpromo.setVisibility(View.VISIBLE);
+                                tx_actualfare.setText(Integer.parseInt(amount_str)/100+"");
+                                tx_discountfare.setText("-"+Integer.parseInt(discount)/100+"");
+                                tx_finalfare.setText("Payable fee : "+discountfinalfare/100+"");
+
+                            } else {
+                                tx_promotext.setVisibility(View.VISIBLE);
+                                tx_promotext.setText("Promocode expired");
+                                tx_promotext.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                                txt_apply.setText("APPLY");
+                                FareMethod(amount_strActual);
+                                linearpromo.setVisibility(View.GONE);
+
+//                                tx_actualfare.setText(amount_str);
+//                                tx_discountfare.setText(discount);
+//                                tx_finalfare.setText(discountfinalfare);
+
+                            }
 
                         } else {
+                            tx_promotext.setText("Promocode not available");
                             Log.e("promoResponse", "failure");
+                            txt_apply.setText("APPLY");
+                            tx_promotext.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.red));
+                            tx_promotext.setVisibility(View.VISIBLE);
+                            FareMethod(amount_strActual);
 
                         }
 
@@ -870,6 +973,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
                         Log.e("exception", e.getMessage());
                         FirebaseCrashlytics.getInstance().recordException(e);
                         Toast.makeText(UpiPayment.this, "" + e.toString(), Toast.LENGTH_SHORT).show();
+                        FareMethod(amount_strActual);
+
                     }
                     break;
                 case Const.MSG_GST:
@@ -1339,8 +1444,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
             Log.e("promoRequest", jsonObject.toString());
             byte data[] = jsonObject.toString().getBytes();
-
-            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
+            progress_bar.setVisibility(View.VISIBLE);
+//            AlertDialogClass.PopupWindowShow(UpiPayment.this, relative1);
             new SendTOServer(UpiPayment.this, requestSent, Const.MSGCallPromocode, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            pDialog.dismiss();
@@ -1595,7 +1700,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
 
                 jsonObject.put("vpp_id", vpp_id);
 
-                jsonObject.put("amount", amount_str);
+                //create order..
+                jsonObject.put("amount", SharedPref.getPreferences(UpiPayment.this, SharedPref.amount));
                 jsonObject.put("currency", "INR");
                 jsonObject.put("receipt", "order_rcpid_101"); // order id generated at server and created date too.
                 jsonObject.put("payment_capture", "true");
@@ -1665,6 +1771,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             options.put("image", "https://s3.amazonaws.com/rzp-mobile/images/rzp.png");
             // options.put("image", getResources().getDrawable(R.drawable.vpp_logo));
             options.put("currency", "INR");
+
+            //payment screen
             options.put("amount", SharedPref.getPreferences(getApplicationContext(), SharedPref.amount));// amount in paisa
             options.put("order_id", id);
             options.put("vpp_id", Logics.getVppId(UpiPayment.this));
@@ -1736,6 +1844,8 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
             jsonObject.put("razorpay_order_id", orderId);
             jsonObject.put("signature_by_checkout", signature);
             jsonObject.put("vpp_id", Logics.getVppId(UpiPayment.this));
+
+            ///signature..
             jsonObject.put("amount", SharedPref.getPreferences(getApplicationContext(), SharedPref.amount));
             jsonObject.put("client_state", state_str);
             jsonObject.put("pan_no", Logics.getPanNo(this));
@@ -1864,4 +1974,14 @@ public class UpiPayment extends AppCompatActivity implements View.OnClickListene
     }
 
 
+    void FareMethod(String amount_str) {
+        SharedPref.savePreferences(UpiPayment.this, SharedPref.amount, amount_str);
+        txt_title.setText("One time Registration fee \n to become Partner Rs." + Integer.parseInt(amount_str) / 100);
+        Log.e("FareMethod", amount_str);
+    }
+
+    void FareMethodDiscountShow(String amount_str) {
+        SharedPref.savePreferences(UpiPayment.this, SharedPref.amount, amount_str);
+        txt_title.setText("One time Registration fee \n to become Partner Rs." + Integer.parseInt(amount_str) / 100);
+    }
 }

@@ -77,9 +77,6 @@ public class Logics {
     }
 
     public static void setVppDetails(Context context, String name, String number, String email, String city, String vppId, String pan_no) {
-
-
-        Log.d("Data", "setVppDetails: " + name + number + city + vppId);
         SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(Const.vppDetails, MODE_PRIVATE).edit();
         sharedPreferences.putString(Const.vpp_name, name);
         sharedPreferences.putString(Const.vpp_mobile, number);
@@ -88,7 +85,6 @@ public class Logics {
         sharedPreferences.putString(Const.vpp_id, vppId);
         sharedPreferences.putString(Const.vpp_pan, pan_no);
         sharedPreferences.apply();
-
     }
 
     public static ArrayList<String> getProfile(Context context) {
@@ -115,7 +111,6 @@ public class Logics {
 
 
     public static String getVppName(Context context) {
-
         String name;
         SharedPreferences sharedPreferences = context.getSharedPreferences(Const.vppDetails, MODE_PRIVATE);
         name = sharedPreferences.getString(Const.vpp_name, null);
@@ -173,8 +168,6 @@ public class Logics {
     }
 
     public static void setContact(Context context, String number) {
-
-
         Log.d("Data", "setVppDetails: " + number);
         SharedPreferences.Editor sharedPreferences = context.getSharedPreferences(Const.vppDetails, MODE_PRIVATE).edit();
         sharedPreferences.putString(Const.vpp_mobile, number);
@@ -686,7 +679,7 @@ public class Logics {
     public static String getPaymentStatus(Context context) {
 
         SharedPreferences sharedPreferences = context.getSharedPreferences("paymentStatus", MODE_PRIVATE);
-        String val = sharedPreferences.getString("isFirst", null);
+        String val = sharedPreferences.getString("isFirst", "0");
         return val;
     }
 
@@ -752,20 +745,20 @@ public class Logics {
         }
     }
 
-    public static void setPLFOA(Context context,String link){
-        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE).edit();
-        sharedPreferences.putString(Const.Psn_lnk_acct_opn,link);
-        sharedPreferences.apply();
-    }
-
-    public static String getPLFOA(Context context){
-        String clientCode = "";
-        SharedPreferences sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE);
-        clientCode =   sharedPreferences.getString(Const.Psn_lnk_acct_opn,"");
-
-        return clientCode;
-
-    }
+//    public static void setPLFOA(Context context,String link){
+//        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE).edit();
+//        sharedPreferences.putString(Const.Psn_lnk_acct_opn,link);
+//        sharedPreferences.apply();
+//    }
+//
+//    public static String getPLFOA(Context context){
+//        String clientCode = "";
+//        SharedPreferences sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE);
+//        clientCode =   sharedPreferences.getString(Const.Psn_lnk_acct_opn,"");
+//
+//        return clientCode;
+//
+//    }
 
 
     public static void setDocumentStatus(Context context, String status) {
@@ -792,7 +785,7 @@ public class Logics {
     public static String getEsignStatus(Context context) {
         String mobile;
         SharedPreferences sharedPreferences = context.getSharedPreferences("esign", MODE_PRIVATE);
-        mobile = sharedPreferences.getString("esign", null);
+        mobile = sharedPreferences.getString("esign", "0");
         return mobile;
     }
 

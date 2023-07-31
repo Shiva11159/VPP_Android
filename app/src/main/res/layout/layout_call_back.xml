@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EEEE"
@@ -48,6 +49,7 @@
                 <LinearLayout
                     android:id="@+id/roundedLinear"
                     android:layout_width="75dp"
+                    android:visibility="gone"
                     android:layout_height="75dp"
                     android:background="@drawable/roundclose"
                     android:orientation="vertical">
@@ -59,7 +61,7 @@
                         android:layout_gravity="center"
                         android:fontFamily="sans-serif-condensed-light"
                         android:gravity="center"
-                        android:text="thur"
+                        android:text=""
                         android:textColor="@color/gray600" />
 
                     <TextView
@@ -69,7 +71,6 @@
                         android:layout_gravity="center"
                         android:fontFamily="@font/opensans_light"
                         android:gravity="center"
-                        android:text="20"
                         android:textColor="@color/gray600"
                         android:textSize="@dimen/dimen_20dp"
                         android:textStyle="bold" />
@@ -82,7 +83,7 @@
 
                         android:fontFamily="sans-serif-condensed-light"
                         android:gravity="center"
-                        android:text="jun 2010"
+                        android:text=""
                         android:textColor="@color/gray600" />
 
                     <ImageView
@@ -101,6 +102,7 @@
 
                 <include
                     android:id="@+id/line1"
+                    android:visibility="gone"
                     layout="@layout/sideline" />
 
                 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -113,8 +115,7 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginRight="5dp"
+
                         android:orientation="vertical"
                         android:padding="5dp"
 
@@ -124,6 +125,19 @@
                             android:layout_width="fill_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
+                            <TextView
+                                android:id="@+id/txtdate"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="cxcsxc"
+                                android:fontFamily="@font/lreg"
+                                android:textSize="10dp"
+
+                                android:layout_gravity="left"
+                                android:gravity="left"
+                                android:layout_weight="1"
+                                android:textColor="@color/black"
+                                />
 
                             <LinearLayout
                                 android:layout_width="fill_parent"
@@ -131,7 +145,7 @@
                                 android:orientation="horizontal">
 
                                 <LinearLayout
-                                    android:layout_width="match_parent"
+                                    android:layout_width="0dp"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:orientation="horizontal">
@@ -139,24 +153,13 @@
 
                                     <TextView
                                         android:id="@+id/txtNAME"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="0dp"
                                         android:layout_height="wrap_content"
-                                        android:fontFamily="sans-serif-condensed-light"
+                                        android:fontFamily="@font/lreg"
                                         android:text=""
                                         android:layout_weight="1"
                                         android:textColor="@color/black"
-                                        android:textSize="15sp" />
-                                    <ImageView
-                                        android:layout_weight="4"
-                                        android:id="@+id/openclose"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="30dp"
-                                        android:layout_gravity="right"
-                                        android:layout_marginRight="8sp"
-                                        android:background="@drawable/opne"
-                                        android:gravity="right"
-                                        android:textColor="#fff"
-                                        android:tint="#fff" />
+                                        android:textSize="12dp" />
 
 
                                 </LinearLayout>
@@ -173,8 +176,8 @@
                                     android:id="@+id/txtcontact_number"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:fontFamily="sans-serif-condensed-light"
-                                    android:text="contact_number"
+                                    android:fontFamily="@font/lreg"
+                                    android:text=""
                                     android:textColor="@color/black"
                                     android:textSize="11dp" />
 
@@ -211,8 +214,9 @@
                                 android:id="@+id/txtremark"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:fontFamily="sans-serif-condensed-light"
+                                android:fontFamily="@font/opensans_regular"
                                 android:text="Remark  : "
+                                android:textColor="@color/black"
                                 android:textSize="12sp"
                                 />
                             <TextView
@@ -220,8 +224,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:fontFamily="sans-serif-condensed-light"
-                                android:text="txtqueryremark"
+                                android:fontFamily="@font/lreg"
+                                android:text=""
                                 android:textColor="@color/cardview_dark_background"
                                 android:textSize="12sp"
                                 tools:ignore="MissingConstraints,NotSibling" />
@@ -236,15 +240,27 @@
                                 android:background="@drawable/triangle"
                                 android:text="ViewDetails"
                                 android:textColor="#fff"
-                                android:tint="#fff"
                                 android:visibility="gone" />
-
-
                         </LinearLayout>
+
+                        <TextView
+                            android:layout_weight="4"
+                            android:id="@+id/openclose"
+                            android:textAllCaps="true"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lreg"
+                            android:layout_gravity="right"
+                            android:gravity="right"
+                            android:textSize="10dp"
+                            android:textColor="@color/black"
+                            />
+
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="right"
+                            android:visibility="gone"
                             android:orientation="horizontal">
 
                             <TextView
@@ -254,7 +270,7 @@
                                 android:layout_weight="2"
                                 android:fontFamily="@font/opensans_light"
                                 android:gravity="right"
-                                android:text="see more"
+                                android:text=""
                                 android:textColor="@color/black"
                                 android:textSize="12sp"
                                 tools:ignore="MissingConstraints,NotSibling" />
@@ -271,7 +287,7 @@
                                 android:gravity="center"
                                 android:text="ViewDetails"
                                 android:textColor="#fff"
-                                android:tint="#fff" />
+                                card_view:tint="#fff" />
 
                         </LinearLayout>
 

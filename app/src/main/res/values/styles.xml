@@ -251,4 +251,13 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
+    <style name="AlertDialogCustom" parent="@android:style/Theme.Dialog">
+        <item name="android:textColor">#F8F5F5</item>
+        <item name="android:textSize">10sp</item>
+    </style>
+
+    <style name="MySpinnerLook"
+        parent="@android:style/Widget.TextView.SpinnerItem">
+        <item name="android:textSize">5dp</item>    //any size
+    </style>
 </resources>

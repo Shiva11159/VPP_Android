@@ -10,6 +10,9 @@ import android.content.IntentSender;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -20,15 +23,24 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
+import android.view.ScaleGestureDetector;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ZoomControls;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -43,11 +55,15 @@ import com.application.vpp.ClientServer.SendTOServer;
 import com.application.vpp.Const.Const;
 import com.application.vpp.Database.DatabaseHelper;
 import com.application.vpp.Datasets.ProductMasterDataset;
+import com.application.vpp.Datasets.UploadFileResponse;
 import com.application.vpp.HttpsTrustManager;
+import com.application.vpp.Interfaces.APiValidateAccount;
 import com.application.vpp.Interfaces.ConnectionProcess;
 import com.application.vpp.Interfaces.DescrpncyIntrfce;
 import com.application.vpp.Interfaces.GstProceed;
 import com.application.vpp.Interfaces.RequestSent;
+import com.application.vpp.Interfaces.SliderImagesPojo;
+import com.application.vpp.NetworkCall.APIClient;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.ExitActivity;
 import com.application.vpp.ReusableLogics.Logics;
@@ -58,6 +74,7 @@ import com.application.vpp.other.FcmMessagingService;
 import com.application.vpp.other.GstDlg;
 import com.application.vpp.other.ShareLinkDlg;
 import com.daasuu.cat.CountAnimationTextView;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.play.core.appupdate.AppUpdateInfo;
 import com.google.android.play.core.appupdate.AppUpdateManager;
@@ -69,8 +86,10 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.android.play.core.tasks.OnFailureListener;
 import com.google.android.play.core.tasks.OnSuccessListener;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 import com.kofigyan.stateprogressbar.StateProgressBar;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -88,19 +107,47 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 import java.util.Timer;
+
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 import me.toptas.fancyshowcase.FancyShowCaseQueue;
 import me.toptas.fancyshowcase.FancyShowCaseView;
 import me.toptas.fancyshowcase.listener.OnViewInflateListener;
+import retrofit2.Call;
+import retrofit2.Response;
 
 public class Dashboard extends com.application.vpp.activity.NavigationDrawer implements GstProceed, RequestSent, View.OnClickListener, ConnectionProcess {
 
+
+    APiValidateAccount apiService;
+
+    private Button btnzIn;
+    private Button btnzOut;
+    PhotoView popupimage;
+    private ScaleGestureDetector scaleGestureDetector;
+    private Matrix matrix = new Matrix();
+    ProgressBar progress_bar;
+
+    //  ZoomControls zoomControls;
+    android.app.AlertDialog alertDialog;
+
     public static View customView;
     public static PopupWindow popupWindow;
-    boolean ranBefore;
+    boolean ranBefore = false;
 
     GstProceed gstProceed;
     RelativeLayout cardDisspripancy, cardBrokerage, cardClient, cardMyLeads, cardInProcess, cardRejected, cardAddLead, cardNotInterested;
@@ -147,6 +194,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
     String currentVersion = "";
     LinearLayout layoutCard3;
     AlertDialog dialogLockPIN;
+    AlertDialog dialogLockPIN1;
     String result = "";
     RelativeLayout mainLayout;
 
@@ -158,18 +206,35 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
     String is_selfie_verified = "0";
     String is_esign_verified = "0";
+    String created_datetime = "0";
 
     boolean conditionCheck1Doc = true;
     boolean conditionCheck1Discrpncy = true;
     boolean conditionCheck2Payment = true;
     boolean conditionCheck3Esign = true;
-
     SharedPreferences preferences;
+    JSONObject paramObject = null;
+    String branchcode = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_dashboard_1, mDrawerLayout);
+
+
+        scaleGestureDetector = new ScaleGestureDetector(this, new ScaleListener());
+
+
+        try {
+
+            apiService = new APIClient().getClientOPS(Dashboard.this).create(APiValidateAccount.class);
+        } catch (Exception e) {
+            Log.e("test6", e.getMessage());
+        }
+
+
+        //  send();
+
 
         descrpncyIntrfce = (DescrpncyIntrfce) this;
         dbh = new DatabaseHelper(this);
@@ -227,16 +292,98 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
         View drawerIcon = getToolbarNavigationIcon(toolbar);
 
+//        Map<String, String> stringStringMap = new HashMap<>();
+//        stringStringMap.put("OCRAPIKey", "OPSID1:e5EPWugygD_Wsdfsfsdfsdsc2wWHoC1D");
+//        stringStringMap.put("Content-Type", "application/json");
+//        stringStringMap.put("Accept", "application/json");
+
+        try {
+            String vppid = Logics.getVppId(Dashboard.this);
+            paramObject = new JSONObject();
+            paramObject.put("userid", vppid); //655841
+//            paramObject.put("userid", "655841"); //655841
+        } catch (Exception e) {
+
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+//            Log.e("ZZZZ", e.getMessage());
+        }
 
         cardReferral1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("onClick: ", "zzz");
-                FragmentManager fm = getSupportFragmentManager();
 
-                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(gstProceed, Dashboard.this);
-                gstDlg.show(fm, "Dialog Fragment");
+                AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+
+                Call<JsonObject> validateSignature = apiService.SendOps(paramObject.toString());
+                validateSignature.enqueue(new retrofit2.Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                        String err = "";
+                        Log.e("test1", call.request().toString());
+                        Log.e("test1__", response.toString());
+
+                        if (response.isSuccessful()) {
+                            try {
+                                Log.e("test2", response.body().toString());
+                                JSONObject object = new JSONObject(response.body().toString());
+                                String status = object.getString("success");
+                                if (status.equalsIgnoreCase("true")) {
+                                    JSONObject jsonObject = object.getJSONObject("response");
+                                    JSONArray jsonArray = jsonObject.getJSONArray("Table1");
+
+                                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                                    String EmpCode = jsonObject1.getString("EmpCode");
+                                    branchcode = jsonObject1.getString("branchCode");
+                                    // call Sp
+                                    personlized_link_for_accnt_opnApicall(branchcode);
+                                    Log.e("onResponseSuccess: ", branchcode);
+
+                                } else {
+
+                                    AlertDialogClass.PopupWindowDismiss();
+//                                    Log.e("onResponseSuccess: ", "No active");
+                                    Toast.makeText(Dashboard.this, "Data not pushed to OPS yet..", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+                                Log.e("test3: ", "No active");
+                            }
+
+                        } else {
+                            switch (response.code()) {
+                                case 404:
+//                            Toast.makeText(context, "not found", Toast.LENGTH_SHORT).show();
+                                    err = "Server Not Found";
+                                    break;
+                                case 500:
+//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+                                    err = "Server Unavailable";
+                                    break;
+                                case 503:
+//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+                                    err = "Server Overloaded try after sometime";
+                                    break;
+                                default:
+                                    err = String.valueOf(response.code());
+                                    err = "Something went wrong try again." + response.code();
+//                            Toast.makeText(context, "unknown error", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                            Toast.makeText(Dashboard.this, err, Toast.LENGTH_SHORT).show();
+                            Log.e("test4", err);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Log.e("test5", "   throwable===" + t.getMessage());
+                    }
+                });
             }
+//                personlized_link_for_accnt_opnApicall();
         });
 
 //        private void shareTextUrl() {
@@ -288,277 +435,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //
 //        inAppUpdateManager.checkForAppUpdate();
 
-        fancyShowCaseView0 = new FancyShowCaseView.Builder(this)
-                .title("First Queue Item")
-                .focusOn(txtAddReference)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        // btn.setOnClickListener(mClickListener);
-
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView0.hide();
-                            }
-                        });
-
-
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("Add Reference");
-                        //  subtitle.setText("Check me out for Application snapshots & upcoming holidays.");
-                        //  subtitle.setText(" Check me out for Application snapshots , viewing  & applying your EWM .. also upcoming holidays.");
-                        subtitle.setText("Referring your contacts is just a click away. Enter their basic details here and that’s it!");
-                        Log.d("0", "onViewInflated: ");
-
-                    }
-                })
-                .build();
-
-//        fancyShowCaseView1 = new FancyShowCaseView.Builder(this)
-//                .title("Second Queue Item")
-//                .focusOn(txtInProcess)
-//                .closeOnTouch(false)
-//                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-//                    @Override
-//                    public void onViewInflated(@NonNull View view) {
-//                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-//                        btn.setOnClickListener(mClickListener);
-//                        btn.setText("Next");
-//                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-//                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-//                        txtView.setText("In process");
-//                        //   subtitle.setText("Check me out to know your in/out timings.");
-//                        //  subtitle.setText("Check me out to know if you are on time at work or On leave.");
-//                        subtitle.setText("We’re sending your references to our system. Work In Progress…");
-//                        Log.d("0", "onViewInflated: ");
-//                        screenValue = 1;
-//                    }
-//                })
-//                .build();
-
-        fancyShowCaseView2 = new FancyShowCaseView.Builder(this)
-                .title("Third Queue Item")
-                .focusOn(txtMyLead)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView2.hide();
-
-                            }
-                        });
-
-
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("My References");
-                        subtitle.setText("Yes, your reference has been accepted by our system! You can track the communication between us and your reference.");
-                        Log.d("1", "onViewInflated: ");
-                        screenValue = 1;
-                    }
-                })
-
-                .build();
-
-        fancyShowCaseView3 = new FancyShowCaseView.Builder(this)
-                .title("Fourth Queue Item")
-                .focusOn(txtRejected)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView3.hide();
-
-                            }
-                        });
-
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("Rejected");
-                        subtitle.setText("We’re sorry, this referral was rejected by the system because (Reason is here).");
-
-
-                        Log.d("2", "onViewInflated: ");
-                        screenValue = 2;
-                    }
-                })
-
-                .build();
-
-
-        fancyShowCaseView4 = new FancyShowCaseView.Builder(this)
-                .title("Fourth Queue Item")
-                .focusOn(txtNotInterested)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView4.hide();
-
-                            }
-                        });
-
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("Not Interested");
-                        subtitle.setText("It seems your reference is not interested for now. No problem, you can approach them again sometime!");
-
-
-                        Log.d("2", "onViewInflated: ");
-                        screenValue = 3;
-                    }
-                })
-
-                .build();
-
-
-        fancyShowCaseView5 = new FancyShowCaseView.Builder(this)
-                .title("Fourth Queue Item")
-                .focusOn(txtClients)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView5.hide();
-
-                            }
-                        });
-
-                        btn.setText("Next");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("My Clients");
-                        subtitle.setText("Congrats, your referred accounts are open!");
-
-                        Log.d("2", "onViewInflated: ");
-                        screenValue = 4;
-                    }
-                })
-
-                .build();
-
-
-        fancyShowCaseView6 = new FancyShowCaseView.Builder(this)
-                .title("Fourth Queue Item")
-                .focusOn(txtPayout)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView6.hide();
-
-                            }
-                        });
-
-                        if (reff == false) {
-                            btn.setText("Finish");
-                            if (!ranBefore) {
-                                // first time
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putBoolean("RanBefore", true);
-                                editor.commit();
-                            }
-                        } else {
-                            btn.setText("Next");
-
-                        }
-
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("My Earnings");
-                        subtitle.setText("Wow, your referral income has started!");
-
-                        Log.d("2", "onViewInflated: ");
-                        screenValue = 5;
-
-                        isfirstTime = 1;
-                        Logics.setInstScreenVal(Dashboard.this, isfirstTime);
-
-                    }
-                })
-
-                .build();
-
-        fancyShowCaseView7 = new FancyShowCaseView.Builder(this)
-                .title("Fourth Queue Item")
-                .focusOn(txtReferral)
-                .focusOn(txtReferral)
-                .closeOnTouch(false)
-                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
-                    @Override
-                    public void onViewInflated(@NonNull View view) {
-                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
-                        //btn.setOnClickListener(mClickListener);
-
-                        btn.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                fancyShowCaseView7.hide();
-
-                            }
-                        });
-                        if (reff == true) {
-                            btn.setText("Finish");
-                            if (!ranBefore) {
-                                // first time
-                                SharedPreferences.Editor editor = preferences.edit();
-                                editor.putBoolean("RanBefore", true);
-                                editor.commit();
-                            }
-                        } else {
-                            btn.setText("Next");
-
-                        }
-//                        btn.setText("Finish");
-                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
-                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
-                        txtView.setText("Share your personalized referral link");
-                        subtitle.setText("you can share your personalized referral link!");
-                        Log.d("2", "onViewInflated: ");
-                        screenValue = 6;
-
-                        isfirstTime = 1;
-                        Logics.setInstScreenVal(Dashboard.this, isfirstTime);
-
-                    }
-                })
-
-                .build();
-
 
 //        if(Logics.getInstScreenVal(this)!=0) {
 
@@ -589,11 +465,40 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             mpinPopupWindow(Dashboard.this);
         }
 
+        if (SharedPref.getPreferences(Dashboard.this, "New").equalsIgnoreCase("0")) {
+            if (SharedPref.getPreferences(Dashboard.this, "PopUpShowRevenueShare").equalsIgnoreCase("0")) {
+
+                //   if (getVersionInfo())
+
+            }
+            mpinPopupWindow(Dashboard.this);
+        }
+
 
         if (Logics.getVppId(Dashboard.this).length() > 0) {
+
+
+            //kept as it is ..
             Logics.setIsBankVerified(com.application.vpp.activity.Dashboard.this, 0);
-            Logics.setVppPanDetails(com.application.vpp.activity.Dashboard.this, "", "", 0);
-            Logics.setOtpVerificationDetails(com.application.vpp.activity.Dashboard.this, "", "", 0, 0, 0);
+
+            // removed this ..
+//            Logics.setVppPanDetails(com.application.vpp.activity.Dashboard.this, "", "", 0);
+            // added this
+
+            SharedPref.savePreferences1(Dashboard.this, "isPan", "0");
+            SharedPref.savePreferences1(Dashboard.this, "panNo", "");
+            SharedPref.savePreferences1(Dashboard.this, "panName", "");
+
+            //removed this ..
+//            Logics.setOtpVerificationDetails(com.application.vpp.activity.Dashboard.this, "", "", 0, 0, 0);
+            //added this ..
+            SharedPref.savePreferences1(Dashboard.this, "mobileNo", "");
+            SharedPref.savePreferences1(Dashboard.this, "isMobile", "0");
+            SharedPref.savePreferences1(Dashboard.this, "email", "");
+            SharedPref.savePreferences1(Dashboard.this, "isEmail", "0");
+            SharedPref.savePreferences1(Dashboard.this, "isReg", "0");
+
+
         }
 
 
@@ -648,6 +553,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     //  personlized_link_for_accnt_opnApicall();
                     //   new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHVERSION,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     //    new SendTOServer(Dashboard.this,Dashboard.this, Const.MSGFETCHLEADDETAILREPORT,data).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -708,7 +614,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //        pDialog.setCancelable(true);
 //        pDialog.getWindow().setBackgroundDrawable(getResources().getDrawable(R.color.white));
 
-
         AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
 
         try {
@@ -719,7 +624,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
                 AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
-
             }
             String vpp_id = Logics.getVppId(Dashboard.this);
             String panno = Logics.getPanNo(Dashboard.this);
@@ -763,13 +667,12 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //    }
 
     private boolean isFirstTime1() {
-        ranBefore = preferences.getBoolean("RanBefore", false);
-//        if (!ranBefore) {
-//            // first time
-//            SharedPreferences.Editor editor = preferences.edit();
-//            editor.putBoolean("RanBefore", true);
-//            editor.commit();
-//        }
+        if (!ranBefore) {
+            // first time
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("RanBefore", true);
+            editor.commit();
+        }
         return !ranBefore;
     }
 
@@ -837,11 +740,11 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //            }break;
 
             case R.id.cardInProcess: {
-                if (Connectivity.getNetworkState(getApplicationContext())) {
-                    startActivity(new Intent(getApplicationContext(), InProcessLeads.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                } else {
-                    Views.SweetAlert_NoDataAvailble(Dashboard.this, "Connect internet !");
-                }
+//                if (Connectivity.getNetworkState(getApplicationContext())) {
+//                    startActivity(new Intent(getApplicationContext(), InProcessLeads.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                } else {
+//                    Views.SweetAlert_NoDataAvailble(Dashboard.this, "Connect internet !");
+//                }
             }
             break;
 
@@ -1123,28 +1026,134 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                 }
                 break;
 
-                case Const.MSGFETCHVPPDETAILS: {
-
-                    String data = (String) msg.obj;
-
-                    Log.e("MSGFETCHVPPDETAILS", data);
-
+//                case Const.MSGFETCHVPPDETAILS: {
+//
+//                    String data = (String) msg.obj;
+//
+//                    Log.e("MSGFETCHVPPDETAILS", data);
+//
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(data);
+//                        String name = jsonObject.getString("name");
+//                        String city = jsonObject.getString("city");
+//                        String mobile = jsonObject.getString("mobile");
+//                        String email = jsonObject.getString("email");
+//                        String vppid = jsonObject.getString("vpp_id");
+//                        String pan_no = jsonObject.getString("pan_no");
+//                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+//
+//                    }
+//                }
+//                break;
+                case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING: {
                     try {
-                        JSONObject jsonObject = new JSONObject(data);
-                        String name = jsonObject.getString("name");
-                        String city = jsonObject.getString("city");
-                        String mobile = jsonObject.getString("mobile");
-                        String email = jsonObject.getString("email");
-                        String vppid = jsonObject.getString("vpp_id");
-                        String pan_no = jsonObject.getString("pan_no");
-                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
+                        AlertDialogClass.PopupWindowDismiss();
+                        String data = (String) msg.obj;
+                        JSONObject js = new JSONObject(data);
+
+                        Log.e("LINK", data);
+
+                        if (js.getInt("Status") == 1) {
+                            Toast.makeText(Dashboard.this, "" + js.getString("ErrorMessage"), Toast.LENGTH_SHORT).show();
+                        } else {
+                            String link = (js.getString("URL") != null) ? js.getString("URL") : "";
+                            // Logics.setPLFOA(Dashboard.this, link);
+                            if (link.length() > 0) {
+                                FragmentManager fm = getSupportFragmentManager();
+                                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(link,gstProceed, Dashboard.this);
+                                gstDlg.show(fm, "Dialog Fragment");
+
+//                                Intent intent = new Intent();
+//                                intent.setAction(Intent.ACTION_SEND);
+//                                intent.setType("text/plain");
+//                                Intent chooserIntent = Intent.createChooser(intent, "Chooser Title");
+//                                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+//                                startActivity(chooserIntent);
+                            } else {
+                                personlized_link_for_accnt_opnApicall(branchcode);
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                break;
+
+//                case Const.MSGFETCHVPPDETAILS: {
+//
+//                    String data = (String) msg.obj;
+//
+//                    Log.e("MSGFETCHVPPDETAILS", data);
+//
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(data);
+//                        String name = jsonObject.getString("name");
+//                        String city = jsonObject.getString("city");
+//                        String mobile = jsonObject.getString("mobile");
+//                        String email = jsonObject.getString("email");
+//                        String vppid = jsonObject.getString("vpp_id");
+//                        String pan_no = jsonObject.getString("pan_no");
+//                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+//
+//                    }
+//                }
+//                break;
+                case Const.MSG_POSTREVENUESHARING: {
+                    AlertDialogClass.PopupWindowDismiss();
+                    String data = (String) msg.obj;
+                    Log.e("MSG_POSTREVENUESHARING", data);
+                    try {
+                        String data1 = (String) msg.obj;
+                        JSONObject jsonObject = new JSONObject(data1);
+                        int status = jsonObject.getInt("status");
+
+                        if (status == 1) {
+                            String message = jsonObject.getString("message");
+                            // AlertDialogClass.ShowMsg(Dashboard.this, message);
+                        } else {
+                            String message = jsonObject.getString("message");
+                            AlertDialogClass.ShowMsg(Dashboard.this, message);
+                        }
+
                     } catch (JSONException e) {
                         e.printStackTrace();
                         AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
 
+                        Log.e("handleMessage: ", e.getMessage());
                     }
+
                 }
                 break;
+
+//                case Const.MSGFETCHVPPDETAILS: {
+//
+//                    String data = (String) msg.obj;
+//
+//                    Log.e("MSGFETCHVPPDETAILS", data);
+//
+//                    try {
+//                        JSONObject jsonObject = new JSONObject(data);
+//                        String name = jsonObject.getString("name");
+//                        String city = jsonObject.getString("city");
+//                        String mobile = jsonObject.getString("mobile");
+//                        String email = jsonObject.getString("email");
+//                        String vppid = jsonObject.getString("vpp_id");
+//                        String pan_no = jsonObject.getString("pan_no");
+//                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                        AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+//
+//                    }
+//                }
+//                break;
 
                 case Const.MSGFETCHDASHBOARD: {
                     String data = (String) msg.obj;
@@ -1191,8 +1200,11 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         JSONObject jsonObject = jsonArray.getJSONObject(0);
                         JSONObject jsonObject1 = jsonArray.getJSONObject(1);
 
+                        String revenuecount = jsonObject.getString("revenuecount");
                         String is_payment_p = jsonObject.getString("is_payment_p");
+                        created_datetime = jsonObject.getString("created_datetime");
 
+                        Log.e("created_datetime", created_datetime);
 
                         is_selfie_verified = jsonObject1.getString("is_selfie_verified");
                         //is_video_verified = jsonObject1.getString("is_video_verified");
@@ -1253,6 +1265,12 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                             conditionCheck2Payment = true;
                         }
 
+
+                        if (SharedPref.getPreferences(getApplicationContext(), SharedPref.UPIPayment1).equalsIgnoreCase(SharedPref.UPIPaymentDONE)) {
+                            conditionCheck2Payment = false;
+                            Logics.setPaymentStatus(Dashboard.this, "1");
+                        }
+
                         //esign ...
 
                         if (is_selfie_verified.equalsIgnoreCase("0") || (is_esign_verified.equalsIgnoreCase("0"))) {
@@ -1296,6 +1314,66 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                             if (ii != 3) {
                                 startAlertPopup(Dashboard.this, mainLayout, ii);
                             }
+                        }
+
+                        if (ii == 3) {
+                            try {
+                                // all done
+
+                                if (Integer.parseInt(revenuecount) > 0) {
+
+                                    //done
+
+                                } else {
+
+
+                                    // not done.
+
+                                    SimpleDateFormat dtobj = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+                                    // Parsing dates in Date datatype
+
+                                    Date a = null;
+                                    Date b = null;
+
+                                    a = dtobj.parse(created_datetime);
+//                                    b = dtobj.parse("2023-04-06 00:00:01");
+                                    b = dtobj.parse("2023-04-14 00:00:01");
+
+                                    // Printing the dates
+
+                                    Log.e("", "Date a is " + dtobj.format(a));
+                                    Log.e("", "Date b is " + dtobj.format(b));
+
+                                    // Checking for equal case
+
+                                    if (a.equals(b)) {
+
+                                        Log.e("", "Both dates are of same day");
+                                    }
+                                    // Checking for after case
+
+                                    else if (a.after(b)) {
+
+                                        Log.e("", "Date a comes after Date b");
+                                    }
+                                    // Checking for before case
+
+                                    else if (a.before(b)) {
+                                        mRevenueSharingPopupWindow(Dashboard.this);
+
+                                        Log.e("", "Date a comes before Date b");
+                                    }
+                                    // here we need to add one condition ... to check agreed or not,
+
+                                }
+
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                                Log.e("exception: ", e.getMessage());
+                            }
+
+
                         }
 
 
@@ -1538,7 +1616,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
                                         Log.e("accnt_opn_link", accnt_opn_link.trim());
 
-                                        Logics.setPLFOA(Dashboard.this, accnt_opn_link.trim());
+//                                        Logics.setPLFOA(Dashboard.this, accnt_opn_link.trim());
 
                                 /*{ {"isDeactivated":0,"vppdata":{"area":"sainagar road Panvel","is_email":1,"is_doc_v":0,
                                 "city":"Head Office","isBankVerified":1,"vpp_bank_name":"Mr  PRAVIN LAXMAN DI","mobile":"9975153610",
@@ -1552,8 +1630,10 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                                         SharedPref.savePreferences(Dashboard.this, "bankAccNo", bankAccNo);
                                         Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
 
+                                        Logics.setmobileNo(Dashboard.this, mobile);  //save mble no ..
+
                                         try {
-                                            if (accnt_opn_link.equalsIgnoreCase("NOT IDENTIFIED")) {
+                                           /* if (accnt_opn_link.equalsIgnoreCase("NOT IDENTIFIED")) {
                                                 cardReferral.setVisibility(View.GONE);
                                                 reff = false;
 
@@ -1568,40 +1648,335 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                                             } else {
                                                 cardReferral.setVisibility(View.VISIBLE);
                                                 reff = true;
+                                            }*/
+
+
+                                            fancyShowCaseView0 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("First Queue Item")
+                                                    .focusOn(txtAddReference)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            // btn.setOnClickListener(mClickListener);
+
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView0.hide();
+                                                                }
+                                                            });
+
+
+                                                            btn.setText("Next");
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("Add Reference");
+                                                            //  subtitle.setText("Check me out for Application snapshots & upcoming holidays.");
+                                                            //  subtitle.setText(" Check me out for Application snapshots , viewing  & applying your EWM .. also upcoming holidays.");
+                                                            subtitle.setText("Referring your contacts is just a click away. Enter their basic details here and that’s it!");
+                                                            Log.d("0", "onViewInflated: ");
+
+                                                        }
+                                                    })
+                                                    .build();
+
+//        fancyShowCaseView1 = new FancyShowCaseView.Builder(this)
+//                .title("Second Queue Item")
+//                .focusOn(txtInProcess)
+//                .closeOnTouch(false)
+//                .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+//                    @Override
+//                    public void onViewInflated(@NonNull View view) {
+//                        Button btn = (Button) view.findViewById(R.id.btn_action_1);
+//                        btn.setOnClickListener(mClickListener);
+//                        btn.setText("Next");
+//                        TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+//                        TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+//                        txtView.setText("In process");
+//                        //   subtitle.setText("Check me out to know your in/out timings.");
+//                        //  subtitle.setText("Check me out to know if you are on time at work or On leave.");
+//                        subtitle.setText("We’re sending your references to our system. Work In Progress…");
+//                        Log.d("0", "onViewInflated: ");
+//                        screenValue = 1;
+//                    }
+//                })
+//                .build();
+
+                                            fancyShowCaseView2 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Third Queue Item")
+                                                    .focusOn(txtMyLead)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView2.hide();
+
+                                                                }
+                                                            });
+
+
+                                                            btn.setText("Next");
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("My References");
+                                                            subtitle.setText("Yes, your reference has been accepted by our system! You can track the communication between us and your reference.");
+                                                            Log.d("1", "onViewInflated: ");
+                                                            screenValue = 1;
+                                                        }
+                                                    })
+
+                                                    .build();
+
+                                            fancyShowCaseView3 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Fourth Queue Item")
+                                                    .focusOn(txtRejected)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView3.hide();
+
+                                                                    SharedPref.savePreferences1(Dashboard.this, "F", "1");
+
+//                                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+//                                                                    SharedPreferences.Editor editor = pref.edit();
+//                                                                    editor.putBoolean(IS_FIRST_RUN, false);
+//                                                                    editor.commit();
+                                                                }
+                                                            });
+
+                                                            btn.setText("Next");
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("Rejected");
+                                                            subtitle.setText("We’re sorry, this referral was rejected by the system because (Reason is here).");
+                                                            Log.d("2", "onViewInflated: ");
+                                                            screenValue = 2;
+                                                        }
+                                                    })
+
+                                                    .build();
+
+
+                                            fancyShowCaseView4 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Fourth Queue Item")
+                                                    .focusOn(txtNotInterested)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView4.hide();
+
+                                                                    Log.e("onClick: ", "444");
+
+                                                                    SharedPref.savePreferences1(Dashboard.this, "F", "1");
+
+
+//                                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+//                                                                    SharedPreferences.Editor editor = pref.edit();
+//                                                                    editor.putBoolean(IS_FIRST_RUN, false);
+//                                                                    editor.commit();
+                                                                }
+                                                            });
+
+                                                            btn.setText("Next");
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("Not Interested");
+                                                            subtitle.setText("It seems your reference is not interested for now. No problem, you can approach them again sometime!");
+
+
+                                                            Log.d("2", "onViewInflated: ");
+                                                            screenValue = 3;
+                                                        }
+                                                    })
+
+                                                    .build();
+
+
+                                            fancyShowCaseView5 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Fourth Queue Item")
+                                                    .focusOn(txtClients)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView5.hide();
+
+                                                                    Log.e("onClick: ", "555");
+
+                                                                    SharedPref.savePreferences1(Dashboard.this, "F", "1");
+
+//                                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+//                                                                    SharedPreferences.Editor editor = pref.edit();
+//                                                                    editor.putBoolean(IS_FIRST_RUN, false);
+//                                                                    editor.commit();
+
+                                                                }
+                                                            });
+
+                                                            btn.setText("Next");
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("My Clients");
+                                                            subtitle.setText("Congrats, your referred accounts are open!");
+
+                                                            Log.d("2", "onViewInflated: ");
+                                                            screenValue = 4;
+                                                        }
+                                                    })
+
+                                                    .build();
+
+
+                                            fancyShowCaseView6 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Fourth Queue Item")
+                                                    .focusOn(txtPayout)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView6.hide();
+                                                                    Log.e("onClick: ", "666");
+
+                                                                    SharedPref.savePreferences1(Dashboard.this, "F", "1");
+
+//                                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+//                                                                    SharedPreferences.Editor editor = pref.edit();
+//                                                                    editor.putBoolean(IS_FIRST_RUN, false);
+//                                                                    editor.commit();
+
+
+                                                                }
+                                                            });
+
+                                                            if (reff == false) {
+                                                                btn.setText("Finish");
+
+                                                            } else {
+                                                                btn.setText("Next");
+
+                                                            }
+
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("My Earnings");
+                                                            subtitle.setText("Wow, your referral income has started!");
+
+                                                            Log.d("2", "onViewInflated: ");
+                                                            screenValue = 5;
+
+                                                            isfirstTime = 1;
+                                                            Logics.setInstScreenVal(Dashboard.this, isfirstTime);
+
+                                                        }
+                                                    })
+
+                                                    .build();
+
+                                            fancyShowCaseView7 = new FancyShowCaseView.Builder(Dashboard.this)
+                                                    .title("Fourth Queue Item")
+                                                    .focusOn(txtReferral)
+                                                    .focusOn(txtReferral)
+                                                    .closeOnTouch(false)
+                                                    .customView(R.layout.layout_custom_help, new OnViewInflateListener() {
+                                                        @Override
+                                                        public void onViewInflated(@NonNull View view) {
+                                                            Button btn = (Button) view.findViewById(R.id.btn_action_1);
+                                                            //btn.setOnClickListener(mClickListener);
+
+                                                            btn.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    fancyShowCaseView7.hide();
+                                                                    Log.e("onClick: ", "777");
+                                                                    SharedPref.savePreferences1(Dashboard.this, "F", "1");
+
+//                                                                    SharedPreferences pref = getApplicationContext().getSharedPreferences("MyPref", 0);
+//                                                                    SharedPreferences.Editor editor = pref.edit();
+//                                                                    editor.putBoolean(IS_FIRST_RUN, false);
+//                                                                    editor.commit();
+                                                                }
+                                                            });
+                                                            if (reff == true) {
+                                                                btn.setText("Finish");
+
+
+                                                            } else {
+                                                                btn.setText("Next");
+
+                                                            }
+                                                            TextView txtView = (TextView) view.findViewById(R.id.custome_layout_title);
+                                                            TextView subtitle = (TextView) view.findViewById(R.id.custome_layout_subtitle);
+                                                            txtView.setText("Share your personalized referral link");
+                                                            subtitle.setText("you can share your personalized referral link!");
+                                                            Log.d("2", "onViewInflated: ");
+                                                            screenValue = 6;
+                                                            isfirstTime = 1;
+                                                            Logics.setInstScreenVal(Dashboard.this, isfirstTime);
+
+                                                        }
+                                                    })
+
+                                                    .build();
+
+                                            // Log.e("isFirstRun", String.valueOf(isFirstRun()));
+
+                                            if (SharedPref.getPreferences1(Dashboard.this, "F").equalsIgnoreCase("0")) {
+
+                                                if (reff == true) {
+                                                    fancyShowCaseQueue = new FancyShowCaseQueue()
+                                                            .add(fancyShowCaseView0)
+                                                            .add(fancyShowCaseView2)
+                                                            .add(fancyShowCaseView3)
+                                                            .add(fancyShowCaseView4)
+                                                            .add(fancyShowCaseView5)
+                                                            .add(fancyShowCaseView6)
+                                                            .add(fancyShowCaseView7);
+                                                    fancyShowCaseQueue.show();
+                                                } else {
+                                                    fancyShowCaseQueue = new FancyShowCaseQueue()
+                                                            .add(fancyShowCaseView0)
+                                                            .add(fancyShowCaseView2)
+                                                            .add(fancyShowCaseView3)
+                                                            .add(fancyShowCaseView4)
+                                                            .add(fancyShowCaseView5)
+                                                            .add(fancyShowCaseView6);
+                                                    fancyShowCaseQueue.show();
+                                                }
                                             }
                                         } catch (Exception e) {
                                             Log.e("handleMessage: ", e.getMessage());
                                         }
                                     }
-
-                                    if (isFirstTime1()) {
-
-                                        if (reff == true) {
-                                            fancyShowCaseQueue = new FancyShowCaseQueue()
-                                                    .add(fancyShowCaseView0)
-                                                    .add(fancyShowCaseView2)
-                                                    .add(fancyShowCaseView3)
-                                                    .add(fancyShowCaseView4)
-                                                    .add(fancyShowCaseView5)
-                                                    .add(fancyShowCaseView6)
-                                                    .add(fancyShowCaseView7);
-                                            fancyShowCaseQueue.show();
-
-                                        } else {
-                                            fancyShowCaseQueue = new FancyShowCaseQueue()
-                                                    .add(fancyShowCaseView0)
-                                                    .add(fancyShowCaseView2)
-                                                    .add(fancyShowCaseView3)
-                                                    .add(fancyShowCaseView4)
-                                                    .add(fancyShowCaseView5)
-                                                    .add(fancyShowCaseView6);
-                                            fancyShowCaseQueue.show();
-
-                                        }
-
-                                    }
-
-
                                 } else {
                                     startAlert();
                                 }
@@ -1616,7 +1991,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                         // AlertDialogClass.ShowMsg(Dashboard.this,e.getMessage());
 
                     }
-
                 }
                 break;
             }
@@ -2011,10 +2385,8 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     public void onClick(DialogInterface dialogInterface, int i) {
                         dialogInterface.dismiss();
                         dialogInterface.cancel();
-
                         //
                         //doc..
-
                         if (conditionCheck1Doc == true) {
                             Intent intent = new Intent(Dashboard.this, UploadDocScreen.class);
                             intent.putExtra(Const.from, Const.doc);
@@ -2246,6 +2618,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             Log.e("update", "Current version " + currentVersion + "playstore version " + onlineVersion);
 
         }
+
     }
 
 
@@ -2254,8 +2627,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             View m_view = LayoutInflater.from(c).inflate(R.layout.popup_banner, null);
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
             dialogBuilder.setView(m_view);
-//            final EditText m_mpinTextEntry = m_view.findViewById(R.id.mpintext);
-//            textView = m_view.findViewById(R.id.errorText) ;
+
             ImageView popupimage = m_view.findViewById(R.id.popupimage);
             TextView textView = m_view.findViewById(R.id.textView);
             ImageView imageViewCncl = m_view.findViewById(R.id.buttonImageclose);
@@ -2279,44 +2651,6 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
             HttpsTrustManager.allowAllSSL();
 
-
-//            Picasso.Builder builder = new Picasso.Builder(c);
-//            builder.listener(new Picasso.Listener()
-//            {
-//                @Override
-//                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception)
-//                {
-//                    exception.printStackTrace();
-//                    Log.e( "onImageLoadFailed: ",exception.getMessage() );
-//                }
-//            });
-//            builder.build().load().memoryPolicy(MemoryPolicy.NO_CACHE)
-//                    .networkPolicy(NetworkPolicy.NO_CACHE).into(popupimage);
-//            headerLayout = m_view.findViewById(R.id.headerLayout);
-
-            // m_materialDialog = new MaterialDialog(GlobalClass.latestContext).setContentView(m_view).setCanceledOnTouchOutside(true);
-//            m_view.findViewById(R.id.mpinloginButton).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    String strMPIN = m_mpinTextEntry.getText().toString().trim();
-//                    checkMPIN(strMPIN);
-//                }
-//            });
-
-            //m_mpinclientCode = m_view.findViewById(R.id.mpinclientCode);
-            //m_mpinclientCode.setText(GlobalClass.loginDetailsModel.getUserID());
-//            m_view.findViewById(R.id.forgotMpin).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    showMessageOKCancel("Are you sure you want to re-generate your MPIN?",
-//                            new DialogInterface.OnClickListener() {
-//                                @Override
-//                                public void onClick(DialogInterface dialog, int which) {
-//                                    clearMpin();
-//                                }
-//                            });
-//                }
-//            });
             dialogLockPIN = dialogBuilder.create();
             dialogLockPIN.setCancelable(false);
             dialogLockPIN.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
@@ -2325,7 +2659,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             dialogLockPIN.setOnDismissListener(new DialogInterface.OnDismissListener() {
                 @Override
                 public void onDismiss(DialogInterface dialogInterface) {
-                    dialogLockPIN = null;
+                    //dialogLockPIN = null;
                 }
             });
 
@@ -2350,6 +2684,234 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
         } catch (Exception e) {
             //  VenturaException.Print(e);
         }
+    }
+
+    private void mRevenueSharingPopupWindow(Context c) {
+        try {
+            View m_view = LayoutInflater.from(c).inflate(R.layout.popup_sharingrevenue, null);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
+            dialogBuilder.setView(m_view);
+            progress_bar = m_view.findViewById(R.id.progress_bar);
+            TextView txtIagree = m_view.findViewById(R.id.txtIagree);
+            TextView checkbox_sharing = m_view.findViewById(R.id.checkbox_sharing);
+            ImageView imageViewCncl = m_view.findViewById(R.id.buttonImageclose);
+            imageViewCncl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogLockPIN1.dismiss();
+                    dialogLockPIN1.cancel();
+                }
+            });
+
+            txtIagree.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogLockPIN1.dismiss();
+                    dialogLockPIN1.cancel();
+                    sendRSharingData("yes", "", "");
+
+                    TastyToast.makeText(getApplicationContext(), "Agreed...", TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
+
+                    // Toast.makeText(c, "Agreed...", Toast.LENGTH_SHORT).show();
+                }
+            });
+            checkbox_sharing.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    progress_bar.setVisibility(View.VISIBLE);
+                    mRevenueSharingPopupWindow2(Dashboard.this, progress_bar);
+                }
+            });
+
+            dialogLockPIN1 = dialogBuilder.create();
+            dialogLockPIN1.setCancelable(false);
+            dialogLockPIN1.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
+            if (!dialogLockPIN1.isShowing()) {
+                dialogLockPIN1.show();
+            }
+            dialogLockPIN1.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialogLockPIN1.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+                    //dialogLockPIN = null;
+                }
+            });
+
+        } catch (Exception e) {
+            //  VenturaException.Print(e);
+            Log.e("zzzzz", e.getMessage());
+        }
+    }
+
+    private void mRevenueSharingPopupWindow2(Context c, ProgressBar progress_bar) {
+        try {
+
+            ImageView mImageView;
+
+            View m_view = LayoutInflater.from(c).inflate(R.layout.popup_bannerrs, null);
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(c);
+            dialogBuilder.setView(m_view);
+//            final EditText m_mpinTextEntry = m_view.findViewById(R.id.mpintext);
+//            textView = m_view.findViewById(R.id.errorText) ;
+
+            // zoomControls = m_view.findViewById(R.id.simpleZoomControl); // initiate a ZoomControls
+
+
+            btnzIn = m_view.findViewById(R.id.btnZoomIn);
+            btnzOut = m_view.findViewById(R.id.btnZoomOut);
+
+
+            btnzIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Animation animZoomIn = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoomin);
+                    popupimage.startAnimation(animZoomIn);
+                }
+            });
+            btnzOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Animation animZoomOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.zoomout);
+                    popupimage.startAnimation(animZoomOut);
+                }
+            });
+
+
+            popupimage = m_view.findViewById(R.id.popupimage);
+            TextView textView = m_view.findViewById(R.id.textView);
+            ImageView imageViewCncl = m_view.findViewById(R.id.buttonImageclose);
+            imageViewCncl.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogLockPIN.dismiss();
+                    dialogLockPIN.cancel();
+                }
+            });
+
+            dialogLockPIN = dialogBuilder.create();
+            dialogLockPIN.setCancelable(true);
+            dialogLockPIN.getWindow().getAttributes().windowAnimations = R.style.DialogTheme;
+            dialogLockPIN.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            dialogLockPIN.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                @Override
+                public void onDismiss(DialogInterface dialogInterface) {
+//                    dialogLockPIN = null;
+                }
+            });
+
+            Picasso.with(Dashboard.this).load("https://crm.ventura1.com/VPP%20mobile%20pop%20up.jpg").memoryPolicy(MemoryPolicy.NO_CACHE)
+                    .networkPolicy(NetworkPolicy.NO_CACHE).into(popupimage, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d("TAG", "onSuccess");
+
+                            if (!((Activity) Dashboard.this).isFinishing()) {
+                                dialogLockPIN.show();
+                                progress_bar.setVisibility(View.GONE);
+
+                            }
+                        }
+
+                        @Override
+                        public void onError() {
+                            Toast.makeText(getApplicationContext(), "An error occurred", Toast.LENGTH_SHORT).show();
+                            progress_bar.setVisibility(View.GONE);
+
+                        }
+                    });
+
+        } catch (Exception e) {
+            //  VenturaException.Print(e);
+        }
+
+    }
+
+    private String getVersionInfo() {
+
+        String versionName = "";
+        try {
+            PackageInfo packageInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            versionName = packageInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+        }
+
+        Log.d("versionName", "getVersionInfo: " + versionName);
+        return versionName;
+
+    }
+
+
+    private void sendRSharingData(String revenuesharing, String created_date, String updated_date) {
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+            String vppid = Logics.getVppId(Dashboard.this);
+            jsonObject.put("vpp_id", vppid);
+            jsonObject.put("revenuesharing", revenuesharing);
+            jsonObject.put("created_date", created_date);
+            jsonObject.put("updated_date", "");
+            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+
+            Log.e("jsonjson", String.valueOf(jsonObject));
+
+            byte[] data = jsonObject.toString().getBytes();
+            new SendTOServer(this, this, Const.MSG_POSTREVENUESHARING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        } catch (Exception e) {
+            AlertDialogClass.PopupWindowDismiss();
+            Views.toast(this, e.getMessage());
+            FirebaseCrashlytics.getInstance().recordException(e);
+            AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+            //btnSubmit.setEnabled(true);
+
+        }
+    }
+
+    // this redirects all touch events in the activity to the gesture detector
+    @Override
+    public boolean onTouchEvent(MotionEvent ev) {
+        scaleGestureDetector.onTouchEvent(ev);
+        return true;
+    }
+
+    private class ScaleListener extends ScaleGestureDetector.
+            SimpleOnScaleGestureListener {
+        @Override
+        public boolean onScale(ScaleGestureDetector detector) {
+            float scaleFactor = detector.getScaleFactor();
+            scaleFactor = Math.max(0.1f, Math.min(scaleFactor, 5.0f));
+            matrix.setScale(scaleFactor, scaleFactor);
+            popupimage.setImageMatrix(matrix);
+            return true;
+        }
+    }
+
+
+    public void personlized_link_for_accnt_opnApicall(String branchcode) {
+
+        //getMobile_1
+
+        try {
+
+//            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+            JSONObject jsonObject = new JSONObject();
+            //   jsonObject.put("vpp_id", "72001");
+//            jsonObject.put("vpp_id", "656010");
+            String vpp_id = Logics.getVppId(Dashboard.this);
+            jsonObject.put("vpp_id", vpp_id);
+//             jsonObject.put("mobile_no","9723179601");
+            jsonObject.put("branchcode", branchcode);
+            byte[] data = jsonObject.toString().getBytes();
+            Log.e("DASHBOARD", "connected: " + jsonObject.toString());
+            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 }

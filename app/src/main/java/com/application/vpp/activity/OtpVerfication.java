@@ -72,12 +72,17 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
     int MaxTry=0;
 
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otpscreen);
-        Profile.handlerProfile = null;
         OtpVerfication.otpVerfhandler = null;
+
+        Profile.handlerProfile = null;
+        OtpVerfication.otpVerfhandler=null;
+        OtpLoginVerfication.otploginverifyhandler=null;
+
         otpVerfhandler = new ViewHandler();
         connectionProcess = (ConnectionProcess) this;
         requestSent = (RequestSent) this;
@@ -128,7 +133,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
             textViewChangeMobile.setVisibility(View.GONE);
             textViewChangeEmail.setVisibility(View.VISIBLE);
 //            SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
-            TastyToast.makeText(getApplicationContext(), "Mobile Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            TastyToast.makeText(getApplicationContext(), "Mobile number verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
             txt_resend_mob.setText("Your mobile number is verified");
             txt_resend_mob.setTextColor(getResources().getColor(R.color.btn_active));
@@ -162,7 +167,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
                 textViewChangeMobile.setVisibility(View.GONE);
                 textViewChangeEmail.setVisibility(View.VISIBLE);
 //                SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
-                TastyToast.makeText(getApplicationContext(), "Mobile Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                TastyToast.makeText(getApplicationContext(), "Mobile number verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
                 txt_resend_mob.setText("Your mobile number is verified");
                 txt_resend_mob.setTextColor(getResources().getColor(R.color.btn_active));
@@ -196,7 +201,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
             textViewChangeEmail.setVisibility(View.GONE);
             textViewChangeMobile.setVisibility(View.GONE);
 //            SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
-            TastyToast.makeText(getApplicationContext(), "Email Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            TastyToast.makeText(getApplicationContext(), "Your email id is verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             txt_email_resend.setText("Your email id is verified");
             txt_email_resend.setTextSize(16);
 
@@ -208,7 +213,6 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
             Logics.setOtpVerificationDetails(OtpVerfication.this, mobileNum, email, verifyMobile, verifyEmail, isRegistered);
             btn_proceed.setVisibility(View.VISIBLE);
 //            SharedPref.savePreferences(getApplicationContext(),Const.EmailVerified,"Done");
-
 
         } else {
 
@@ -253,7 +257,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
 //            textViewChangeEmail.setVisibility(View.GONE);
 //            textViewChangeMobile.setVisibility(View.GONE);
 //            SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
-//            TastyToast.makeText(getApplicationContext(), "Email Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+//            TastyToast.makeText(getApplicationContext(), "Email id verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 //            txt_email_resend.setText("Your email id is verified");
 //            txt_email_resend.setTextSize(16);
 //
@@ -319,8 +323,8 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
         imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         strMobOtp = edt_mob_otp.getText().toString().toUpperCase();
         if (strMobOtp.matches(mobileOtp)) {
-            //   Toast.makeText(OtpVerfication.this, " Mobile Otp Verified", Toast.LENGTH_LONG).show();
-            TastyToast.makeText(getApplicationContext(), "Mobile Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            //   Toast.makeText(OtpVerfication.this, " Mobile number verified", Toast.LENGTH_LONG).show();
+            TastyToast.makeText(getApplicationContext(), "Mobile number verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
             txt_resend_mob.setText("Your mobile number is verified");
             txt_resend_mob.setTextColor(getResources().getColor(R.color.btn_active));
@@ -337,7 +341,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
 
             //dummy added for playstore
             if (SharedPref.getPreferences(OtpVerfication.this,"DPAN").equalsIgnoreCase("AZTPT4416B")){
-                TastyToast.makeText(getApplicationContext(), "Mobile Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                TastyToast.makeText(getApplicationContext(), "Mobile number verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 txt_resend_mob.setText("Your mobile number is verified");
                 txt_resend_mob.setTextColor(getResources().getColor(R.color.btn_active));
                 txt_resend_mob.setTextSize(16);
@@ -363,8 +367,8 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
         imm.hideSoftInputFromWindow(mainlayout.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
         strEmailOtp = edt_email_otp.getText().toString().toUpperCase();
         if (strEmailOtp.matches(emailOtp)) {
-            // Toast.makeText(OtpVerfication.this, " Email Otp Verified", Toast.LENGTH_LONG).show();
-            TastyToast.makeText(getApplicationContext(), "Email Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+            // Toast.makeText(OtpVerfication.this, " Email id verified", Toast.LENGTH_LONG).show();
+            TastyToast.makeText(getApplicationContext(), "Email id verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             txt_email_resend.setText("Your email id is verified");
             txt_email_resend.setTextSize(16);
 
@@ -398,7 +402,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
 
             if (SharedPref.getPreferences(OtpVerfication.this,"DPAN").equalsIgnoreCase("AZTPT4416B")){
 
-                TastyToast.makeText(getApplicationContext(), "Email Otp Verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                TastyToast.makeText(getApplicationContext(), "Email id verified", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
                 txt_email_resend.setText("Your email id is verified");
                 txt_email_resend.setTextSize(16);
 
@@ -674,6 +678,7 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
 
                         int status = jsonObject.getInt("status");
                         if (status != 0) {
+
                             fetchDetails();
 //                            if (isRegistered == 3) {
 //                                Intent intent = new Intent(OtpVerfication.this, Welcome.class);
@@ -810,6 +815,8 @@ public class OtpVerfication extends AppCompatActivity implements RequestSent, Vi
 
                                 startActivity(intent);
                             } else if (updateEmail == 1) {
+
+
                                 String emailOtp = jsonObject.getString("emailotp");
                                 String email = jsonObject.getString("email");
                                 Intent intent = new Intent(OtpVerfication.this, AuthenticateUpdateProfile.class);

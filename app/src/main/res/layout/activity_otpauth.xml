@@ -336,8 +336,9 @@
                         android:id="@+id/txtProfileEmail"
                         style="@style/txtProfleDetails"
                         android:layout_weight="2"
-
+                        android:cursorVisible="true"
                         android:hint="Email Address"
+                        android:inputType="text"
                         android:textAllCaps="true"
                         android:textColor="@color/textColor" />
                 </LinearLayout>

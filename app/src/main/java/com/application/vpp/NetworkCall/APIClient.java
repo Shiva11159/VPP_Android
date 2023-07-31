@@ -7,6 +7,7 @@ import com.application.vpp.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.security.KeyStore;
 import java.security.cert.CertificateException;
@@ -22,9 +23,11 @@ import javax.net.ssl.X509TrustManager;
 
 import okhttp3.Authenticator;
 import okhttp3.Credentials;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.Route;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -42,12 +45,15 @@ public class APIClient {
     private static Retrofit retrofit3 = null;
     private static Retrofit retrofit4 = null;
     private static Retrofit retrofit5 = null;
+    private static Retrofit retrofit6 = null;
 
     public static String BASE_URL1 = "https://vpp.ventura1.com/OrderDetail/";   // not using actually, we use method only for order not api.
 //    public static String BASE_URL1 = "https://43.242.213.117/OrderDetoail/";   // not using actually, we use method only for order not api.
     public static String BASE_URL3 = "https://vpp.ventura1.com/videoupload/";
 //    public static String BASE_URL3 = "https://43.242.213.117/videoupload/";
     public static String BASE_URL0 = "https://vpp.ventura1.com/FranchiseLogAPI/";
+
+    public static String BASE_URL_OPS = "https://ocrapi.ventura1.com/";
 
     Gson gson = new GsonBuilder().setLenient().create();
 
@@ -96,7 +102,7 @@ public class APIClient {
         try {
 
             TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-            tmf.init(SSLUtil.getFromRaw(context,"PKCS12","vensec@123"));
+            tmf.init(SSLUtil.getFromRaw(context));
 
             TrustManager[]  trustAllCerts = tmf.getTrustManagers();
 
@@ -112,7 +118,7 @@ public class APIClient {
                 public boolean verify(String hostname, SSLSession session) {
 
                     Log.e( "verify: ", hostname);
-                    if (hostname.equalsIgnoreCase("vpp.ventura1.com") ||
+                    if (hostname.equalsIgnoreCase("vpp.ventura1.com") ||hostname.equalsIgnoreCase("ocrapi.ventura1.com") ||
                             hostname.equalsIgnoreCase("172.16.102.55") || hostname.equalsIgnoreCase("43.242.213.117")) {
                         return true;
                     } else {
@@ -161,6 +167,40 @@ public class APIClient {
         }
         return retrofit3;
     }
+    public Retrofit getClientOPS(Context context) {
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        //
+//        OkHttpClient okHttpClient = new OkHttpClient().newBuilder()
+//                .connectTimeout(40, TimeUnit.SECONDS)
+//                .readTimeout(40, TimeUnit.SECONDS)
+//                .writeTimeout(40, TimeUnit.SECONDS)
+//                .addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Interceptor.Chain chain) throws IOException {
+//                        Request original = chain.request();
+//                        Request request = original.newBuilder()
+//                                .addHeader("OCRAPIKey", "OPSID1:e5EPWugygD_Wsdfsfsdfsdsc2wWHoC1D")
+////                                .header("Key", "Value")
+//                                .method(original.method(), original.body())
+//                                .build();
+//
+//                        return chain.proceed(request);
+//                    }
+//                })
+//                .build();
+
+        if (retrofit6 == null) {
+            retrofit6 = new Retrofit.Builder()
+                    .baseUrl(BASE_URL_OPS)
+                    .addConverterFactory(GsonConverterFactory.create(gson))
+                    .client(getUnsafeOkHttpClient(context).build())
+//                     .client(okHttpClient)
+                    .build();
+        }
+        return retrofit6;
+    }
     public Retrofit getClientAllLogs(Context context) {
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -197,7 +237,6 @@ public class APIClient {
         }
         return retrofit5;
     }
-
 
 
 }

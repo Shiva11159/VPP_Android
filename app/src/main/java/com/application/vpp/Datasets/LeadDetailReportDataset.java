@@ -108,6 +108,30 @@ public class LeadDetailReportDataset {
         ProductName = productName;
     }
 
+    public String getMobileNo() {
+        return MobileNo;
+    }
+
+    public void setMobileNo(String mobileNo) {
+        MobileNo = mobileNo;
+    }
+
+    public LeadDetailReportDataset(String leadDate, String leadNo, String customerName, String branchCode, String VPPPAN, String userName, String response, String clientCode, String accountOpenedDate, String clientName, String status, String productName, String mobileNo) {
+        LeadDate = leadDate;
+        LeadNo = leadNo;
+        CustomerName = customerName;
+        BranchCode = branchCode;
+        this.VPPPAN = VPPPAN;
+        UserName = userName;
+        Response = response;
+        ClientCode = clientCode;
+        AccountOpenedDate = accountOpenedDate;
+        ClientName = clientName;
+        Status = status;
+        ProductName = productName;
+        MobileNo = mobileNo;
+    }
+
     public String UserName;
     public String Response ;
     public String ClientCode ;
@@ -115,4 +139,8 @@ public class LeadDetailReportDataset {
     public String ClientName ;
     public String Status ;
     public String ProductName ;
+    public String MobileNo ;
+
+
+
 }

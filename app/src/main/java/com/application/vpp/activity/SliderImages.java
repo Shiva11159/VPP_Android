@@ -119,12 +119,10 @@ public class SliderImages extends AppCompatActivity implements View.OnClickListe
 
             case R.id.btnFinish: {
                 startActivity(new Intent(SliderImages.this, SignupScreen.class));
-                finish();
             }
             break;
             case R.id.btnLogin: {
                 startActivity(new Intent(SliderImages.this, LoginScreen.class));
-                finish();
                 SharedPref.savePreferences(getApplicationContext(), Const.FromUpdate, "");
             }
             break;

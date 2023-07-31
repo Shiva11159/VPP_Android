@@ -3,6 +3,7 @@ package com.application.vpp.NetworkCall;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
+import android.widget.Toast;
 
 import androidx.annotation.RawRes;
 
@@ -21,21 +22,21 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 
 public class SSLUtil {
-    public static KeyStore getFromRaw(Context context, String algorithm, String filePassword)
+    public static KeyStore getFromRaw(Context context)
     {
         try
         {
             //keystorePass="vensec@123" keystoreType="PKCS12"
-            InputStream inputStream =  context.getResources().openRawResource(R.raw.ventura2023);
+            InputStream inputStream =  context.getResources().openRawResource(R.raw.ventura124);
             KeyStore keystore = KeyStore.getInstance("PKCS12");
             keystore.load(inputStream, "vensec@123".toCharArray());
             inputStream.close();
-
             return keystore;
         }
         catch(Exception e)
-        {}
-
+        {
+            Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         return null;
     }
 
@@ -51,9 +52,10 @@ public class SSLUtil {
 
             return context.getSocketFactory();
         }
-        catch(Exception e){}
 
+        catch(Exception e){}
         return null;
+
     }
 }
 

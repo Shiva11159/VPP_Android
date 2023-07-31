@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
+    android:id="@+id/mainlayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mainlayout">
+    >
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colour_new_toolbar"
-        tools:context="com.application.vpp.activity.Dashboard">
+       >
 
         <LinearLayout
             android:id="@+id/linearText"
@@ -32,185 +33,205 @@
 
         </LinearLayout>
 
-
         <LinearLayout
+            android:id="@+id/linearLastName"
             android:layout_below="@+id/linearText"
-            android:id="@+id/linearFirst"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="28dp"
-            android:paddingRight="10dp"
 
             android:background="@drawable/top_rounded"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_first_name"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/opensans_regular"
-                android:layout_height="wrap_content">
-
-                <EditText android:textAllCaps="true"
-                    android:id="@+id/edtAccNo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="number"
-                    android:textSize="16sp"
-                    android:maxLength="20"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/colour_new_text"
-                    android:hint="Account Number"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_below="@+id/linearFirst"
-            android:id="@+id/linearLastName"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
             android:orientation="vertical">
 
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/find_ifsc"-->
-<!--                android:layout_marginRight="10dp"-->
-<!--                android:textSize="12sp"-->
-<!--                android:fontFamily="@font/opensans_regular"-->
-<!--                android:textColor="@color/colour_new_text"-->
-<!--                android:layout_gravity="right"/>-->
+            <!--            <TextView-->
+            <!--                android:layout_width="wrap_content"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:text="@string/find_ifsc"-->
+            <!--                android:layout_marginRight="10dp"-->
+            <!--                android:textSize="12sp"-->
+            <!--                android:fontFamily="@font/opensans_regular"-->
+            <!--                android:textColor="@color/colour_new_text"-->
+            <!--                android:layout_gravity="right"/>-->
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/text_input_name"
-                android:layout_below="@+id/linearFirstName"
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_marginLeft="28dp"
-                android:fontFamily="@font/opensans_regular"
-                android:layout_height="wrap_content">
-
-                <EditText android:textAllCaps="true"
-                    android:id="@+id/edtIfscCode"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:orientation="vertical">
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textCapCharacters"
-                    android:maxLength="12"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/colour_new_text"
-                    android:textSize="16sp"
-                    android:hint="IFSC Code"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:drawableTint="@color/black"
+                        android:layout_gravity="right"
+                        android:drawableLeft="@drawable/bankverify"
+                        android:textStyle="bold"
+                        android:text=""/>
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-condensed"
+                        android:textSize="25dp"
+                        android:text="Enter Bank Details"/>
 
-
-
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/linearMobile"-->
-<!--                android:paddingLeft="28dp"-->
-<!--                android:paddingRight="10dp"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:orientation="vertical">-->
-
-
-
-<!--                <TextView-->
-<!--                    android:id="@+id/edtLName"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:inputType="text"-->
-<!--                    android:fontFamily="@font/opensans_bold"-->
-<!--                    android:textColor="@color/colour_new_text"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:hint="Bank Name"/>-->
-
-
-<!--                <TextView-->
-<!--                        android:id="@+id/edtMobile"-->
-<!--                        android:inputType="number"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:maxLength="10"-->
-<!--                        android:textColor="@color/colour_new_text"-->
-<!--                        android:fontFamily="@font/opensans_bold"-->
-<!--                        android:textSize="16sp"-->
-<!--                        android:hint="Branch Name"/>-->
-
-<!--&lt;!&ndash;                <TextView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="wrap_content"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:text="remaining attempts : 3"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:fontFamily="@font/opensans_italic"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_marginRight="10dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:textSize="14sp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_gravity="right"/>&ndash;&gt;-->
-
-
-<!--            </LinearLayout>-->
-
-            <LinearLayout
-                android:id="@+id/linearEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_below="@id/linearLastName"
-                    android:id="@+id/text_input_email"
+                </LinearLayout>
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="wrap_content">
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:layout_height="wrap_content"
 
-                </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:orientation="vertical">
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/text_input_AccNoOld"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+
+                        android:visibility="visible">
+                        <EditText
+
+                            android:id="@+id/edtAccNoOld"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:singleLine="true"
+
+                            android:cursorVisible="true"
+
+                            android:paddingLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:textSize="15dp"
+                            android:maxLength="15"
+                            android:fontFamily="@font/opensans_regular"
+                            android:hint="Old Account Number *"
+                            android:inputType="number"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="visible">
+                        <EditText
+                            android:id="@+id/edtAccNo"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:text="149301510436"
+                            android:singleLine="true"
+
+                            android:cursorVisible="true"
+
+                            android:paddingLeft="10dp"
+                            android:layout_marginTop="20dp"
+                            android:textSize="15dp"
+                            android:maxLength="15"
+                            android:fontFamily="@font/opensans_regular"
+                            android:hint="Enter New Account Number *"
+                            android:inputType="number"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:visibility="visible">
+                        <EditText
+                            android:textSize="15dp"
+                            android:id="@+id/edtIfscCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:singleLine="true"
+                            android:text="ICIC0001493"
+                            android:textAllCaps="true"
+                            android:paddingLeft="10dp"
+                            android:maxLength="100"
+                            android:layout_marginTop="20dp"
+                            android:fontFamily="@font/opensans_regular"
+                            android:hint="Enter IFSC Code *"
+                            android:inputType="text"
+                            />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/lay_name"
+                        android:layout_marginTop="20dp"
+                        android:layout_width="wrap_content"
+                        android:visibility="visible"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/txtNote"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="NOTE : "
+                            android:visibility="gone"
+                            android:textSize="16sp"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:layout_marginLeft="28dp"/>
+                        <TextView
+                            android:layout_toRightOf="@+id/txtNote"
+                            android:layout_width="wrap_content"
+                            android:id="@+id/txt"
+                            android:visibility="visible"
+                            android:layout_height="wrap_content"
+                            android:text="NOTE : As per Bank details entered this account belongs to : "
+                            android:textSize="15dp"
+                            android:fontFamily="sans-serif-medium"
+                            android:layout_marginLeft="10dp"/>
+                        <TextView
+                            android:layout_toRightOf="@+id/txtNote"
+                            android:id="@+id/txtNote3"
+                            android:layout_below="@+id/txt"
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_height="wrap_content"
+                            android:text=""
+                            android:textSize="15dp"
+                            android:fontFamily="@font/opensans_semibold"
+                            android:textColor="@color/colorAccent"
+                            android:layout_marginLeft="10dp"/>
+
+                    </RelativeLayout>
+
+
+                    <Button
+                        android:id="@+id/btn_Submit_AccNo"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:layout_marginTop="20dp"
+                        android:layout_gravity="center"
+                        android:background="@drawable/buttonback1"
+                        android:text="Verify"
+                        android:fontFamily="@font/opensans_regular"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"/>
+                </LinearLayout>
+
 
             </LinearLayout>
-            <LinearLayout
-                android:id="@+id/linearHowDidYouHear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:orientation="horizontal">
 
 
-            </LinearLayout>
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_below="@id/linearLastName"
-                android:id="@+id/text_input_reference"
-                android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_height="wrap_content">
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <mehdi.sakout.fancybuttons.FancyButton
-                android:id="@+id/btn_Submit_AccNo"
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:layout_marginTop="25dp"
-                android:layout_gravity="center_horizontal"
-                fancy:fb_borderColor="#FFFFFF"
-                fancy:fb_borderWidth="1dp"
-                fancy:fb_defaultColor="@color/colour_new_button"
-                fancy:fb_focusColor="#9bd823"
-                fancy:fb_iconPosition="left"
-                fancy:fb_radius="30dp"
-                fancy:fb_textFont="@font/opensans_semibold"
-                fancy:fb_text="Verify"
-                android:visibility="visible"
-                fancy:fb_textColor="#FFFFFF" />
 
             <View
+                android:visibility="visible"
                 android:id="@+id/view"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -222,92 +243,51 @@
                 tools:layout_editor_absoluteY="375dp" />
 
 
-            <RelativeLayout
-                android:id="@+id/lay_name"
-                android:layout_marginTop="25dp"
-                android:layout_width="wrap_content"
-                android:visibility="gone"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/txtNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="NOTE : "
-                    android:textSize="16sp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:textColor="@color/colour_new_text"
-                    android:layout_marginLeft="28dp"/>
-                <TextView
-                    android:layout_toRightOf="@+id/txtNote"
-                    android:id="@+id/txtAccountValidateNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="As per Bank details entered this account belongs to "
-                    android:textSize="16sp"
-                    android:fontFamily="@font/opensans_regular"
-                    android:textColor="@color/colour_new_text"
-                    android:layout_marginLeft="10dp"/>
-                <TextView
-                    android:layout_toRightOf="@+id/txtNote"
-                    android:id="@+id/txtNote3"
-                    android:layout_below="@+id/txtAccountValidateNote"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textSize="16sp"
-                    android:fontFamily="@font/opensans_semibold"
-                    android:textColor="@color/colour_new_text"
-                    android:layout_marginLeft="10dp"/>
+
+
+            <!--            <mehdi.sakout.fancybuttons.FancyButton-->
+            <!--                android:id="@+id/btn_edt_name"-->
+            <!--                android:layout_width="180dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:paddingBottom="10dp"-->
+            <!--                android:paddingLeft="20dp"-->
+            <!--                android:paddingRight="20dp"-->
+            <!--                android:paddingTop="10dp"-->
+            <!--                android:layout_marginTop="25dp"-->
+
+            <!--                android:layout_gravity="center_horizontal"-->
+            <!--                fancy:fb_borderColor="#FFFFFF"-->
+            <!--                fancy:fb_borderWidth="1dp"-->
+            <!--                fancy:fb_defaultColor="@color/colour_new_button"-->
+            <!--                fancy:fb_focusColor="#9bd823"-->
+            <!--                fancy:fb_iconPosition="left"-->
+            <!--                fancy:fb_radius="30dp"-->
+            <!--                fancy:fb_textFont="@font/opensans_semibold"-->
+            <!--                fancy:fb_text="Edit name"-->
+            <!--                android:visibility="gone"-->
+            <!--                fancy:fb_textColor="#FFFFFF" />-->
 
 
 
-
-            </RelativeLayout>
-
-
-<!--            <mehdi.sakout.fancybuttons.FancyButton-->
-<!--                android:id="@+id/btn_edt_name"-->
-<!--                android:layout_width="180dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:paddingBottom="10dp"-->
-<!--                android:paddingLeft="20dp"-->
-<!--                android:paddingRight="20dp"-->
-<!--                android:paddingTop="10dp"-->
-<!--                android:layout_marginTop="25dp"-->
-
-<!--                android:layout_gravity="center_horizontal"-->
-<!--                fancy:fb_borderColor="#FFFFFF"-->
-<!--                fancy:fb_borderWidth="1dp"-->
-<!--                fancy:fb_defaultColor="@color/colour_new_button"-->
-<!--                fancy:fb_focusColor="#9bd823"-->
-<!--                fancy:fb_iconPosition="left"-->
-<!--                fancy:fb_radius="30dp"-->
-<!--                fancy:fb_textFont="@font/opensans_semibold"-->
-<!--                fancy:fb_text="Edit name"-->
-<!--                android:visibility="gone"-->
-<!--                fancy:fb_textColor="#FFFFFF" />-->
-            <mehdi.sakout.fancybuttons.FancyButton
+            <Button
                 android:id="@+id/btn_bankProceed"
-                android:layout_width="180dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:paddingTop="10dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center_horizontal"
-                fancy:fb_borderColor="#FFFFFF"
-                fancy:fb_borderWidth="1dp"
-                fancy:fb_defaultColor="@color/colour_new_button"
-                fancy:fb_focusColor="#9bd823"
-                fancy:fb_iconPosition="left"
-                fancy:fb_radius="30dp"
-                fancy:fb_textFont="@font/opensans_semibold"
-                fancy:fb_text="Proceed"
-                android:visibility="gone"
-                fancy:fb_textColor="#FFFFFF" />
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:visibility="visible"
+                android:layout_margin="10dp"
+                android:layout_gravity="center"
+                android:background="@drawable/buttonback1"
+                android:text="Proceed"
+                android:fontFamily="@font/opensans_light"
+                android:textStyle="bold"
+                android:textColor="@color/white"/>
 
         </LinearLayout>
+
+
+
+
 
 
 

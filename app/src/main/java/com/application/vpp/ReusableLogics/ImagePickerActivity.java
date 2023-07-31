@@ -6,8 +6,11 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
+import android.hardware.Camera;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
@@ -26,6 +29,7 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import static androidx.core.content.FileProvider.getUriForFile;
@@ -78,36 +82,14 @@ public class ImagePickerActivity extends AppCompatActivity {
         int requestCode = intent.getIntExtra(INTENT_IMAGE_PICKER_OPTION, -1);
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             takeCameraImage();
+            Log.e("camera", "called");
         } else {
             chooseImageFromGallery();
         }
-    }
 
-    public static void showImagePickerOptions(Context context, final PickerOptionListener listener) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-        builder.setTitle(context.getString(R.string.lbl_set_profile_photo));
 
-        String[] animals = {context.getString(R.string.lbl_take_camera_picture), context.getString(R.string.lbl_choose_from_gallery)};
-        builder.setItems(animals, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int which) {
-                switch (which) {
-                    case 0:
-                        listener.onTakeCameraSelected();
-                        break;
-                    case 1:
-                        listener.onChooseGallerySelected();
-                        break;
-                }
-            }
-
-        });
-        // create and show the alert dialog
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void takeCameraImage() {
+        }
+        private void takeCameraImage() {
         Dexter.withActivity(this)
                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .withListener(new MultiplePermissionsListener() {
@@ -117,6 +99,48 @@ public class ImagePickerActivity extends AppCompatActivity {
                             fileName = System.currentTimeMillis() + ".jpg";
                             Log.e("ssssss","ssssss"+fileName);
                             Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                            takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+
+//                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+//                                takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+//                            } else {
+//                                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+//                            }
+
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+
+
+                                // Extras for displaying the front camera on most devices
+
+                                takePictureIntent.putExtra("com.google.assistant.extra.USE_FRONT_CAMERA", true);
+                                takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+                                takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+
+                                // Extras for displaying the front camera on Samsung
+                                takePictureIntent.putExtra("camerafacing", "front");
+                                takePictureIntent.putExtra("previous_mode", "Selfie");
+
+
+                                Log.e("MANUFACTURER", Build.MANUFACTURER);
+
+                                if (Build.MANUFACTURER.contains("Honor")) {
+                                    // Extras for displaying the front camera on Honor
+                                    takePictureIntent.putExtra("default_camera", "1");
+                                    takePictureIntent.putExtra("default_mode", "com.hihonor.camera2.mode.photo.PhotoMode");
+                                } else if (Build.MANUFACTURER.contains("Huawei")){
+                                    // Extras for displaying the front camera on Huawei
+                                    takePictureIntent.putExtra("default_camera", "1");
+                                    takePictureIntent.putExtra("default_mode", "com.huawei.camera2.mode.photo.PhotoMode");
+                                }
+
+                                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", Camera.CameraInfo.CAMERA_FACING_FRONT);
+                                takePictureIntent.putExtra("android.intent.extras.LENS_FACING_FRONT", 1);
+                                takePictureIntent.putExtra("android.intent.extra.USE_FRONT_CAMERA", true);
+                            } else {
+                                takePictureIntent.putExtra("android.intent.extras.CAMERA_FACING", 1);
+                            }
+
                             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, getCacheImagePath(fileName));
                             if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
                                 startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);

@@ -5,13 +5,18 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.application.vpp.Datasets.ClientlistData;
 import com.application.vpp.Datasets.PayoutListData;
 import com.application.vpp.R;
+import com.application.vpp.Utility.AlertDialogClass;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -44,14 +49,19 @@ public class PayoutList extends RecyclerView.Adapter<PayoutList.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-        holder.txtMonth.setText(payoutListDataArrayList.get(position).month);
-        holder.txtPayout.setText(payoutListDataArrayList.get(position).payout);
+        holder.txtDate.setText(payoutListDataArrayList.get(position).month);
+        holder.txtGross.setText(payoutListDataArrayList.get(position).payout);
         holder.txtProduct.setText(payoutListDataArrayList.get(position).product);
 
-        StringTokenizer stringTokenizer = new StringTokenizer(payoutListDataArrayList.get(position).month, " ");
+        Log.e("zzzzzzzz - "+position, payoutListDataArrayList.get(position).product);
 
-        holder.txtmonth.setText(stringTokenizer.nextToken());
-        holder.txtyear.setText(stringTokenizer.nextToken());
+        AlertDialogClass.PopupWindowDismiss();
+
+
+//        StringTokenizer stringTokenizer = new StringTokenizer(payoutListDataArrayList.get(position).month, " ");
+//
+//        holder.txtmonth.setText(stringTokenizer.nextToken());
+//        holder.txtyear.setText(stringTokenizer.nextToken());
 
     }
 
@@ -61,18 +71,24 @@ public class PayoutList extends RecyclerView.Adapter<PayoutList.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtMonth, txtPayout, txtBrokerage, txtProduct, txtmonth, txtyear;
+
+        TextView txtDate,txtProduct,txtGross,txtNet;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            txtyear = (TextView) itemView.findViewById(R.id.year);
-            txtmonth = (TextView) itemView.findViewById(R.id.month);
-            txtMonth = (TextView) itemView.findViewById(R.id.txtPayoutMonth);
-            txtPayout = (TextView) itemView.findViewById(R.id.txtPayoutAmount);
-            txtProduct = (TextView) itemView.findViewById(R.id.txtPayoutProduct);
+            txtDate = (TextView) itemView.findViewById(R.id.txtDate);
+            txtProduct = (TextView) itemView.findViewById(R.id.txtProduct);
+            txtGross = (TextView) itemView.findViewById(R.id.txtGross);
+            txtNet = (TextView) itemView.findViewById(R.id.txtNet);
 
 
         }
+    }
+
+    public void filterList(ArrayList<PayoutListData> filteredList) {
+        payoutListDataArrayList = filteredList;
+        Log.e("filterList: ", String.valueOf(payoutListDataArrayList.size()));
+        notifyDataSetChanged();
     }
 }

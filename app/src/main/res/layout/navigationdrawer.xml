@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/txtWelcome"
             android:layout_width="wrap_content"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/lbold"
 
             android:layout_height="wrap_content"
             android:layout_above="@+id/txtVPPName"
@@ -49,8 +49,7 @@
             android:layout_above="@+id/txtVPPId"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:fontFamily="@font/opensans_regular"
-
+            android:fontFamily="@font/lbold"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -63,7 +62,7 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:text=""
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/lbold"
 
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -78,7 +77,7 @@
             android:layout_marginEnd="20dp"
             android:layout_marginBottom="10dp"
             android:text=""
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/lbold"
 
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -148,7 +147,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imgProfile"
                     android:text="@string/my_profile"
                     android:textSize="16sp" />
@@ -216,8 +216,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imginformation"
                     android:text="About VPP"
                     android:textSize="16sp" />
@@ -246,8 +247,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imgBell"
                     android:text="Notifications"
                     android:textSize="16sp" />
@@ -276,8 +278,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imgFollowUs"
                     android:text="Connect on Social Media "
                     android:textSize="16sp" />
@@ -512,8 +515,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/imgFAQ"
                     android:text="FAQ"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -540,8 +544,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@id/imgUpcoming"
                     android:text="Upcoming Events"
                     android:textSize="16sp" />
@@ -571,8 +576,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@id/imgContact"
                     android:text="Contact Us"
                     android:textSize="16sp" />
@@ -583,6 +589,7 @@
                 android:id="@+id/layoutQuery"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
+                android:visibility="gone"
                 android:background="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:focusable="true"
@@ -630,8 +637,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imgLogout"
                     android:text="@string/addreference"
                     android:textSize="16sp" />
@@ -693,8 +701,9 @@
                     android:layout_marginStart="20dp"
                     android:layout_toRightOf="@+id/imgmyleads"
                     android:text="@string/my_references"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -723,8 +732,9 @@
                     android:layout_marginStart="20dp"
                     android:layout_toRightOf="@+id/imgrejected"
                     android:text="Rejected"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -753,8 +763,9 @@
                     android:layout_marginStart="20dp"
                     android:layout_toRightOf="@+id/imgProcess"
                     android:text="Not Interested"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -782,8 +793,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/imgEkyc"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                    android:fontFamily="@font/lreg"
                     android:text="@string/my_clients"
                     android:textSize="16sp" />
 
@@ -811,8 +823,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
                     android:layout_toRightOf="@+id/imgbuysell"
                     android:text="@string/my_earnings"
                     android:textSize="16sp" />
@@ -842,10 +855,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
-                    android:fontFamily="@font/opensans_regular"
 
                     android:layout_toRightOf="@+id/imgbuysell2"
-                    android:text="@string/Dashboard2"
+
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
                     android:textSize="16sp" />
 
             </RelativeLayout>
@@ -873,7 +887,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/imglayoutsubpartner"
                     android:text="@string/subparter"
-                    android:fontFamily="@font/opensans_regular"
+
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
 
                     android:textSize="16sp" />
 
@@ -897,7 +913,8 @@
                     android:background="@drawable/reg_track" />
 
                 <TextView
-                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -913,8 +930,9 @@
                 android:layout_height="50dp"
                 android:background="?android:attr/selectableItemBackground"
                 android:gravity="center"
+
                 android:onClick="onDrawerClick"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/imglayoutcallback"
@@ -931,8 +949,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
 
-                    android:fontFamily="@font/opensans_regular"
-                    android:layout_toRightOf="@+id/imglayoutcallback"
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
+                   android:layout_toRightOf="@+id/imglayoutcallback"
                     android:text="CallBack Details"
                     android:textSize="16sp" />
 
@@ -962,8 +981,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
 
-                    android:fontFamily="@font/opensans_regular"
-                    android:layout_toRightOf="@+id/imglayoutPrivacypolicy"
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
+                   android:layout_toRightOf="@+id/imglayoutPrivacypolicy"
                     android:text="Privacy Policy"
                     android:textSize="16sp" />
 
@@ -991,7 +1011,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/imglayoutShareLink"
-                    android:fontFamily="@font/opensans_regular"
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
 
                     android:text="Share Link"
                     android:textSize="16sp" />
@@ -1017,9 +1038,9 @@
                 <TextView
 
                     android:layout_width="match_parent"
-
-                    android:fontFamily="@font/opensans_regular"
-                    android:layout_height="wrap_content"
+                    android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lreg"
+                   android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_toRightOf="@+id/imglayoutlogout"
                     android:text="Logout"

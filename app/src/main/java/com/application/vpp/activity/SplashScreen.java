@@ -298,13 +298,14 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
                 JSONObject jsonObject = new JSONObject();
                 String versionName = getVersionInfo();
                 jsonObject.put("versionName", versionName);
-                jsonObject.put("vpp_id", vpp_id);
-                jsonObject.put("panno", panno);
+                jsonObject.put("vpp_id", vpp_id); //
+                jsonObject.put("panno", panno); //
                 jsonObject.put("updated_date", SharedPref.getPreferences(SplashScreen.this, "slider_udpated_date"));
                 jsonObject.put("popup_updated_date", SharedPref.getPreferences(SplashScreen.this, "popup_udpated_date"));
                 byte[] data = jsonObject.toString().getBytes();
                 Log.e("splashScreen", "connected: " + jsonObject.toString());
                 new SendTOServer(SplashScreen.this, SplashScreen.this, Const.MSGVERIFYVPP, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
             }
 
         } catch (Exception e) {
@@ -556,11 +557,20 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
 
                                 if (vppdata.length() == 0) {
 
+                                    Logics.setPaymentStatus(SplashScreen.this, "0");
+                                    Logics.setEsignStatus(SplashScreen.this, "0");
+
                                     int isBankVerified = Logics.getisBankVerified(SplashScreen.this);
-                                    int isPanVerified = Logics.getisPanVerified(SplashScreen.this);
-                                    int isMobile = Logics.getisMobile_V(SplashScreen.this);
-                                    int isEmail = Logics.getisEmail_V(SplashScreen.this);
-                                    int isReg = Logics.getisRegisterd(SplashScreen.this);
+//                                    int isPanVerified = Logics.getisPanVerified(SplashScreen.this);
+                                    //int isMobile = Logics.getisMobile_V(SplashScreen.this);
+//                                    int isEmail = Logics.getisEmail_V(SplashScreen.this);
+//                                    int isReg = Logics.getisRegisterd(SplashScreen.this);
+
+                                    int isMobile = Integer.parseInt(SharedPref.getPreferences1(SplashScreen.this,"isMobile"));
+                                    int isEmail = Integer.parseInt(SharedPref.getPreferences1(SplashScreen.this,"isEmail"));
+                                    int isReg = Integer.parseInt(SharedPref.getPreferences1(SplashScreen.this,"isReg"));
+                                    int isPanVerified = Integer.parseInt(SharedPref.getPreferences1(SplashScreen.this,"isPan"));
+                                    Log.e("isPanVerified", String.valueOf(isPanVerified));
 
                                     if (isBankVerified == 1) {
 //                                         Toast.makeText(SplashScreen.this, "You have Completed Steps upto Bank Verfication", Toast.LENGTH_LONG).show();
@@ -569,10 +579,16 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
                                     } else if (isPanVerified == 1) {
 //                                        Toast.makeText(getApplicationContext(), "You have Completed Steps upto Pan Verification", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(getApplicationContext(), BankValidation.class);
+                                        intent.putExtra("from","splash");
+                                        intent.putExtra("acc", "");
                                         startActivity(intent);
                                     } else if (isMobile == 1 && isEmail == 1 && isReg == 1) {
                                         // Toast.makeText(getApplicationContext(), "Mobile and Email Id Already Verified", Toast.LENGTH_LONG).show();
                                         Intent intent = new Intent(getApplicationContext(), PanValidation.class);
+                                        startActivity(intent);
+                                    } else if (isMobile == 1 ) {
+                                        // Toast.makeText(getApplicationContext(), "Mobile and Email Id Already Verified", Toast.LENGTH_LONG).show();
+                                        Intent intent = new Intent(getApplicationContext(), SignupScreenEmail.class);
                                         startActivity(intent);
                                     }  else {
                                         boolean pg = Logics.getSharedPrefFromTag("permission_granted", false, context);
@@ -597,6 +613,8 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
 
                                     //if vpp is there... will call here .
 
+                                    Log.e("vppdata", String.valueOf(vppdata));
+
                                     String name = vppdata.getString("name");
                                     String city = vppdata.getString("city");
                                     String mobile = vppdata.getString("mobile");
@@ -610,7 +628,7 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
 
                                     Log.e("spl_accnt_opn_link",accnt_opn_link);
 
-                                    Logics.setPLFOA(SplashScreen.this,accnt_opn_link.trim());
+                                   // Logics.setPLFOA(SplashScreen.this,accnt_opn_link.trim());
                                    // Logics.setmobileNO_lINK(SplashScreen.this,mobile);
 
                                 /*{ {"isDeactivated":0,"vppdata":{"area":"sainagar road Panvel","is_email":1,"is_doc_v":0,
@@ -633,6 +651,8 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
                                    // Logics.setPaymentStatus(SplashScreen.this, vppdata.getString("is_pay_p"));
                                     SharedPref.savePreferences(SplashScreen.this, "bankAccNo", bankAccNo);
                                     Logics.setVppDetails(SplashScreen.this, name, mobile, email, city, vppid, pan_no);
+
+                                    Logics.setmobileNo(SplashScreen.this, mobile);  //save mble no ..
 
 
                                     SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
@@ -657,13 +677,13 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
                         }
                     } else {
                         String message = jsonObject.getString("message");
-                        AlertDialogClass.ShowMsg(SplashScreen.this, message);
+                        AlertDialogClass.ShowMsg(SplashScreen.this, "S - "+message);
                     }
 
 
                 } catch (JSONException e) {
                     e.printStackTrace();
-                    AlertDialogClass.ShowMsg(SplashScreen.this, e.getMessage());
+                    AlertDialogClass.ShowMsg(SplashScreen.this, "D - "+e.getMessage());
 
                     Log.e("handleMessage: ", e.getMessage());
                 }

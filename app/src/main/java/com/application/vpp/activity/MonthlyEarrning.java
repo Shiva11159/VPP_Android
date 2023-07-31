@@ -126,8 +126,8 @@ public class MonthlyEarrning extends NavigationDrawer implements AdapterView.OnI
             System.out.println("year bin" + year);
             dates = year + "-" + month + "-" + "01";
             System.out.println("date bin" + dates);
-            //vppid = "72237";
-            String vppid = Logics.getVppId(MonthlyEarrning.this);
+            vppid = "72237";
+//            String vppid = Logics.getVppId(MonthlyEarrning.this);
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("vppid", vppid);
             jsonObject.put("dates", dates);

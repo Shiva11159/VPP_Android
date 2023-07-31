@@ -77,6 +77,9 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_lead_list, mDrawerLayout);
+
+        connectionProcess = (ConnectionProcess) this;
+
         handlerLeadList = new ViewHandler();
         GsonBuilder gsonBuilder = new GsonBuilder();
         gsonBuilder.setDateFormat("M/d/yy hh:mm a");
@@ -92,7 +95,8 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
         requestSent = (RequestSent) this;
 
         listLead = (RecyclerView) findViewById(R.id.listLead);
-        mainlayout =  findViewById(R.id.mainlayout);
+
+            mainlayout =  findViewById(R.id.mainlayout);
 
 //        ringProgressDialog = ProgressDialog.show(MyLeads.this, "Please wait ...", "Loading Your Data ...", true);
 //        ringProgressDialog.setCancelable(true);
@@ -147,6 +151,23 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
             }
         });
 
+
+
+
+        if (Connectivity.getNetworkState(getApplicationContext())) {
+            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProgressDlgConnectSocket(MyLeads.this, connectionProcess, "Server Not Available");
+//                    ConnectToserver(connectionProcess);
+                    }
+                });
+            } else {
+                sendData();
+            }
+        }
+
     }
 
     @Override
@@ -164,7 +185,6 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
 //                ringProgressDialog.dismiss();
 //            }
 
-            AlertDialogClass.PopupWindowDismiss();
             data = "";
             data = (String) msg.obj;
             data = String.valueOf(ssb.append(data));
@@ -172,10 +192,10 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
             int msgCode = msg.arg1;
             switch (msgCode) {
 
-                case Const.MSGSOCKETCONNECTEDMYLEADS: {
-                    sendData();
-                }
-                break;
+//                case Const.MSGSOCKETCONNECTEDMYLEADS: {
+//                    sendData();
+//                }
+//                break;
 
                 case Const.MSGFETCHLEADDETAILS: {
                     Log.e("MSGFETCHLEADDETAILS", data);
@@ -185,6 +205,8 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
                             tv_nodataavail.setVisibility(View.VISIBLE);
                             linearleadhide.setVisibility(View.GONE);
                             ssb.setLength(0);
+                            AlertDialogClass.PopupWindowDismiss();
+
 
                         } else {
                             tv_nodataavail.setVisibility(View.GONE);
@@ -281,7 +303,6 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
 //            }
             JSONObject jsonObject = new JSONObject();
             String vppid = Logics.getVppId(MyLeads.this);
-
 
             jsonObject.put("VPPID", vppid);
 //            jsonObject.put("VPPID", "72891");
@@ -450,21 +471,7 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
 
     @Override
     protected void onResume() {
-        connectionProcess = (ConnectionProcess) this;
 
-        if (Connectivity.getNetworkState(getApplicationContext())) {
-            if (Const.isServerConnected == true && Const.isSocketConnected == false) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        ProgressDlgConnectSocket(MyLeads.this, connectionProcess, "Server Not Available");
-//                    ConnectToserver(connectionProcess);
-                    }
-                });
-            } else {
-                sendData();
-            }
-        }
 
         ///added this lines extra by shiva ....
         handler.postDelayed(runnable = new Runnable() {
@@ -587,7 +594,7 @@ public class MyLeads extends NavigationDrawer implements RequestSent, Connection
         for (LeadDetailReportDataset item : listDatasetArrayList) {
 
             if (item.getCustomerName() != null) {
-                if (item.getCustomerName().toUpperCase().contains(text.toUpperCase())) {
+                if (item.getCustomerName().toUpperCase().contains(text.toUpperCase())||item.getMobileNo().toUpperCase().contains(text.toUpperCase())) {
                     filteredList.add(item);
                 }
             }

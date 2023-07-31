@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -32,12 +33,14 @@ public class ShareLinkDlg extends DialogFragment {
     static Activity ctx;
 
     EditText et_link;
-    TextView Close_Popup_Share;
-    Button btn_share;
+    ImageView buttonImageclose;
+    TextView txt_share;
+    public static String link_="";
 
-    public static ShareLinkDlg newInstance(GstProceed gstProceed, Activity context) {
+    public static ShareLinkDlg newInstance(String link,GstProceed gstProceed, Activity context) {
         shareLinkDlg = new ShareLinkDlg();
         gstProceedInterface = gstProceed;
+        link_ = link;
         ctx = context;
         return shareLinkDlg;
     }
@@ -53,33 +56,31 @@ public class ShareLinkDlg extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.actvtyflg, container, false);
+        View rootView = inflater.inflate(R.layout.actvtyflg_, container, false);
         getDialog().setCanceledOnTouchOutside(true);
 //        gstProceedInterface=(GstProceed)this;
         et_link = (EditText) rootView.findViewById(R.id.et_link_);
-        Close_Popup_Share = (TextView) rootView.findViewById(R.id.Close_Popup_Share);
-        btn_share = (Button) rootView.findViewById(R.id.btn_share);
-        String link = Logics.getPLFOA(ctx);
-        et_link.setText(link);
+        buttonImageclose = (ImageView) rootView.findViewById(R.id.buttonImageclose);
+        txt_share =  rootView.findViewById(R.id.txt_share);
+        et_link.setText(link_);
 
-        Close_Popup_Share.setOnClickListener(new View.OnClickListener() {
+        buttonImageclose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 shareLinkDlg.dismiss();
                 dismiss();
-
             }
         });
 
-        btn_share.setOnClickListener(new View.OnClickListener() {
+        txt_share.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (Connectivity.getNetworkState(getActivity())) {
-                    String link = Logics.getPLFOA(getActivity());
+//                    String link = Logics.getPLFOA(getActivity());
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_SEND);
                     intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(getActivity()));
+                    intent.putExtra(Intent.EXTRA_TEXT, "" + link_);
                     intent.setType("text/plain");
                     Intent chooserIntent = Intent.createChooser(intent, "share your referral link");
                     chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});

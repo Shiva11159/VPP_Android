@@ -32,9 +32,10 @@
 
                 <RelativeLayout
                     android:id="@+id/cardAddLead"
+
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -45,7 +46,7 @@
 
                     <TextView
                         android:id="@+id/txtAddReference"
-                        android:fontFamily="@font/opensans_semibold"
+                        android:fontFamily="@font/lreg"
 
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -53,7 +54,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/addreference"
-                        android:textColor="@color/card_textColor"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -124,7 +125,7 @@
                     android:id="@+id/cardMyLeads"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -141,9 +142,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_references"
-                        android:fontFamily="@font/opensans_semibold"
+                        android:fontFamily="@font/lreg"
 
-                        android:textColor="@color/card_textColor"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <com.daasuu.cat.CountAnimationTextView
@@ -188,7 +189,7 @@
                     android:id="@+id/cardRejcted"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -205,9 +206,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/rejected"
-                        android:fontFamily="@font/opensans_semibold"
+                        android:fontFamily="@font/lreg"
 
-                        android:textColor="@color/card_textColor"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -232,7 +233,7 @@
                     android:id="@+id/cardNotInterested"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -249,9 +250,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="Not Interested"
-                        android:fontFamily="@font/opensans_semibold"
+                        android:fontFamily="@font/lreg"
 
-                        android:textColor="@color/card_textColor"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -276,7 +277,7 @@
                     android:id="@+id/cardClient"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -293,9 +294,9 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_clients"
-                        android:fontFamily="@font/opensans_semibold"
+                        android:fontFamily="@font/lreg"
 
-                        android:textColor="@color/card_textColor"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <com.daasuu.cat.CountAnimationTextView
@@ -336,7 +337,7 @@
                     android:id="@+id/cardBrokerage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="?attr/selectableItemBackground"
+                    android:background="@drawable/cellshape"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -353,8 +354,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="@string/my_earnings"
-                        android:fontFamily="@font/opensans_semibold"
-                        android:textColor="@color/card_textColor"
+                        android:fontFamily="@font/lreg"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <ImageView
@@ -367,18 +368,18 @@
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_margin="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:id="@+id/cardReferral"
                 app:cardBackgroundColor="@color/white">
 
                 <RelativeLayout
                     android:visibility="visible"
                     android:id="@+id/cardReferral1"
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="?attr/selectableItemBackground"
@@ -398,8 +399,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="Your referral link"
-                        android:fontFamily="@font/opensans_semibold"
-                        android:textColor="@color/card_textColor"
+                        android:fontFamily="@font/lreg"
+                        android:textColor="@color/venturanew"
                         android:textSize="16sp" />
 
                     <ImageView

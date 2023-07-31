@@ -8,6 +8,13 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp">
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_gravity="left"
+        android:src="@drawable/alertlogo"></ImageView>
 
     <TextView
         android:id="@+id/Close_Popup_Share"
@@ -47,7 +54,7 @@
                 android:drawableLeft="@drawable/collaboration_"
                 android:drawablePadding="10dp"
 
-                android:fontFamily="sans-serif-condensed"
+                android:fontFamily="@font/lreg"
                 android:padding="10dp"
                 android:text="Your referral link"
                 android:textColor="@color/black"

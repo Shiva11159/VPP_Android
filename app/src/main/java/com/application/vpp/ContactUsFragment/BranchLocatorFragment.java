@@ -304,7 +304,7 @@ public class BranchLocatorFragment extends Fragment implements RequestSent,CallB
     }
 
     @Override
-    public void getReason(String reason, String name, String leadNo) {
+    public void getReason(String reason, String name, String leadNo,String updateddate) {
 
     }
 

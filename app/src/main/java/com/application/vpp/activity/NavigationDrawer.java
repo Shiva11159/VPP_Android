@@ -1,11 +1,13 @@
 package com.application.vpp.activity;
 
+import android.content.ClipboardManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,16 +27,20 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.application.vpp.ClientServer.Connectivity;
+import com.application.vpp.ClientServer.SendTOServer;
 import com.application.vpp.Const.Const;
 import com.application.vpp.Interfaces.ConnectionProcess;
 import com.application.vpp.Interfaces.DescrpncyIntrfce;
 import com.application.vpp.Interfaces.RequestSent;
 import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.Logics;
+import com.application.vpp.Utility.AlertDialogClass;
 import com.application.vpp.Views.Views;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 import com.sdsmdg.tastytoast.TastyToast;
+
+import org.json.JSONObject;
 
 public class NavigationDrawer extends AppCompatActivity implements RequestSent, DescrpncyIntrfce {
 
@@ -76,7 +83,6 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent, 
         requestSent = (RequestSent) this;
         imgConnection = (ImageView) findViewById(R.id.imgConnection);
         handlerNavigation = new ViewHandler();
-
 
         mainLayout = (RelativeLayout) findViewById(R.id.mainLayout);
         layoutAddLead = (RelativeLayout) findViewById(R.id.layoutAddLead);
@@ -239,11 +245,11 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent, 
 
                     case R.id.layoutInProcess: {
 
-                        if (Connectivity.getNetworkState(getApplicationContext())) {
-                            startActivity(new Intent(NavigationDrawer.this, InProcessLeads.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
-                        } else {
-                            TastyToast.makeText(NavigationDrawer.this, "No Internet", TastyToast.LENGTH_LONG, TastyToast.ERROR);
-                        }
+//                        if (Connectivity.getNetworkState(getApplicationContext())) {
+//                            startActivity(new Intent(NavigationDrawer.this, InProcessLeads.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
+//                        } else {
+//                            TastyToast.makeText(NavigationDrawer.this, "No Internet", TastyToast.LENGTH_LONG, TastyToast.ERROR);
+//                        }
                     }
                     break;
 
@@ -580,30 +586,6 @@ public class NavigationDrawer extends AppCompatActivity implements RequestSent, 
 
 
     }
-
-    public void personlized_link_for_accnt_opnApicall() {
-
-
-        //getMobile_1
-
-//        try {
-//            AlertDialogClass.PopupWindowShow(NavigationDrawer.this, mainLayout);
-//            JSONObject jsonObject = new JSONObject();
-//            //   jsonObject.put("vpp_id", "72001");
-//            jsonObject.put("vpp_id", Logics.getVppId(NavigationDrawer.this));
-////             jsonObject.put("mobile_no","9723179601");
-//            jsonObject.put("mobile_no", Logics.getMobile_LINK(NavigationDrawer.this));
-//            byte[] data = jsonObject.toString().getBytes();
-//            Log.e("DASHBOARD", "connected: " + jsonObject.toString());
-//            new SendTOServer(NavigationDrawer.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-
-
-    }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

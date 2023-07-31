@@ -5,17 +5,22 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.application.vpp.Datasets.ClientlistData;
 import com.application.vpp.Datasets.InProcessDataset;
+import com.application.vpp.Interfaces.CallBack;
 import com.application.vpp.R;
+import com.application.vpp.Utility.AlertDialogClass;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +38,10 @@ public class InProcessAdapter extends RecyclerView.Adapter<InProcessAdapter.View
     String s;
     View view;
 
-    public InProcessAdapter(ArrayList<InProcessDataset> inProcessDatasetArrayList, Context context, String s) {
+    CallBack callBack;
+    public InProcessAdapter(ArrayList<InProcessDataset> inProcessDatasetArrayList, Context context, String s,CallBack callback) {
 
+        this.callBack=callback;
         this.context = context;
         this.inProcessDatasetArrayList = inProcessDatasetArrayList;
         detailsFiltered = new ArrayList<>(inProcessDatasetArrayList);
@@ -58,23 +65,47 @@ public class InProcessAdapter extends RecyclerView.Adapter<InProcessAdapter.View
 //        Log.e("kk", inProcessDatasetArrayList.get(position).ProspectName);
 
         if (!s.equalsIgnoreCase("")) {  //rejected
-            holder.txtbrokerageProductName.setVisibility(View.VISIBLE);
-            holder.txtbrokerageProductName.setText(inProcessDatasetArrayList.get(position).ProductName);
+//            holder.txtbrokerageProductName.setVisibility(View.VISIBLE);
+            holder.txtProduct.setText(inProcessDatasetArrayList.get(position).ProductName);
+            holder.txtMobileNo.setText(inProcessDatasetArrayList.get(position).MobileNo);
 
-            StringTokenizer stringTokenizer=new StringTokenizer(inProcessDatasetArrayList.get(position).LeadDate);
-            String one=stringTokenizer.nextToken();
-            String two=stringTokenizer.nextToken();
-            String three=stringTokenizer.nextToken();
-            String four=stringTokenizer.nextToken();
-            holder.txtdate.setText(one);
-            holder.txtmon_yr.setText(two +" "+ three);
-            holder.txttime.setText(four);
+
+//            holder.txtdate.setText(one);
+//            holder.txtmon_yr.setText(two +" "+ three);
+//            holder.txttime.setText(four);
 
         } else {
-            holder.txtbrokerageProductName.setVisibility(View.GONE);
+            holder.txtProduct.setText("-");
         }
-        holder.txtmonthlyProspectName.setText(inProcessDatasetArrayList.get(position).ProspectName);
-        holder.txtbrokerageDate.setText(inProcessDatasetArrayList.get(position).LeadDate);
+
+
+        holder.txtMobileNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:"+inProcessDatasetArrayList.get(position).getMobileNo().trim()));
+//                startActivity(intent);
+                context.startActivity(intent);
+            }
+        });
+
+        StringTokenizer stringTokenizer=new StringTokenizer(inProcessDatasetArrayList.get(position).LeadDate);
+        String one=stringTokenizer.nextToken();
+        String two=stringTokenizer.nextToken();
+        String three=stringTokenizer.nextToken();
+        String four=stringTokenizer.nextToken();
+        holder.txtName.setText(inProcessDatasetArrayList.get(position).ProspectName);
+        holder.txtDate.setText(one +" "+two+" "+three);
+
+
+        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               // callBack.getReason(inProcessDatasetArrayList.get(holder.getAdapterPosition()).getReason(), inProcessDatasetArrayList.get(holder.getAdapterPosition()).getProspectName(),"",inProcessDatasetArrayList.get(holder.getAdapterPosition()).getRejectionDate());
+            }
+        });
+
+        AlertDialogClass.PopupWindowDismiss();
 
     }
 
@@ -83,20 +114,19 @@ public class InProcessAdapter extends RecyclerView.Adapter<InProcessAdapter.View
         return inProcessDatasetArrayList.size();
     }
 
-
-
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtmonthlyProspectName, txtbrokerageDate, txtbrokerageProductName,txtdate,txtmon_yr,txttime;
+//        TextView txtmonthlyProspectName, txtbrokerageDate, txtbrokerageProductName,txtdate,txtmon_yr,txttime;
+        TextView txtDate, txtName, txtMobileNo,txtProduct;
+        LinearLayout linearLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
-            txtbrokerageProductName = (TextView) itemView.findViewById(R.id.txtbrokerageProductName);
-            txtmonthlyProspectName = (TextView) itemView.findViewById(R.id.txtmonthlyProspectName);
-            txtbrokerageDate = (TextView) itemView.findViewById(R.id.txtbrokerageDate);
-            txtdate = (TextView) itemView.findViewById(R.id.date);
-            txtmon_yr = (TextView) itemView.findViewById(R.id.mon_yr);
-            txttime = (TextView) itemView.findViewById(R.id.time);
+            linearLayout = (LinearLayout) itemView.findViewById(R.id.linearLayout);
+            txtDate = (TextView) itemView.findViewById(R.id.txtDate);
+            txtName = (TextView) itemView.findViewById(R.id.txtName);
+            txtMobileNo = (TextView) itemView.findViewById(R.id.txtMobileNo);
+            txtProduct = (TextView) itemView.findViewById(R.id.txtProduct);
 
         }
     }

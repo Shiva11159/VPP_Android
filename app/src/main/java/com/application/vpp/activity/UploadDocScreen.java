@@ -786,7 +786,7 @@ public class UploadDocScreen extends AppCompatActivity implements View.OnClickLi
                     if (isDocument == 0) {
                         TastyToast.makeText(getApplicationContext(), "Images Uploaded Succesfully", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
 
-                        if (Logics.getEsignStatus(UploadDocScreen.this).equalsIgnoreCase("0")) {
+                        if (Logics.getPaymentStatus(UploadDocScreen.this).equalsIgnoreCase("0")) {
                             Intent intent = new Intent(UploadDocScreen.this, UpiPayment.class);
                             intent.putExtra("isDocument", 0);
                             startActivity(intent);

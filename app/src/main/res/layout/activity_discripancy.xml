@@ -172,13 +172,14 @@
                         android:id="@+id/linear2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/white"
+                        android:background="@drawable/cellshape"
                         android:orientation="horizontal"
                         android:padding="5dp">
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -186,11 +187,13 @@
                                 android:layout_width="2dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
+                                android:visibility="gone"
                                 android:background="@color/gray300" />
 
                             <ImageView
                                 android:id="@+id/imgpaymentstatus"
                                 android:layout_width="25dp"
+                                android:layout_gravity="center"
                                 android:layout_height="25dp"
                                 android:gravity="center" />
 
@@ -199,7 +202,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:background="@color/gray300"
-                                android:visibility="visible" />
+                                android:visibility="gone" />
                         </LinearLayout>
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -227,8 +230,9 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:layout_weight="1"
+                                        android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lbold"
                                         android:text="Payment Status"
-                                        android:textColor="@color/gray600"
                                         android:textSize="15sp" />
                                 </LinearLayout>
 
@@ -243,13 +247,13 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginRight="8sp"
                                         android:layout_weight="1"
-                                        android:fontFamily="@font/opensans_light"
+                                        android:fontFamily="@font/lreg"
                                         android:gravity="right"
                                         android:paddingTop="5dp"
                                         android:paddingBottom="5dp"
                                         android:text=""
-                                        android:textColor="@color/gray600"
-                                        android:textSize="12dp"
+                                        android:textColor="@color/black"
+                                        android:textSize="15dp"
                                         android:visibility="visible" />
 
                                 </LinearLayout>
@@ -307,8 +311,9 @@
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
+                            android:layout_gravity="center"
                             android:orientation="vertical">
 
                             <View
@@ -357,10 +362,10 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
 
+                                        android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lbold"
                                         android:layout_weight="1"
-                                        android:fontFamily="@font/opensans_regular"
                                         android:text="Bank Status"
-                                        android:textColor="@color/gray600"
                                         android:textSize="15sp" />
 
                                 </LinearLayout>
@@ -449,7 +454,8 @@
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -501,9 +507,9 @@
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
                                         android:layout_weight="1"
-                                        android:fontFamily="@font/opensans_regular"
-                                        android:text="Adhar Status"
-                                        android:textColor="@color/gray600"
+
+                                        android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lbold"                                        android:text="Adhar Status"
                                         android:textSize="15sp" />
 
                                 </LinearLayout>
@@ -589,7 +595,8 @@
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -640,10 +647,10 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
-                                        android:fontFamily="@font/opensans_regular"
                                         android:text="Pan Status"
-                                        android:textColor="@color/gray600" />
 
+                                        android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lbold"></TextView>
                                 </LinearLayout>
 
                                 <LinearLayout
@@ -731,7 +738,8 @@
 
                         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                             android:layout_width="wrap_content"
-                            android:layout_height="100dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
                             android:gravity="center_horizontal"
                             android:orientation="vertical">
 
@@ -782,9 +790,9 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_marginLeft="10dp"
-                                        android:fontFamily="@font/opensans_regular"
-                                        android:text="Selfie Status"
-                                        android:textColor="@color/gray600" />
+                                        android:textColor="@color/venturanew"
+                                        android:fontFamily="@font/lbold"                                        android:text="Selfie Status"
+                                        />
 
                                 </LinearLayout>
 

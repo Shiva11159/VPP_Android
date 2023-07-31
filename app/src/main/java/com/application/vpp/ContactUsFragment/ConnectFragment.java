@@ -48,6 +48,7 @@ import com.application.vpp.R;
 import com.application.vpp.ReusableLogics.Logics;
 import com.application.vpp.Utility.AlertDialogClass;
 import com.application.vpp.Views.Views;
+import com.application.vpp.activity.AddLead;
 import com.application.vpp.activity.ContactUs;
 import com.google.android.material.tabs.TabLayout;
 import com.sdsmdg.tastytoast.TastyToast;
@@ -140,6 +141,7 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
         view = inflater.inflate(R.layout.connect_layout, container, false);
         mainlayout = (ScrollView) view.findViewById(R.id.mainLayout);
         connectionProcess = (ConnectionProcess) this;
+
         handlerConnect = new ViewHandler();
         image1 = view.findViewById(R.id.image1);
         image2 = view.findViewById(R.id.image2);
@@ -167,7 +169,7 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
 
         // viewPager.setOffscreenPageLimit(1);
 
-        //viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
+        viewPager.setAdapter(new MyAdapter(getChildFragmentManager()));
 
         /**
          * Now , this is a workaround ,
@@ -277,6 +279,9 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
 
     void sendDataCallBack(EditText edt_name, EditText edt_phone_number) {
         try {
+
+
+            AlertDialogClass.PopupWindowShow(getActivity(), edt_name);
             String vppid = Logics.getVppId(getContext());
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("name", edt_name.getText().toString().toUpperCase().trim());
@@ -297,6 +302,8 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
     }
 
     public void sendQuery(EditText query) {
+        AlertDialogClass.PopupWindowShow(getActivity(), query);
+
         String VppId;
         JSONObject jsonObject = new JSONObject();
         VppId = Logics.getVppId(getContext());
@@ -326,9 +333,7 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
 
-
             Log.d("Message", "handleMessageLeadList: " + msg.toString());
-
 
             String data = (String) msg.obj;
             int msgCode = msg.arg1;
@@ -337,6 +342,8 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
 //                    if (progressDialog != null) {
 //                        progressDialog.dismiss();
 //                    }
+
+                    AlertDialogClass.PopupWindowDismiss();
                     clickedquery = true;
                     Log.e( "MSGQUERY" , msg.toString());
 
@@ -379,6 +386,7 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
                     try {
                         Log.e("MSGCALLBACK", data);
                         clickedvalidation = true;
+                        AlertDialogClass.PopupWindowDismiss();
                         JSONObject jsonObject = new JSONObject(data);
                         int status = jsonObject.getInt("status");
                         String message = jsonObject.getString("mesage");
@@ -417,9 +425,9 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
             public void run() {
                 if (Connectivity.getNetworkState(getActivity()))
                     if (clickedvalidation == false) {
-                       // validation();
+                        // validation();
                     } else {
-                       // sendQuery();
+                        // sendQuery();
                     }
                 else
                     Views.SweetAlert_NoDataAvailble(getActivity(), "No Internet");
@@ -502,52 +510,52 @@ public class ConnectFragment extends Fragment implements RequestSent, Connection
     }
 
 
-//    class MyAdapter extends FragmentPagerAdapter {
-//
-//        public MyAdapter(FragmentManager fm) {
-//            super(fm);
-//        }
-//
-//        /**
-//         * Return fragment with respect to Position .
-//         */
-//
-//        @Override
-//        public Fragment getItem(int position) {
-//            switch (position) {
-//                case 0:
-//                    return new QueryFragment();
-//                case 1:
-//                    return new CallbackFragment();
-//            }
-//            return null;
-//        }
-//
-//        @Override
-//        public int getCount() {
-//
-//            return int_items;
-//
-//        }
-//
-//        /**
-//         * This method returns the title of the tab according to the position.
-//         */
-//
-//        @Override
-//        public CharSequence getPageTitle(int position) {
-//
-//            switch (position) {
-//                case 0:
-//                    String recent_news = "Query details";
-//                    return recent_news;
-//                case 1:
-//                    String category = "Callback details";
-//                    return category;
-//            }
-//            return null;
-//        }
-//    }
+    class MyAdapter extends FragmentPagerAdapter {
+
+        public MyAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        /**
+         * Return fragment with respect to Position .
+         */
+
+        @Override
+        public Fragment getItem(int position) {
+            switch (position) {
+                case 0:
+                    return new CallbackFragment();
+                case 1:
+                    return new QueryFragment();
+            }
+            return null;
+        }
+
+        @Override
+        public int getCount() {
+
+            return int_items;
+
+        }
+
+        /**
+         * This method returns the title of the tab according to the position.
+         */
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position) {
+                case 0:
+                    String recent_news = "Callback details";
+                    return recent_news;
+                case 1:
+                    String category = "Query details";
+                    return category;
+            }
+            return null;
+        }
+    }
 
 
     private void CallbackMethod() {

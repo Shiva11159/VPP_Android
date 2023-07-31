@@ -350,6 +350,14 @@ public class Connectivity {
                     return false; // ~25 kbps
                 case TelephonyManager.NETWORK_TYPE_LTE: // API level 11
                     return true; // ~ 10+ Mbps
+
+                case TelephonyManager.NETWORK_TYPE_TD_SCDMA: //3g
+                    return true; //
+                case TelephonyManager.NETWORK_TYPE_NR:  // 5G
+                    return true; //
+
+                case TelephonyManager.NETWORK_TYPE_IWLAN:  // 4G
+                    return true; //
                 // Unknown
                 case TelephonyManager.NETWORK_TYPE_UNKNOWN:
                 default:

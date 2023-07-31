@@ -9,6 +9,8 @@
 
     <LinearLayout
         android:id="@+id/linearleadhide"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -16,29 +18,105 @@
 
         <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
-            android:background="@color/searchBackground"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/searchView"
-                android:padding="10dp"
-                android:background="@drawable/round_rect1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Search by Name"
-                android:layout_marginBottom="10dp"
-                tools:layout_constraintTop_creator="1"
-                tools:layout_constraintRight_creator="1"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="16dp"
-                tools:layout_constraintLeft_creator="1"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp" />
+                android:background="@drawable/mf_et_border"
+                android:drawableRight="@drawable/search"
+                android:padding="5dp"
+                android:hint="Search by name and contact no"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:fontFamily="@font/opensans_light"
+                android:paddingStart="10dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/text_secondary"
+                android:textSize="14dp">
+
+            </EditText>
+
+            <TableLayout
+                android:id="@+id/tblTop10List"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:id="@+id/tableRow1"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="5dp"
+                    android:layout_height="wrap_content"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/txtDate"
+                        android:layout_width="0dp"
+                        android:lines="1"
+                        android:textAllCaps="true"
+                        android:textSize="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:padding="5dp"
+                        android:text="LeadDate" />
+
+                    <TextView
+                        android:id="@+id/txtName"
+
+                        android:lines="1"
+                        android:textSize="10dp"
+                        android:textStyle="bold"
+                        android:fontFamily="@font/opensans_semibold"
+
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"
+                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:padding="5dp"
+                        android:text="Name" />
+
+                    <TextView
+                        android:id="@+id/txtMobileNo"
+                        android:layout_width="0dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lines="1"
+                        android:gravity="center"
+                        android:textAllCaps="true"
+                        android:textSize="10dp"
+                        android:textStyle="bold"                        android:layout_height="wrap_content"
+                        android:layout_column="1"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"                        android:padding="5dp"
+                        android:text="contact no" />
+
+                    <TextView
+                        android:id="@+id/txtStatus"
+                        android:layout_width="0dp"
+                        android:gravity="center"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:lines="1"
+                        android:textSize="10dp"
+                        android:textAllCaps="true"
+                        android:layout_column="1"
+                        android:textColor="@color/venturanew"
+                        android:background="@drawable/cell_shape"                        android:padding="5dp"
+                        android:text="status" />
+                </TableRow>
+            </TableLayout>
+
 
         </LinearLayout>
         <!--        <androidx.appcompat.widget.SearchView-->
@@ -109,9 +187,12 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listLead"
         android:layout_width="match_parent"
+
         android:layout_height="match_parent"
         android:layout_below="@+id/linearleadhide"
-        android:layout_margin="10dp">
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginBottom="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>

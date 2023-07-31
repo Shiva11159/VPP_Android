@@ -18,11 +18,11 @@
     <uses-permission android:name="android.permission.CAMERA" />
 
     <uses-feature
-        android:name="android.hardware.camera.front"
-        android:required="true" />
-    <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
 
     <queries>
         <intent>
@@ -46,25 +46,45 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
 <!--        <activity-->
-<!--            android:name=".ShareLinkDlg"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_share_link_dlg"-->
-<!--            android:theme="@style/AppTheme.NoActionBar">-->
+<!--            android:name=".OtpLoginVerfication"-->
+<!--            android:exported="false">-->
 <!--            <meta-data-->
 <!--                android:name="android.app.lib_name"-->
 <!--                android:value="" />-->
 <!--        </activity>-->
+        <!-- <activity -->
+        <!-- android:name=".activity.TestAppState" -->
+        <!-- android:exported="true"> -->
+        <!-- &lt;!&ndash;            <intent-filter>&ndash;&gt; -->
+        <!-- &lt;!&ndash;                <action android:name="android.intent.action.MAIN" />&ndash;&gt; -->
+        <!-- &lt;!&ndash;                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />&ndash;&gt; -->
+        <!-- &lt;!&ndash;                <category android:name="android.intent.category.LAUNCHER" />&ndash;&gt; -->
+        <!-- &lt;!&ndash;            </intent-filter>&ndash;&gt; -->
+        <!-- </activity> -->
+        <activity
+            android:name=".activity.AuthenticateUpdateAccountProfile"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity> <!-- <activity -->
+        <!-- android:name=".ShareLinkDlg" -->
+        <!-- android:exported="false" -->
+        <!-- android:label="@string/title_activity_share_link_dlg" -->
+        <!-- android:theme="@style/AppTheme.NoActionBar"> -->
+        <!-- <meta-data -->
+        <!-- android:name="android.app.lib_name" -->
+        <!-- android:value="" /> -->
+        <!-- </activity> -->
         <activity
             android:name=".activity.PrivacyPolicy"
             android:label="Privacy Policy" />
         <activity
             android:name=".activity.DiscripancyActivity"
-            android:label="@string/discrepancy" />
-        <activity
-            android:name=".Razorpay.RazorpayActivity"
-            android:exported="true"
-            android:label="@string/razorpay" />
-
+            android:label="@string/discrepancy" /> <!-- <activity -->
+        <!-- android:name=".Razorpay.RazorpayActivity" -->
+        <!-- android:exported="true" -->
+        <!-- android:label="@string/razorpay" /> -->
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
@@ -104,12 +124,11 @@
             android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="unspecified">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--            <intent-filter>-->`
+<!--                <action android:name="android.intent.action.MAIN" />-->
+<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
         <activity
             android:name=".activity.LoginScreen"
@@ -125,6 +144,9 @@
             android:screenOrientation="unspecified" />
         <activity
             android:name=".activity.SignupScreen"
+            android:screenOrientation="unspecified" />
+        <activity
+            android:name=".activity.SignupScreenEmail"
             android:screenOrientation="unspecified" />
         <activity
             android:name=".activity.BrokerageList"
@@ -154,11 +176,11 @@
             android:label="Not Interested"
             android:screenOrientation="unspecified"
             android:windowSoftInputMode="stateHidden|adjustResize" />
-        <activity
-            android:name=".activity.InProcessLeads"
-            android:label="In Process"
-            android:screenOrientation="unspecified"
-            android:windowSoftInputMode="stateHidden|adjustResize" />
+<!--        <activity-->
+<!--            android:name=".activity.InProcessLeads"-->
+<!--            android:label="In Process"-->
+<!--            android:screenOrientation="unspecified"-->
+<!--            android:windowSoftInputMode="stateHidden|adjustResize" />-->
         <activity
             android:name=".ReusableLogics.ExitActivity"
             android:screenOrientation="unspecified" />
@@ -215,18 +237,19 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".activity.OtpVerfication" />
+        <activity android:name=".activity.OtpVerfication"
+
+            /> <activity android:name=".activity.OtpLoginVerfication" />
         <activity android:name=".activity.PanValidation" />
-        <activity android:name=".activity.BankValidation" />
-        <activity android:name=".activity.SignupScreen2">
-
-            <!-- <intent-filter> -->
-            <!-- <action android:name="android.intent.action.MAIN" /> -->
-            <!-- <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" /> -->
-
-
-            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-            <!-- </intent-filter> -->
+        <activity android:name=".activity.BankValidation">
+        </activity>
+        <activity android:name=".activity.SignupScreen2"
+            android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
 
         </activity>
         <activity android:name=".activity.UploadDocScreen" />

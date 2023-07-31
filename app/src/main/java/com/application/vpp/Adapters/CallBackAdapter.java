@@ -1,7 +1,9 @@
 package com.application.vpp.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +35,8 @@ import java.util.StringTokenizer;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
+import org.w3c.dom.Text;
+
 /**
  * Created by bpandey on 15-06-2018.
  */
@@ -59,9 +63,12 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
         return viewHolder;
     }
 
+    @SuppressLint("SuspiciousIndentation")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int i) {
         String status = clientlistDataArrayList.get(holder.getAdapterPosition()).getStatus();
+
+        Log.e("status",  clientlistDataArrayList.get(holder.getAdapterPosition()).getStatus());
         holder.txtStatus.setText(String.valueOf(clientlistDataArrayList.get(holder.getAdapterPosition()).getStatus()));
 //        holder.txtDate.setText("Date :" + queryDataList.get(position).date);
         final boolean isExpanded = expandState.get(holder.getAdapterPosition());
@@ -74,13 +81,20 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
             holder.txtcontact_number.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).getContact_number());
         }
         String name = clientlistDataArrayList.get(holder.getAdapterPosition()).getName();
+        String date = clientlistDataArrayList.get(holder.getAdapterPosition()).getCreated_date();
         holder.txtNAME.setText("" + name);
+        holder.txtdate.setText("" + date);
 
         if (clientlistDataArrayList.get(holder.getAdapterPosition()).getRemark().length() > 14) {
             holder.txt_remark.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).getRemark().substring(0, 15));
             holder.txtseehide.setVisibility(VISIBLE);
 
         } else {
+
+            if (clientlistDataArrayList.get(holder.getAdapterPosition()).getRemark().equalsIgnoreCase("")){
+                holder.txt_remark.setText("-");
+
+            }else
             holder.txt_remark.setText(clientlistDataArrayList.get(holder.getAdapterPosition()).getRemark());
 //                holder.txtseehide.setVisibility(View.GONE);
         }
@@ -89,11 +103,14 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
 //            holder.txtremark.setVisibility(View.VISIBLE);
 //            holder.mTimelineView.setMarker(mContext.getResources().getDrawable(R.drawable.close));
 
-            holder.openclose.setBackground(context.getResources().getDrawable(R.drawable.opne));
+//            holder.openclose.setBackground(context.getResources().getDrawable(R.drawable.opne));
+            holder.openclose.setText("open");
 //            holder.txt_remark.setVisibility(View.GONE);
             holder.roundedLinear.setBackground(context.getResources().getDrawable(R.drawable.round));
 
         } else {
+            holder.openclose.setText("close");
+
             holder.openclose.setBackground(context.getResources().getDrawable(R.drawable.close));
             holder.roundedLinear.setBackground(context.getResources().getDrawable(R.drawable.roundclose));
 
@@ -101,28 +118,28 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
 
         }
 
-        holder.card_view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onClickButton(holder.booleantxt,isExpanded,holder.txt_remark, holder.txtremark, holder.imageButtonDropdown, holder.getAdapterPosition(), holder.txtcontact_number, holder.txtseehide);
-
-            }
-        });
+//        holder.card_view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onClickButton(holder.booleantxt,isExpanded,holder.txt_remark, holder.txtremark, holder.imageButtonDropdown, holder.getAdapterPosition(), holder.txtcontact_number, holder.txtseehide);
+//
+//            }
+//        });
 //        holder.txtStatus.invalidate();
 
-        try {
-
-            StringTokenizer stringTokenizer = new StringTokenizer(clientlistDataArrayList.get(holder.getAdapterPosition()).getCreated_date(), " ");
-            String date = stringTokenizer.nextToken();
-            String time = stringTokenizer.nextToken();
-
-            Date date1 = new SimpleDateFormat("dd-MMM-yy").parse(date);
-            holder.week.setText(Methods.getday(date1));
-            holder.date.setText(Methods.getdate(date1));
-            holder.monthyr.setText(Methods.getmonth(date1) + " " + Methods.getyear(date1));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+//        try {
+//
+//            StringTokenizer stringTokenizer = new StringTokenizer(clientlistDataArrayList.get(holder.getAdapterPosition()).getCreated_date(), " ");
+//            String date = stringTokenizer.nextToken();
+//            String time = stringTokenizer.nextToken();
+//
+//            Date date1 = new SimpleDateFormat("dd-MMM-yy").parse(date);
+//            holder.week.setText(Methods.getday(date1));
+//            holder.date.setText(Methods.getdate(date1));
+//            holder.monthyr.setText(Methods.getmonth(date1) + " " + Methods.getyear(date1));
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
@@ -135,13 +152,13 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView txtStatus, txtDate, txtcontact_number, txt_remark, txtNAME;
+        TextView txtStatus, txtDate, txtcontact_number, txt_remark, txtNAME,txtdate;
         TimelineView mTimelineView;
         TextView week, date, monthyr, txtseehide, txtremark,booleantxt;
         LinearLayout roundedLinear;
         ImageButton imageButtonDropdown;
 
-        ImageView openclose;
+        TextView openclose;
         CardView card_view;
 
         public ViewHolder(View itemView) {
@@ -155,6 +172,7 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
             txtcontact_number = (TextView) itemView.findViewById(R.id.txtcontact_number);
             txt_remark = (TextView) itemView.findViewById(R.id.txtqueryremark);
             txtNAME = (TextView) itemView.findViewById(R.id.txtNAME);
+            txtdate = (TextView) itemView.findViewById(R.id.txtdate);
             mTimelineView = (TimelineView) itemView.findViewById(R.id.time_marker);
             txtStatus = (TextView) itemView.findViewById(R.id.txtstatus);
             card_view = (CardView) itemView.findViewById(R.id.card_view);
@@ -249,7 +267,7 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
             dropdown = false;
             expandState.put(i, false);
             txt_remark.clearAnimation();
-            txtseehide.setText("see more");
+//            txtseehide.setText("see more");
 
 
         } else {
@@ -261,7 +279,7 @@ public class CallBackAdapter extends RecyclerView.Adapter<CallBackAdapter.ViewHo
 //            ANim(txt_remark);
             expandState.put(i, true);
             booleantxt.setVisibility(VISIBLE);
-            txtseehide.setText("Hide");
+//            txtseehide.setText("Hide");
 
         }
 

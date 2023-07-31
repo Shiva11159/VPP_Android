@@ -29,16 +29,26 @@
             android:textStyle="bold"
             android:visibility="gone" />
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/image"
+            android:layout_marginTop="25dp"
+            android:layout_gravity="left"
+            android:src="@drawable/alertlogo">
+        </ImageView>
+
+
         <TextView
             android:layout_width="match_parent"
             android:layout_marginTop="25dp"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/opensans_light"
+            android:fontFamily="@font/lreg"
             android:paddingLeft="15dp"
             android:text="Query"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textSize="12dp"
+            android:textSize="10dp"
 
             />
 
@@ -47,38 +57,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/opensans_regular"
+            android:layout_gravity="left"
+            android:gravity="left"
+            android:fontFamily="@font/lbold"
             android:paddingLeft="15dp"
             android:inputType="text|textMultiLine"
-            android:text=""
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="15dp"
+            android:text="-"
+            android:textColor="@color/venturanew"
+            android:textSize="12dp"
             />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:fontFamily="@font/opensans_light"
+            android:fontFamily="@font/lreg"
             android:paddingLeft="15dp"
             android:text="Remark"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:textSize="12dp" />
+            android:textSize="10dp" />
 
         <TextView
             android:id="@+id/remarktxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:fontFamily="@font/opensans_regular"
+            android:fontFamily="@font/lbold"
             android:paddingLeft="15dp"
+            android:layout_marginBottom="10dp"
             android:inputType="text|textMultiLine"
-            android:text=""
-            android:textColor="@color/black"
-            android:textColorHint="@color/black"
-            android:textSize="15dp" />
+            android:text="-"
+            android:textColor="@color/venturanew"
+            android:textSize="12dp" />
 
     </LinearLayout>
 
