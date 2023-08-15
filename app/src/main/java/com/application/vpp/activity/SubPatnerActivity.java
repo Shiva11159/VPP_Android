@@ -152,7 +152,7 @@ public class SubPatnerActivity extends NavigationDrawer implements ConnectionPro
 //            String vppid = Logics.getVppId(SubPatnerActivity.this);
 
 //            jsonObject.put("VPPID", vppid);   /*72686*/
-            jsonObject.put("VPPID", vppid);   /*72686*/
+            jsonObject.put("VPPID", "72686");   /*72686*/
             jsonObject.put("reportType", "SubPartner");
 
             byte data[] = jsonObject.toString().getBytes();

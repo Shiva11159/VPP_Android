@@ -401,8 +401,8 @@ public class Payout extends NavigationDrawer implements RequestSent, ConnectionP
             JSONObject jsonObject = new JSONObject();
             String vppid = Logics.getVppId(Payout.this);
 
-//            jsonObject.put("VPPID", "73352");     //73352 ...
-            jsonObject.put("VPPID", vppid);     //73352 ..
+            jsonObject.put("VPPID", "73352");     //73352 ...
+//            jsonObject.put("VPPID", vppid);     //73352 ..
 //            jsonObject.put("imei",imei);
 //            jsonObject.put("simNo",simID);
             byte data[] = jsonObject.toString().getBytes();

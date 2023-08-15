@@ -352,10 +352,10 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
             jsonObject.put("regpegno", 4);
             Log.e("sendData: ", jsonObject.toString());
 
-            //data = jsonObject.toString().getBytes();
-
-            data1="{\"area\":\"YERWADA\",\"vppbankname\":\"SACHIN SHAMRAO PATIL\",\"city\":\"PUNE CITY\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"8149142766\",\"isBankV\":0,\"bankaccno\":\"636701500806\",\"prof\":\"\",\"Ifsc\":\"ICIC0006367\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"NEAR MENTAL HOSPITAL\",\"pin\":\"411006\",\"dob\":-100915200,\"name\":\"SHRI SAHIL PEERMOHAMMAD SHAIKH\",\"state\":\"MADHYA PRADESH\",\"pan\":\"AXHPS3405P\",\"vpppanname\":\"SHRI SAHIL PEERMOHAMMAD SHAIKH\",\"email\":\"sahilshk2014@gmail.com\",\"houseNum\":\"HUSAINSHAHBABANAGAR\"}".getBytes();
-            new SendTOServer(this, this, Const.MSGSIGNUP2, data1, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            data = jsonObject.toString().getBytes();
+//
+//            data1="{\"area\":\"AHMEDNAGAR\",\"vppbankname\":\"null null null\",\"city\":\"AHMEDNAGAR\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"8830191346\",\"isBankV\":0,\"bankaccno\":\"168201000017428\",\"prof\":\"HOUSE WIFE\",\"Ifsc\":\"IOBA0001682\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"VARQUA SCHOOL\",\"pin\":\"414002\",\"dob\":-313286400,\"name\":\"SMT REKHA J MANJHI\",\"state\":\"MADHYA PRADESH\",\"pan\":\"DDMPM8092Q\",\"vpppanname\":\"SMT REKHA J MANJHI\",\"email\":\"neelammanjhikhushi1019@gmail.com\",\"houseNum\":\"PLOT NO 15 JHAMKHED ROAD GENERAL ARUN VADIYA COLONY\"}".getBytes();
+            new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);

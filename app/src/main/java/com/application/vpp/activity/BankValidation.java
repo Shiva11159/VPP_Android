@@ -82,29 +82,32 @@ import retrofit2.Retrofit;
 
 public class BankValidation extends AppCompatActivity implements View.OnClickListener, RequestSent, ConnectionProcess {
 
+    //168201000017428
+    //IOBA0001682
 
     AlertDialog alertDialog;
 
     //    TextInputLayout text_input_AccNoOld;
-    EditText edtAccNo, edtIfscCode,edtAccNoOld;
+    EditText edtAccNo, edtIfscCode, edtAccNoOld;
     TextView txtAccNoOld;
     RelativeLayout layName;
     TextView txtAccountValidateNote;
-    Button  btnProceed, btn_verify_AccNo;
+    Button btnProceed, btn_verify_AccNo;
     Button btn_Submit_AccNo;
     private int resCode;
     private String resMsg;
     public static Handler handlerBank, handlerbankverify;
     public String fname, lname, mname, name;
-//    ProgressDialog ringProgressDialog;
+    //    ProgressDialog ringProgressDialog;
     ScrollView mainlayout;
     ConnectionProcess connectionProcess;
     RequestSent requestSent;
-    int MaxTry=0;
-    String err="";
+    int MaxTry = 0;
+    String err = "";
 
-    TextView txtACC,txtIFSC;
+    TextView txtACC, txtIFSC;
     ArrayList<InserSockettLogs> inserSockettLogsArrayList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,13 +125,12 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         }
 
 
-
         layName = (RelativeLayout) findViewById(R.id.lay_name);
         edtAccNoOld = findViewById(R.id.edtAccNoOld);
         txtAccNoOld = findViewById(R.id.txtAccNoOld);
 
 
-        txtIFSC= findViewById(R.id.txtIFSC);
+        txtIFSC = findViewById(R.id.txtIFSC);
         txtACC = findViewById(R.id.txtACC);
 
 //        text_input_AccNoOld = findViewById(R.id.text_input_AccNoOld);
@@ -144,7 +146,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         //btnEdtName.setOnClickListener(this);
         btnProceed.setOnClickListener(this);
         handlerBank = new ViewHandler();
-        handlerbankverify= new ViewHandler();
+        handlerbankverify = new ViewHandler();
 
 
 //        if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
@@ -162,7 +164,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //            txtAccNoOld.setVisibility(View.GONE);
 //        }
 
-        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList,"SocketLogs", BankValidation.this);
+        inserSockettLogsArrayList = SharedPref.getLogsArrayList(inserSockettLogsArrayList, "SocketLogs", BankValidation.this);
 
     }
 
@@ -395,29 +397,29 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //        }
 //    }
 
-    private void call_bankvarification(){
-    try {
-    AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
-    JSONObject jsonObject = new JSONObject();
-    String strAccNo = edtAccNo.getText().toString().trim().toUpperCase();
+    private void call_bankvarification() {
+        try {
+            AlertDialogClass.PopupWindowShow(BankValidation.this, mainlayout);
+            JSONObject jsonObject = new JSONObject();
+            String strAccNo = edtAccNo.getText().toString().trim().toUpperCase();
 
-    String strIfsc = edtIfscCode.getText().toString().trim().toUpperCase();
+            String strIfsc = edtIfscCode.getText().toString().trim().toUpperCase();
 
-    jsonObject.put("ifsc", strIfsc);
-    jsonObject.put("acc_no", strAccNo);
-    jsonObject.put("login_id", "VPPAPP");
+            jsonObject.put("ifsc", strIfsc);
+            jsonObject.put("acc_no", strAccNo);
+            jsonObject.put("login_id", "VPPAPP");
 
-    byte[] data = jsonObject.toString().getBytes();
-    Log.e("splashScreen", "connected: " + jsonObject.toString());
-    new SendTOServer(BankValidation.this, BankValidation.this, Const.MSGBANKVERIFICATION, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-}catch(Exception e){
-    e.printStackTrace();
+            byte[] data = jsonObject.toString().getBytes();
+            Log.e("splashScreen", "connected: " + jsonObject.toString());
+            new SendTOServer(BankValidation.this, BankValidation.this, Const.MSGBANKVERIFICATION, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
-    private void call_bankUpdateAccountIfsc(){
+    private void call_bankUpdateAccountIfsc() {
         try {
-            AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
+            AlertDialogClass.PopupWindowShow(BankValidation.this, mainlayout);
             JSONObject jsonObject = new JSONObject();
 
             String AccNo = Logics.getBankAccNo(BankValidation.this);
@@ -436,7 +438,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
             byte[] data = jsonObject.toString().getBytes();
             Log.e("splashScreen", "connected: " + jsonObject.toString());
             new SendTOServer(BankValidation.this, BankValidation.this, Const.MSG_UPDATEACCOUNT_IFSCCODE, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -515,14 +517,14 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
             case R.id.btn_verify_AccNo: {
                 if (Connectivity.getNetworkState(getApplicationContext())) {
 //                    btn_verify_AccNo.setEnabled(false);
-                    if(edtAccNo.getText().toString().equalsIgnoreCase("")){
+                    if (edtAccNo.getText().toString().equalsIgnoreCase("")) {
 
                         edtAccNo.setError("Enter Account number.");
 
                         edtAccNo.startAnimation(shakeError());
 //                        TastyToast.makeText(BankValidation.this,"Enter Account number",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
 //                        btn_verify_AccNo.setEnabled(true);
-                    }else if (edtIfscCode.getText().toString().equalsIgnoreCase("")){
+                    } else if (edtIfscCode.getText().toString().equalsIgnoreCase("")) {
 //                        TastyToast.makeText(BankValidation.this,"Enter IFSC code",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
 
                         edtIfscCode.setError("Enter IFSC code.");
@@ -530,14 +532,14 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                         edtIfscCode.startAnimation(shakeError());
 
                         //                        btn_verify_AccNo.setEnabled(true);
-                    }else if(!Methods.isValidIFSCCode(edtIfscCode.getText().toString().trim())){
+                    } else if (!Methods.isValidIFSCCode(edtIfscCode.getText().toString().trim())) {
 
                         edtIfscCode.setError("Enter Valid IFSC code.");
                         edtIfscCode.startAnimation(shakeError());
 //                        TastyToast.makeText(BankValidation.this,"Enter Valid IFSC code",TastyToast.LENGTH_SHORT,TastyToast.ERROR);
 //                        btn_verify_AccNo.setEnabled(true);
 
-                    }else {
+                    } else {
 //                    fetchBankResponse();
                         call_bankvarification();
                     }
@@ -575,7 +577,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
     private void saveBankDetails() {
 
-        AlertDialogClass.PopupWindowShow(BankValidation.this,mainlayout);
+        AlertDialogClass.PopupWindowShow(BankValidation.this, mainlayout);
         String AccNo = Logics.getBankAccNo(BankValidation.this);
         String Ifsc = Logics.getBankIfsc(BankValidation.this);
         String vppBkname = Logics.getVppBankName(BankValidation.this);
@@ -606,7 +608,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         } catch (JSONException e) {
             e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
-            AlertDialogClass.ShowMsg(BankValidation.this,e.getMessage());
+            AlertDialogClass.ShowMsg(BankValidation.this, e.getMessage());
             btnProceed.setEnabled(true);
 
         }
@@ -664,51 +666,53 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
                         String data = (String) msg.obj;
                         Log.d("Message", "handleMessagePan: " + data);
+                        Toast.makeText(BankValidation.this, "Name Update :" + data, Toast.LENGTH_SHORT).show();
+
                         JSONObject jsonObject = null;
                         jsonObject = new JSONObject(data);
                         int status = jsonObject.getInt("status");
                         if (status == 1) {
-                            if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
+                            if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")) {
                                 call_bankUpdateAccountIfsc();
-                            }else
-                            {
+                            } else {
                                 Intent intent = new Intent(BankValidation.this, SignupScreen2.class);
                                 startActivity(intent);
                             }
 
-                        }else {
-                            String Message=jsonObject.getString("Message");
-                            AlertDialogClass.ShowMsg(BankValidation.this,Message);
+                        } else {
+                            String Message = jsonObject.getString("Message");
+                            AlertDialogClass.ShowMsg(BankValidation.this, Message);
 
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                         FirebaseCrashlytics.getInstance().recordException(e);
-                        AlertDialogClass.ShowMsg(BankValidation.this,e.getMessage());
+                        AlertDialogClass.ShowMsg(BankValidation.this, e.getMessage());
                         btnProceed.setEnabled(true);
 
                     }
                 }
                 break;
-                case Const.MSGBANKVERIFICATION:{
+                case Const.MSGBANKVERIFICATION: {
                     String data = (String) msg.obj;
                     Log.d("Message", "handleMessagePan: " + data);
+                    Toast.makeText(BankValidation.this, "verification :" + data, Toast.LENGTH_SHORT).show();
                     Log.e("data", data);
                     JSONObject jsonObject = null;
 
-                    Methods.hideKeyboard(BankValidation.this,mainlayout);
+                    Methods.hideKeyboard(BankValidation.this, mainlayout);
                     try {
                         jsonObject = new JSONObject(data);
 
-                        if(jsonObject.getString("status").equalsIgnoreCase("1")) {
+                        if (jsonObject.getString("status").equalsIgnoreCase("1")) {
 
                             AlertDialogClass.PopupWindowDismiss();
                             String data1 = jsonObject.getString("bank_response");
 
-                            Log.e("data1",data1 );
+                            Log.e("data1", data1);
                             Gson g = new Gson();
                             BankValidateData bk = g.fromJson(data1, BankValidateData.class);
-                            if(bk!=null) {
+                            if (bk != null) {
                                 String networkrepcode = bk.getNwrespcode();
                                 String responsecode = bk.getRespcode();
                                 String AccNo = bk.getAcc_no();
@@ -731,17 +735,17 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                                     Logics.setVppBankDetails(BankValidation.this, AccNo, Ifsc, vppBkname, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 1);
 
                                     //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
-                                } else if (responsecode.equals("99")){
+                                } else if (responsecode.equals("99")) {
 
                                     if (!networkrepcode.equalsIgnoreCase("M5") || !!networkrepcode.equalsIgnoreCase("52")) {
 
                                         Log.e("onResponse: ", "99999");
 
                                         Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                        txtAccountValidateNote.setText(bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
+                                        txtAccountValidateNote.setText(bk.getNwrespmessg() + "\n Opps!! something went wrong please contact to customer support team");
 
                                     } else {
-                                         AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
+                                        AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg());
 
                                     }
                                     //Toast.makeText(BankValidation.this, ""+response.body(), Toast.LENGTH_SHORT).show();
@@ -749,18 +753,18 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                                     Log.e("onResponse: ", "three");
 
                                     Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                    txtAccountValidateNote.setText(bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
+                                    txtAccountValidateNote.setText(bk.getNwrespmessg() + "\n Opps!! something went wrong please contact to customer support team");
 
                                 } else if (responsecode.equals("02")) {
                                     Log.e("onResponse: ", "four");
 
                                     Logics.setVppBankDetails(BankValidation.this, edtAccNo.getText().toString().trim(), edtIfscCode.getText().toString().trim(), name, txnId, respCode, resp, networkrepcode, nwResmsg, nwtxnField, 0);
-                                    txtAccountValidateNote.setText(bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
+                                    txtAccountValidateNote.setText(bk.getNwrespmessg() + "\n Opps!! something went wrong please contact to customer support team");
 
 
                                 } else {
 
-                                    AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg()+"\n Opps!! something went wrong please contact to customer support team");
+                                    AlertDialogClass.ShowMsg(BankValidation.this, bk.getNwrespmessg() + "\n Opps!! something went wrong please contact to customer support team");
                                     AlertDialogClass.PopupWindowDismiss();
                                     //show error popup in excetion too.
                                     Log.e("onResponse: ", "00000");
@@ -769,9 +773,9 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                                 }
                             }
 
-                        }else {
-                            TastyToast.makeText(BankValidation.this,""+jsonObject.getString("message"),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
-                          //  btn_verify_AccNo.setEnabled(true);
+                        } else {
+                            TastyToast.makeText(BankValidation.this, "" + jsonObject.getString("message"), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
+                            //  btn_verify_AccNo.setEnabled(true);
                         }
 
                     } catch (JSONException e) {
@@ -780,8 +784,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                         AlertDialogClass.ShowMsg(BankValidation.this, "Opps!! something went wrong please contact to customer support team");
                         Log.e("onResponse: ", "four");
 
-                    }
-                    catch (Exception e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                         AlertDialogClass.PopupWindowDismiss();
                         AlertDialogClass.ShowMsg(BankValidation.this, "Opps!! something went wrong please contact to customer support team");
@@ -790,24 +793,24 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                     }
                 }
                 break;
-                case Const.MSG_UPDATEACCOUNT_IFSCCODE:{
+                case Const.MSG_UPDATEACCOUNT_IFSCCODE: {
                     String data = (String) msg.obj;
                     Log.e("ACCOUNT_IFSCCODE", data);
                     JSONObject jsonObject = null;
 
-                    Methods.hideKeyboard(BankValidation.this,mainlayout);
+                    Methods.hideKeyboard(BankValidation.this, mainlayout);
                     try {
                         jsonObject = new JSONObject(data);
 
-                        if(jsonObject.getString("status").equalsIgnoreCase("1")) {
+                        if (jsonObject.getString("status").equalsIgnoreCase("1")) {
                             AlertDialogClass.PopupWindowDismiss();
-                            alert(jsonObject.getString("mesage"),1);
+                            alert(jsonObject.getString("mesage"), 1);
                             TastyToast.makeText(getApplicationContext(), jsonObject.getString("mesage"), TastyToast.LENGTH_SHORT, TastyToast.SUCCESS);
 
-                        }else {
-                            TastyToast.makeText(BankValidation.this,""+jsonObject.getString("message"),TastyToast.LENGTH_SHORT,TastyToast.ERROR);
+                        } else {
+                            TastyToast.makeText(BankValidation.this, "" + jsonObject.getString("message"), TastyToast.LENGTH_SHORT, TastyToast.ERROR);
 //                            btn_verify_AccNo.setEnabled(true);
-                            alert(jsonObject.getString("mesage"),0);
+                            alert(jsonObject.getString("mesage"), 0);
 
                         }
 
@@ -828,8 +831,8 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onBackPressed() {
 
-        if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")){
-              super.onBackPressed();
+        if (getIntent().getStringExtra("from").equalsIgnoreCase("profile")) {
+            super.onBackPressed();
 
         }
     }
@@ -860,7 +863,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         }
 
 
-        Log.e( "connected: ", "connected");
+        Log.e("connected: ", "connected");
         AlertDialogClass.PopupWindowDismiss();
 
         //        AlertDailog.ProgressDlgDiss();
@@ -871,7 +874,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                     saveBankDetails();
                 else
                     Views.SweetAlert_NoDataAvailble(BankValidation.this, "No Internet");
-             //   TastyToast.makeText(BankValidation.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
+                //   TastyToast.makeText(BankValidation.this, "Connected", TastyToast.LENGTH_LONG, TastyToast.SUCCESS);
             }
         });
     }
@@ -988,7 +991,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         // 2. Confirmation message
         SweetAlertDialog sweetAlertDialog = new SweetAlertDialog(context, SweetAlertDialog.WARNING_TYPE);
 
-        Log.e( "DlgConnectSocket", "called");
+        Log.e("DlgConnectSocket", "called");
         MaxTry++;
         if (MaxTry > 3) {
             sweetAlertDialog.setTitleText(msg)
@@ -1018,7 +1021,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
             if (!BankValidation.this.isFinishing()) {
                 sweetAlertDialog.show();
             } else {
-              //  Toast.makeText(BankValidation.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
+                //  Toast.makeText(BankValidation.this, "ggggggggggg", Toast.LENGTH_SHORT).show();
             }
             sweetAlertDialog.setCancelable(false);
 
@@ -1026,14 +1029,14 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 //            new ConnectTOServer(InProcessLeads.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
 
-            if (connectionProcess==null){
-                Log.e( "DlgConnectSocket11111_null", "called");
+            if (connectionProcess == null) {
+                Log.e("DlgConnectSocket11111_null", "called");
 
-            }else {
+            } else {
                 new ConnectTOServer(BankValidation.this, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                 connectionProcess.ConnectToserver(connectionProcess);
             }
-            Log.e( "DlgConnectSocket11111", "called");
+            Log.e("DlgConnectSocket11111", "called");
 
         }
 
@@ -1058,7 +1061,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void alert(String msg,int i) {
+    private void alert(String msg, int i) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         LayoutInflater inflater = this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.
@@ -1068,10 +1071,10 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
         TextView txtMsg = dialogView.findViewById(R.id.txtMsg);
         TextView txtMsg1 = dialogView.findViewById(R.id.txtMsg1);
 
-        if (i==1){
+        if (i == 1) {
             txtMsg.setVisibility(View.VISIBLE);
             txtMsg1.setVisibility(View.GONE);
-        }else {
+        } else {
             txtMsg.setVisibility(View.GONE);
             txtMsg1.setVisibility(View.VISIBLE);
 
