@@ -354,14 +354,13 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 
             data = jsonObject.toString().getBytes();
 //
-//            data1="{\"area\":\"AHMEDNAGAR\",\"vppbankname\":\"null null null\",\"city\":\"AHMEDNAGAR\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"8830191346\",\"isBankV\":0,\"bankaccno\":\"168201000017428\",\"prof\":\"HOUSE WIFE\",\"Ifsc\":\"IOBA0001682\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"VARQUA SCHOOL\",\"pin\":\"414002\",\"dob\":-313286400,\"name\":\"SMT REKHA J MANJHI\",\"state\":\"MADHYA PRADESH\",\"pan\":\"DDMPM8092Q\",\"vpppanname\":\"SMT REKHA J MANJHI\",\"email\":\"neelammanjhikhushi1019@gmail.com\",\"houseNum\":\"PLOT NO 15 JHAMKHED ROAD GENERAL ARUN VADIYA COLONY\"}".getBytes();
+//            data1="{\"area\":\"SINDI RAILWAY\",\"vppbankname\":\"POONAM GAUTAM TELANG\",\"city\":\"WARDHA\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"7499535233\",\"isBankV\":1,\"bankaccno\":\"3147557888\",\"prof\":\"\",\"Ifsc\":\"KKBK0001839\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"WARDHA\",\"pin\":\"442105\",\"dob\":446169600,\"name\":\"KUMARI POONAM GAUTAM TELANG\",\"state\":\"MADHYA PRADESH\",\"pan\":\"BNFPT4961C\",\"vpppanname\":\"KUMARI POONAM GAUTAM TELANG\",\"email\":\"telangpunam333@gmail.com\",\"houseNum\":\"KANDHALI RD,AT POST SINDIRAILWAY TAH SELU\"}".getBytes();
             new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
             AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
         }
-
 
 //        try {
 //            JSONObject jsonObject = new JSONObject();

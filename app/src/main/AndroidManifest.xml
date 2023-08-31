@@ -124,12 +124,12 @@
             android:name=".activity.SplashScreen"
             android:exported="true"
             android:screenOrientation="unspecified">
-                        <intent-filter>
-                            <action android:name="android.intent.action.MAIN" />
-                            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
 
-                            <category android:name="android.intent.category.LAUNCHER" />
-                        </intent-filter>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".activity.LoginScreen"
@@ -241,29 +241,26 @@
         <activity android:name=".activity.OtpVerfication" />
         <activity android:name=".activity.OtpLoginVerfication" />
         <activity android:name=".activity.PanValidation" />
-        <activity
-            android:name=".activity.BankValidation">
-<!--            android:exported="true"-->
+        <activity android:name=".activity.BankValidation">
+            <!--            android:exported="true"-->
 
             >
-<!--            <intent-filter>`-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+            <!--            <intent-filter>`-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
 
         </activity>
-        <activity
-            android:name=".activity.SignupScreen2">
-<!--            android:exported="true"-->
+        <activity android:name=".activity.SignupScreen2">
 
-<!--            <intent-filter>`-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
-<!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+            <!--            <intent-filter>-->
+            <!--                <action android:name="android.intent.action.MAIN" />-->
+            <!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
+            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
+            <!--            </intent-filter>-->
 
         </activity>
         <activity android:name=".activity.UploadDocScreen" />

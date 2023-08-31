@@ -103,11 +103,11 @@
                             android:layout_weight="1"
                             android:background="@drawable/selector"
                             android:cursorVisible="true"
-
                             android:fontFamily="@font/opensans_regular"
                             android:hint="House No. / Building Name *"
                             android:inputType="text"
                             android:padding="10dp"
+                            android:maxLength="45"
                             android:singleLine="true"
                             android:textSize="14dp" />
 
@@ -116,6 +116,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
+                            android:maxLength="30"
                             android:layout_marginTop="15dp"
                             android:layout_weight="1"
                             android:background="@drawable/selector"

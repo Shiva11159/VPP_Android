@@ -179,6 +179,68 @@
                     android:background="@color/graph_indicator" />
 
                 <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:padding="5dp">
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black" />
+
+                    <TextView
+                        style="@style/lumpsumLeft"
+                        android:layout_weight="0.5"
+
+                        android:fontFamily="@font/lreg"
+                        android:text="Preeti Singh:"
+                        android:textAllCaps="true"
+                        android:textColor="@color/venturanew"
+
+                        android:textSize="12dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/lreg"
+                            android:gravity="right"
+                            android:text="+91 22 6622 7357"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="@dimen/dimen_10"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="2.5"
+                            android:fontFamily="@font/lreg"
+                            android:gravity="right"
+                            android:text="+91 9819885487"
+                            android:textColor="@color/black"
+                            android:textSize="12dp" />
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/graph_indicator" />
+
+                <LinearLayout
                     android:id="@+id/R6"
                     android:layout_width="match_parent"
 
@@ -192,19 +254,17 @@
                         android:background="@color/black" />
 
                     <TextView
-                        android:id="@+id/ifsc"
                         style="@style/lumpsumLeft"
                         android:layout_weight="0.5"
 
                         android:fontFamily="@font/lreg"
-                        android:text="Anuja Vichare"
+                        android:text="Dharmin Shah:"
                         android:textAllCaps="true"
                         android:textColor="@color/venturanew"
 
                         android:textSize="12dp" />
 
                     <TextView
-                        android:id="@+id/txt_ifsc_Val"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -212,13 +272,12 @@
                         android:layout_weight="2.5"
                         android:fontFamily="@font/lreg"
                         android:gravity="right"
-                        android:text="02266227262"
+                        android:text="+91 22 6774 7617"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:id="@+id/R7"
@@ -239,7 +298,7 @@
                         android:layout_weight="2.5"
                         android:fontFamily="@font/lreg"
                         android:gravity="right"
-                        android:text="09920755443"
+                        android:text="+91 9920043342"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
@@ -269,7 +328,7 @@
                         style="@style/lumpsumLeft"
                         android:layout_weight="0.5"
                         android:fontFamily="@font/lreg"
-                        android:text="Pari savla "
+                        android:text="Momita Bose: "
                         android:textAllCaps="true"
                         android:textColor="@color/venturanew"
                         android:textSize="12dp" />
@@ -281,9 +340,9 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginRight="10dp"
                         android:layout_weight="2.5"
+                        android:text="+91 22 67747603"
                         android:fontFamily="@font/lreg"
                         android:gravity="right"
-                        android:text="02266227262"
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
@@ -306,7 +365,8 @@
                         android:layout_weight="2.5"
                         android:fontFamily="@font/lreg"
                         android:gravity="right"
-                        android:text="08779152522"
+                        android:text="+91 9867075734"
+
                         android:textColor="@color/black"
                         android:textSize="12dp" />
 
@@ -396,13 +456,13 @@
 
                     <LinearLayout
                         android:id="@+id/card_view_callback_form"
-                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-
                         android:layout_marginLeft="6dp"
+
                         android:layout_marginRight="5dp"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:visibility="gone">
 
                         <View
                             android:layout_width="3dp"
@@ -457,11 +517,11 @@
                                 <EditText
                                     android:id="@+id/edt_phone_number"
                                     android:layout_width="match_parent"
-                                    android:imeOptions="actionDone"
                                     android:layout_height="wrap_content"
                                     android:background="@android:color/transparent"
                                     android:fontFamily="@font/opensans_regular"
                                     android:hint=" Phone Number *"
+                                    android:imeOptions="actionDone"
 
                                     android:inputType="number"
                                     android:maxLength="10"
@@ -623,12 +683,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
-                            android:visibility="gone"
                             android:background="@drawable/rect"
-                            android:fontFamily="@font/opensans_regular">
+                            android:fontFamily="@font/opensans_regular"
+                            android:visibility="gone">
 
                             <EditText
-                                android:imeOptions="actionDone"
                                 android:id="@+id/q_edt"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -636,6 +695,7 @@
                                 android:background="@android:color/transparent"
                                 android:fontFamily="@font/opensans_regular"
                                 android:hint=" Type Your Query "
+                                android:imeOptions="actionDone"
                                 android:inputType="text"
 
                                 android:lines="3"
@@ -706,20 +766,20 @@
                     android:id="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="35dp"
+                    android:background="@drawable/tab_layout_round_border"
                     app:tabGravity="fill"
                     app:tabIndicatorGravity="stretch"
                     app:tabMaxWidth="0dp"
                     app:tabMode="fixed"
-                    android:background="@drawable/tab_layout_round_border"
                     app:tabSelectedTextColor="@android:color/white"
                     app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
                     app:tabTextColor="?attr/colorPrimary" />
 
                 <androidx.viewpager.widget.ViewPager
                     android:id="@+id/viewpager"
-                    android:layout_below="@+id/tabs"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
+                    android:layout_below="@+id/tabs"
                     android:layout_weight="1" />
 
             </RelativeLayout>
