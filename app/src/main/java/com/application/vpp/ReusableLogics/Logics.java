@@ -745,20 +745,20 @@ public class Logics {
         }
     }
 
-//    public static void setPLFOA(Context context,String link){
-//        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE).edit();
-//        sharedPreferences.putString(Const.Psn_lnk_acct_opn,link);
-//        sharedPreferences.apply();
-//    }
-//
-//    public static String getPLFOA(Context context){
-//        String clientCode = "";
-//        SharedPreferences sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE);
-//        clientCode =   sharedPreferences.getString(Const.Psn_lnk_acct_opn,"");
-//
-//        return clientCode;
-//
-//    }
+    public static void setPLFOA(Context context,String link){
+        SharedPreferences.Editor sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE).edit();
+        sharedPreferences.putString(Const.Psn_lnk_acct_opn,link);
+        sharedPreferences.apply();
+    }
+
+    public static String getPLFOA(Context context){
+        String clientCode = "";
+        SharedPreferences sharedPreferences = context.getSharedPreferences("LINK",MODE_PRIVATE);
+        clientCode =   sharedPreferences.getString(Const.Psn_lnk_acct_opn,"");
+
+        return clientCode;
+
+    }
 
 
     public static void setDocumentStatus(Context context, String status) {

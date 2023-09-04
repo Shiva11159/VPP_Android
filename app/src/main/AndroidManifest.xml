@@ -253,14 +253,15 @@
             <!--            </intent-filter>-->
 
         </activity>
-        <activity android:name=".activity.SignupScreen2">
+        <activity android:name=".activity.SignupScreen2"
+            >
 
-            <!--            <intent-filter>-->
-            <!--                <action android:name="android.intent.action.MAIN" />-->
-            <!--                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
+<!--                        <intent-filter>-->
+<!--                            <action android:name="android.intent.action.MAIN" />-->
+<!--                            <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />-->
 
-            <!--                <category android:name="android.intent.category.LAUNCHER" />-->
-            <!--            </intent-filter>-->
+<!--                            <category android:name="android.intent.category.LAUNCHER" />-->
+<!--                        </intent-filter>-->
 
         </activity>
         <activity android:name=".activity.UploadDocScreen" />

@@ -84,6 +84,8 @@ public class Const {
     public static final int MSGSOCKETCONNECTEDCLIENT = 107;
     public static final int MSGBANKVERIFICATION = 71;
     public static final int MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING = 72;
+    public static final int MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW = 78;
+
     public static final int MSG_UPDATEACCOUNT_IFSCCODE = 73;
 
     // new method created for individual otp send replaced by msgcode 2 ..
@@ -187,8 +189,7 @@ public class Const {
 
     //
 //        public static final int SERVER_PORT = 2020 ; //shiva PORT testing..
-    public static final int SERVER_PORT = 7778 ; //shiva PORT production...
-
+    public static final int SERVER_PORT = 7778 ; //shiva PORT production.
 
     //    public static String SERVER_IP = "192.168.43.65"; //Local Server
     //public static final int SERVER_PORT = 8081;     //Local PORT

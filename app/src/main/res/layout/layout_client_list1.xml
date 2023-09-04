@@ -6,10 +6,10 @@
 
     <TableLayout
         android:id="@+id/tblTop10List"
-        android:background="?attr/selectableItemBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
+        android:background="?attr/selectableItemBackground"
         android:stretchColumns="*">
 
         <TableRow
@@ -18,20 +18,30 @@
             android:layout_height="wrap_content"
             android:weightSum="1">
 
-            <TextView
-                android:id="@+id/txtDate"
+            <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_column="0"
-                android:background="@drawable/cellshape"
-                android:fontFamily="@font/lreg"
-                android:gravity="center"
-                android:lines="1"
-                android:padding="10dp"
-                android:text="HELLO THERE"
-                android:textAllCaps="true"
-                android:textColor="@color/black"
-                android:textSize="10dp" />
+                android:background="@drawable/cellshape">
+
+                <TextView
+                    android:id="@+id/txtDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:fontFamily="@font/lreg"
+                    android:lines="1"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:paddingLeft="2dp"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="11dp"
+                    android:text="21 AUG 1234567999"
+                    android:textAllCaps="true"
+                    android:textColor="@color/black"
+                    android:textSize="9dp" />
+
+            </LinearLayout>
+
 
             <TextView
                 android:id="@+id/txtName"
@@ -39,13 +49,13 @@
                 android:layout_height="wrap_content"
                 android:layout_column="1"
                 android:background="@drawable/cellshape"
-                android:textColor="@color/black"
                 android:fontFamily="@font/lreg"
                 android:gravity="center"
                 android:lines="1"
                 android:padding="10dp"
                 android:text="HELLO THERE "
                 android:textAllCaps="true"
+                android:textColor="@color/black"
                 android:textSize="10dp" />
 
             <TextView
@@ -77,6 +87,7 @@
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
+
             <TextView
                 android:id="@+id/txtClientCode"
                 android:layout_width="0dp"

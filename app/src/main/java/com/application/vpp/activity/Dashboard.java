@@ -298,17 +298,16 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //        stringStringMap.put("Accept", "application/json");
 
         try {
+
             String vppid = Logics.getVppId(Dashboard.this);
             paramObject = new JSONObject();
 //            paramObject.put("userid", vppid); //655841
-            paramObject.put("userid", "656263"); //655841
-        } catch (Exception e) {
+            paramObject.put("userid", vppid); //655841
 
+        } catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
 //            Log.e("ZZZZ", e.getMessage());
         }
-
-
 
         cardReferral1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -318,74 +317,72 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
                 // temp comment.
 
-//                Call<JsonObject> validateSignature = apiService.SendOps(paramObject.toString());
-//                validateSignature.enqueue(new retrofit2.Callback<JsonObject>() {
-//                    @Override
-//                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-//
-//                        String err = "";
-//                        Log.e("test1", call.request().toString());
-//                        Log.e("test1__", response.toString());
-//
-//                        if (response.isSuccessful()) {
-//                            try {
-//                                Log.e("test2", response.body().toString());
-//                                JSONObject object = new JSONObject(response.body().toString());
-//                                String status = object.getString("success");
-//                                if (status.equalsIgnoreCase("true")) {
-//                                    JSONObject jsonObject = object.getJSONObject("response");
-//                                    JSONArray jsonArray = jsonObject.getJSONArray("Table1");
-//
-//                                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
-//                                    String EmpCode = jsonObject1.getString("EmpCode");
-//                                    branchcode = jsonObject1.getString("branchCode");
-//                                    // call Sp
-                                    personlized_link_for_accnt_opnApicall();
-//                                    Log.e("onResponseSuccess: ", branchcode);
-//
-//                                } else {
-//
-//                                    AlertDialogClass.PopupWindowDismiss();
-////                                    Log.e("onResponseSuccess: ", "No active");
-//                                    Toast.makeText(Dashboard.this, "Data not pushed to OPS yet..", Toast.LENGTH_SHORT).show();
-//                                }
-//
-//                            } catch (Exception e) {
-//                                Log.e("test3: ", "No active");
-//                            }
-//
-//                        } else {
-//                            switch (response.code()) {
-//                                case 404:
-////                            Toast.makeText(context, "not found", Toast.LENGTH_SHORT).show();
-//                                    err = "Server Not Found";
-//                                    break;
-//                                case 500:
-////                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
-//                                    err = "Server Unavailable";
-//                                    break;
-//                                case 503:
-////                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
-//                                    err = "Server Overloaded try after sometime";
-//                                    break;
-//                                default:
-//                                    err = String.valueOf(response.code());
-//                                    err = "Something went wrong try again." + response.code();
-////                            Toast.makeText(context, "unknown error", Toast.LENGTH_SHORT).show();
-//                                    break;
-//                            }
-//
-//                            Toast.makeText(Dashboard.this, err, Toast.LENGTH_SHORT).show();
-//                            Log.e("test4", err);
-//                        }
-//
-//                    }
-//
-//                    @Override
-//                    public void onFailure(Call<JsonObject> call, Throwable t) {
-//                        Log.e("test5", "   throwable===" + t.getMessage());
-//                    }
-//                });
+                Call<JsonObject> validateSignature = apiService.SendOps(paramObject.toString());
+                validateSignature.enqueue(new retrofit2.Callback<JsonObject>() {
+                    @Override
+                    public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+
+                        String err = "";
+
+                        if (response.isSuccessful()) {
+                            try {
+                                Log.e("test2", response.body().toString());
+                                JSONObject object = new JSONObject(response.body().toString());
+                                String status = object.getString("success");
+                                if (status.equalsIgnoreCase("true")) {
+                                    JSONObject jsonObject = object.getJSONObject("response");
+                                    JSONArray jsonArray = jsonObject.getJSONArray("Table1");
+
+                                    JSONObject jsonObject1 = jsonArray.getJSONObject(0);
+                                    String EmpCode = jsonObject1.getString("EmpCode");
+                                    branchcode = jsonObject1.getString("branchCode");
+                                    // call Sp
+                                    personlized_link_for_accnt_opnApicall(branchcode);
+                                    Log.e("onResponseSuccess: ", branchcode);
+
+                                } else {
+
+                                    AlertDialogClass.PopupWindowDismiss();
+//                                    Log.e("onResponseSuccess: ", "No active");
+                                    Toast.makeText(Dashboard.this, "Data not pushed to OPS yet..", Toast.LENGTH_SHORT).show();
+                                }
+
+                            } catch (Exception e) {
+                                Log.e("test3: ", "No active");
+                            }
+
+                        } else {
+                            switch (response.code()) {
+                                case 404:
+//                            Toast.makeText(context, "not found", Toast.LENGTH_SHORT).show();
+                                    err = "Server Not Found";
+                                    break;
+                                case 500:
+//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+                                    err = "Server Unavailable";
+                                    break;
+                                case 503:
+//                            Toast.makeText(context, "server broken", Toast.LENGTH_SHORT).show();
+                                    err = "Server Overloaded try after sometime";
+                                    break;
+                                default:
+                                    err = String.valueOf(response.code());
+                                    err = "Something went wrong try again." + response.code();
+//                            Toast.makeText(context, "unknown error", Toast.LENGTH_SHORT).show();
+                                    break;
+                            }
+
+                            Toast.makeText(Dashboard.this, err, Toast.LENGTH_SHORT).show();
+                            Log.e("test4", err);
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<JsonObject> call, Throwable t) {
+                        Log.e("test5", "   throwable===" + t.getMessage());
+                    }
+                });
             }
 //                personlized_link_for_accnt_opnApicall();
         });
@@ -1052,7 +1049,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //                    }
 //                }
 //                break;
-                case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING: {
+                case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW: {
                     try {
                         AlertDialogClass.PopupWindowDismiss();
                         String data = (String) msg.obj;
@@ -1077,7 +1074,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //                                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
 //                                startActivity(chooserIntent);
                             } else {
-                                personlized_link_for_accnt_opnApicall();
+                                personlized_link_for_accnt_opnApicall(branchcode);
                             }
                         }
                     } catch (Exception e) {
@@ -2894,8 +2891,32 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
 //
 
-//    temp blocked
-//    public void personlized_link_for_accnt_opnApicall(String branchcode) {
+    //temp blocked
+    public void personlized_link_for_accnt_opnApicall(String branchcode) {
+        //getMobile_1
+        try {
+//            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+            JSONObject jsonObject = new JSONObject();
+            //   jsonObject.put("vpp_id", "72001");
+//            jsonObject.put("vpp_id", "656010");
+            String vpp_id = Logics.getVppId(Dashboard.this);
+            jsonObject.put("vpp_id", "656263");
+//             jsonObject.put("mobile_no","9723179601");
+            jsonObject.put("branchcode", branchcode);
+            byte[] data = jsonObject.toString().getBytes();
+
+            Log.e("link generate", jsonObject.toString());
+            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+
+    }
+//    public void personlized_link_for_accnt_opnApicall() {
 //
 //        //getMobile_1
 //        try {
@@ -2904,10 +2925,12 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //            //   jsonObject.put("vpp_id", "72001");
 ////            jsonObject.put("vpp_id", "656010");
 //            String vpp_id = Logics.getVppId(Dashboard.this);
-//            jsonObject.put("vpp_id", "656263");
-////             jsonObject.put("mobile_no","9723179601");
-//            jsonObject.put("branchcode", branchcode);
+//            jsonObject.put("vpp_id", vpp_id);
+//             jsonObject.put("mobile_no",Logics.getProfile(Dashboard.this).get(3));
+////            jsonObject.put("branchcode", branchcode);
 //            byte[] data = jsonObject.toString().getBytes();
+//
+//            Log.e("mobileNO",Logics.getProfile(Dashboard.this).get(3));
 //
 //            Log.e("link generate", jsonObject.toString());
 //            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -2920,32 +2943,5 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //
 //
 //    }
-    public void personlized_link_for_accnt_opnApicall() {
-
-        //getMobile_1
-        try {
-//            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
-            JSONObject jsonObject = new JSONObject();
-            //   jsonObject.put("vpp_id", "72001");
-//            jsonObject.put("vpp_id", "656010");
-            String vpp_id = Logics.getVppId(Dashboard.this);
-            jsonObject.put("vpp_id", vpp_id);
-             jsonObject.put("mobile_no",Logics.getProfile(Dashboard.this).get(3));
-//            jsonObject.put("branchcode", branchcode);
-            byte[] data = jsonObject.toString().getBytes();
-
-            Log.e("mobileNO",Logics.getProfile(Dashboard.this).get(3));
-
-            Log.e("link generate", jsonObject.toString());
-            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-
-
-    }
 
 }

@@ -80,7 +80,6 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
             holder.txtDate.setText(clientlistDataArrayList.get(position).AccountOpenedDate);
             holder.txtClientCode.setText(clientlistDataArrayList.get(position).ClientCode);
 
-
             holder.txtMobileNo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -90,7 +89,6 @@ public class ClientListAdapter extends RecyclerView.Adapter<ClientListAdapter.Vi
                     context.startActivity(intent);
                 }
             });
-
 
             // Log.e( "AccountOpenedDate: ",clientlistDataArrayList.get(position).AccountOpenedDate);
 //

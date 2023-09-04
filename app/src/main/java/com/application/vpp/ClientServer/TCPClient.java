@@ -642,8 +642,10 @@ public class TCPClient extends Client implements TCPClientProcess {
                 BankValidation.handlerbankverify.sendMessage(msg);
             }
             break;
-            case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING: {
+            case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW: {
                 Dashboard.handlerDashboard.sendMessage(msg);
+
+                Log.e("msg123", String.valueOf(msg));
             }
             break;
 

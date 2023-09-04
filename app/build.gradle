@@ -11,7 +11,9 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "andro idx.test.runner.AndroidJUnitRunner"
         ndk.abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
+
     }
+
     buildTypes {
         release {
             /*firebaseCrashlytics {
