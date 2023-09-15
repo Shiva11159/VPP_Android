@@ -192,6 +192,8 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
     @Override
     public void connected() {
 
+        //
+
        /* String newVersion="";
         try {
             newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + this.getPackageName()+ "&hl=en")
@@ -628,7 +630,7 @@ public class SplashScreen extends AppCompatActivity implements RequestSent, Conn
 
                                     Log.e("spl_accnt_opn_link",accnt_opn_link);
 
-                                   // Logics.setPLFOA(SplashScreen.this,accnt_opn_link.trim());
+                                    Logics.setPLFOA(SplashScreen.this,accnt_opn_link.trim());
                                    // Logics.setmobileNO_lINK(SplashScreen.this,mobile);
 
                                 /*{ {"isDeactivated":0,"vppdata":{"area":"sainagar road Panvel","is_email":1,"is_doc_v":0,

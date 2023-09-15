@@ -309,6 +309,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //            Log.e("ZZZZ", e.getMessage());
         }
 
+/*
         cardReferral1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -385,6 +386,21 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                 });
             }
 //                personlized_link_for_accnt_opnApicall();
+        });
+*/
+
+        cardReferral1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e( "onClick: ", "new");
+                FragmentManager fm = getSupportFragmentManager();
+                if (Logics.getPLFOA(Dashboard.this).equalsIgnoreCase("") || Logics.getPLFOA(Dashboard.this).equalsIgnoreCase("null")) {
+                    Toast.makeText(Dashboard.this, "Your referral link would be shared soon", Toast.LENGTH_SHORT).show();
+                } else {
+                    ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(Logics.getPLFOA(Dashboard.this), gstProceed, Dashboard.this);
+                    gstDlg.show(fm, "Dialog Fragment");
+                }
+            }
         });
 
 //        private void shareTextUrl() {
@@ -791,30 +807,33 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
             }
             break;
 
-//            case R.id.cardReferral1: {
+            case R.id.cardReferral1: {
+
+                Log.e( "onClick: ", "zzz");
+                FragmentManager fm = getSupportFragmentManager();
+//                if (Logics.getPLFOA(Dashboard.this).equalsIgnoreCase("") || Logics.getPLFOA(Dashboard.this).equalsIgnoreCase(null)){
+//                    Toast.makeText(Dashboard.this, "Link not available", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(Logics.getPLFOA(Dashboard.this),gstProceed, Dashboard.this);
+//                    gstDlg.show(fm, "Dialog Fragment");
+//                }
+
+
+//                Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
+//                if (Connectivity.getNetworkState(getApplicationContext())) {
+//                    String link = Logics.getPLFOA(Dashboard.this);
+//                    Intent intent = new Intent();
+//                    intent.setAction(Intent.ACTION_SEND);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
 //
-//
-//                Log.e( "onClick: ", "zzz");
-//                FragmentManager fm = getSupportFragmentManager();
-//
-//                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(gstProceed, Dashboard.this);
-//                gstDlg.show(fm, "Dialog Fragment");
-//
-////                Toast.makeText(this, "hi", Toast.LENGTH_SHORT).show();
-////                if (Connectivity.getNetworkState(getApplicationContext())) {
-////                    String link = Logics.getPLFOA(Dashboard.this);
-////                    Intent intent = new Intent();
-////                    intent.setAction(Intent.ACTION_SEND);
-////                    intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+//                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
+//                    intent.setType("text/plain");
+//                    Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(Dashboard.this));
+//                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+//                    startActivity(chooserIntent);
 ////
-////                    intent.putExtra(Intent.EXTRA_TEXT, "" + Logics.getPLFOA(Dashboard.this));
-////                    intent.setType("text/plain");
-////                    Intent chooserIntent = Intent.createChooser(intent, "share your referral link : \n" + Logics.getPLFOA(Dashboard.this));
-////                    chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
-////                    startActivity(chooserIntent);
-//////
-////                }
-//            }
+//                }
+            }
 //            break;
 ////            case R.id.cardDisspripancy: {
 ////                if (Connectivity.getNetworkState(getApplicationContext())) {
@@ -1049,63 +1068,64 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //                    }
 //                }
 //                break;
-                case Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW: {
-                    try {
-                        AlertDialogClass.PopupWindowDismiss();
-                        String data = (String) msg.obj;
-                        JSONObject js = new JSONObject(data);
-
-                        Log.e("LINK", data);
-
-                        if (js.getInt("Status") == 1) {
-                            Toast.makeText(Dashboard.this, "" + js.getString("ErrorMessage"), Toast.LENGTH_SHORT).show();
-                        } else {
-                            String link = (js.getString("URL") != null) ? js.getString("URL") : "";
-                            // Logics.setPLFOA(Dashboard.this, link);
-                            if (link.length() > 0) {
-                                FragmentManager fm = getSupportFragmentManager();
-                                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(link,gstProceed, Dashboard.this);
-                                gstDlg.show(fm, "Dialog Fragment");
-
-//                                Intent intent = new Intent();
-//                                intent.setAction(Intent.ACTION_SEND);
-//                                intent.setType("text/plain");
-//                                Intent chooserIntent = Intent.createChooser(intent, "Chooser Title");
-//                                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
-//                                startActivity(chooserIntent);
-                            } else {
-                                personlized_link_for_accnt_opnApicall(branchcode);
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                break;
-
-//                case Const.MSGFETCHVPPDETAILS: {
-//
-//                    String data = (String) msg.obj;
-//
-//                    Log.e("MSGFETCHVPPDETAILS", data);
-//
+//                case Const.MSGPERSONALIZED    LINK_FOR_ACCOUNT_OPENING_NEW: {
 //                    try {
-//                        JSONObject jsonObject = new JSONObject(data);
-//                        String name = jsonObject.getString("name");
-//                        String city = jsonObject.getString("city");
-//                        String mobile = jsonObject.getString("mobile");
-//                        String email = jsonObject.getString("email");
-//                        String vppid = jsonObject.getString("vpp_id");
-//                        String pan_no = jsonObject.getString("pan_no");
-//                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                        AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+//                        AlertDialogClass.PopupWindowDismiss();
+//                        String data = (String) msg.obj;
+//                        JSONObject js = new JSONObject(data);
 //
+//                        Log.e("LINK", data);
+//
+//                        if (js.getInt("Status") == 1) { dw233
+//                            Toast.makeText(Dashboard.this, "" + js.getString("ErrorMessage"), Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            String link = (js.getString("URL") != null) ? js.getString("URL") : "";
+//                            // Logics.setPLFOA(Dashboard.this, link);
+//                            if (link.length() > 0) {
+//                                FragmentManager fm = getSupportFragmentManager();
+//                                ShareLinkDlg gstDlg = ShareLinkDlg.newInstance(link,gstProceed, Dashboard.this);
+//                                gstDlg.show(fm, "Dialog Fragment");
+//
+////                                Intent intent = new Intent();
+////                                intent.setAction(Intent.ACTION_SEND);
+////                                intent.setType("text/plain");
+////                                Intent chooserIntent = Intent.createChooser(intent, "Chooser Title");
+////                                chooserIntent.putExtra(Intentf.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+////                                chooserIntent.putExtra(Intentf.EXTRA_INITIAL_INTENTS, new Intent[]{intent});
+////                                startActivity(chooserIntent);
+//                            } else {
+//                                personlized_link_for_accnt_opnApicall(branchcode);
+//                            }
+//                        }
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
 //                    }
 //                }
+//
 //                break;
+//
+////                case Const.MSGFETCHVPPDETAILS: {
+////
+////                    String data = (String) msg.obj;
+////
+////                    Log.e("MSGFETCHVPPDETAILS", data);
+////
+////                    try {
+////                        JSONObject jsonObject = new JSONObject(data);
+////                        String name = jsonObject.getString("name");
+////                        String city = jsonObject.getString("city");
+////                        String mobile = jsonObject.getString("mobile");
+////                        String email = jsonObject.getString("email");
+////                        String vppid = jsonObject.getString("vpp_id");
+////                        String pan_no = jsonObject.getString("pan_no");
+////                        Logics.setVppDetails(Dashboard.this, name, mobile, email, city, vppid, pan_no);
+////                    } catch (JSONException e) {
+////                        e.printStackTrace();
+////                        AlertDialogClass.ShowMsg(Dashboard.this, e.getMessage());
+////
+////                    }
+////                }
+////                break;
                 case Const.MSG_POSTREVENUESHARING: {
                     AlertDialogClass.PopupWindowDismiss();
                     String data = (String) msg.obj;
@@ -1617,7 +1637,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 
                                         Log.e("accnt_opn_link", accnt_opn_link.trim());
 
-//                                        Logics.setPLFOA(Dashboard.this, accnt_opn_link.trim());
+                                        Logics.setPLFOA(Dashboard.this, accnt_opn_link.trim());
 
                                 /*{ {"isDeactivated":0,"vppdata":{"area":"sainagar road Panvel","is_email":1,"is_doc_v":0,
                                 "city":"Head Office","isBankVerified":1,"vpp_bank_name":"Mr  PRAVIN LAXMAN DI","mobile":"9975153610",
@@ -2716,6 +2736,8 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
                     // Toast.makeText(c, "Agreed...", Toast.LENGTH_SHORT).show();
                 }
             });
+
+            // shiva
             checkbox_sharing.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -2892,32 +2914,7 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //
 
     //temp blocked
-    public void personlized_link_for_accnt_opnApicall(String branchcode) {
-        //getMobile_1
-        try {
-//            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
-            JSONObject jsonObject = new JSONObject();
-            //   jsonObject.put("vpp_id", "72001");
-//            jsonObject.put("vpp_id", "656010");
-            String vpp_id = Logics.getVppId(Dashboard.this);
-            jsonObject.put("vpp_id", "656263");
-//             jsonObject.put("mobile_no","9723179601");
-            jsonObject.put("branchcode", branchcode);
-            byte[] data = jsonObject.toString().getBytes();
-
-            Log.e("link generate", jsonObject.toString());
-            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-
-
-    }
-//    public void personlized_link_for_accnt_opnApicall() {
-//
+//    public void personlized_link_for_accnt_opnApicall(String branchcode) {
 //        //getMobile_1
 //        try {
 ////            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
@@ -2925,15 +2922,13 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //            //   jsonObject.put("vpp_id", "72001");
 ////            jsonObject.put("vpp_id", "656010");
 //            String vpp_id = Logics.getVppId(Dashboard.this);
-//            jsonObject.put("vpp_id", vpp_id);
-//             jsonObject.put("mobile_no",Logics.getProfile(Dashboard.this).get(3));
-////            jsonObject.put("branchcode", branchcode);
+//            jsonObject.put("vpp_id", "656263");
+////             jsonObject.put("mobile_no","9723179601");
+//            jsonObject.put("branchcode", branchcode);
 //            byte[] data = jsonObject.toString().getBytes();
 //
-//            Log.e("mobileNO",Logics.getProfile(Dashboard.this).get(3));
-//
 //            Log.e("link generate", jsonObject.toString());
-//            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING_NEW, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 //
 //        } catch (Exception e) {
 //
@@ -2943,5 +2938,32 @@ public class Dashboard extends com.application.vpp.activity.NavigationDrawer imp
 //
 //
 //    }
+    public void personlized_link_for_accnt_opnApicall() {
+
+        //getMobile_1
+        try {
+//            AlertDialogClass.PopupWindowShow(Dashboard.this, mainLayout);
+            JSONObject jsonObject = new JSONObject();
+            //   jsonObject.put("vpp_id", "72001");
+//            jsonObject.put("vpp_id", "656010");
+            String vpp_id = Logics.getVppId(Dashboard.this);
+            jsonObject.put("vpp_id", vpp_id);
+             jsonObject.put("mobile_no",Logics.getProfile(Dashboard.this).get(3));
+//            jsonObject.put("branchcode", branchcode);
+            byte[] data = jsonObject.toString().getBytes();
+
+            Log.e("mobileNO",Logics.getProfile(Dashboard.this).get(3));
+
+            Log.e("link generate", jsonObject.toString());
+            new SendTOServer(Dashboard.this, requestSent, Const.MSGPERSONALIZED_LINK_FOR_ACCOUNT_OPENING, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+
+    }
 
 }

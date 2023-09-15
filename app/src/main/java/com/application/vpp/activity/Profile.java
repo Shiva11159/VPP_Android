@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -270,7 +271,9 @@ public class Profile extends AppCompatActivity implements RequestSent, Connectio
             uplaodimage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     {
+
                         Dexter.withActivity(Profile.this)
                                 .withPermissions(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                                 .withListener(new MultiplePermissionsListener() {

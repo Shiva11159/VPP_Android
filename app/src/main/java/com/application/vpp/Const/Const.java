@@ -88,7 +88,8 @@ public class Const {
 
     public static final int MSG_UPDATEACCOUNT_IFSCCODE = 73;
 
-    // new method created for individual otp send replaced by msgcode 2 ..
+    // new method created for individual otp send r
+    // eplaced by msgcode 2 ..
     public static final int MSG_SIGNUP_OTP_NEW = 74;
 
     //    new method created for individual otp send  public static  final  int MSGAUTHENTICATE=30;

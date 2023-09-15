@@ -305,14 +305,12 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
 //        int isMobileV = Logics.getisMobile_V(SignupScreen2.this);
         String isMobileV = SharedPref.getPreferences(SignupScreen2.this, "isMobile");
 
-
         // signup 2
 //        String email = Logics.getEmail_1(SignupScreen2.this);
         email = SharedPref.getPreferences(SignupScreen2.this, "email");
 
 //        int isEmailV = Logics.getisEmail_V(SignupScreen2.this);
         String isEmailV = SharedPref.getPreferences(SignupScreen2.this, "isEmail");
-
 
         // bank details.
         int isBankV = Logics.getisBankVerified(SignupScreen2.this); // not changed..
@@ -323,82 +321,82 @@ public class SignupScreen2 extends AppCompatActivity implements AdapterView.OnIt
         //
 
         JSONObject jsonObject = new JSONObject();
-//        try {
-//            jsonObject.put("imei", imei);
-//            //  jsonObject.put("ip","1234566666");
-//            jsonObject.put("ip", ip);
-//            jsonObject.put("name", vppPanName);
-//            jsonObject.put("ref", ref);
-//            jsonObject.put("refCode", refCode);
-//            jsonObject.put("mobile", mobile);
-//            jsonObject.put("email", email);
-//            jsonObject.put("isMobileV", isMobileV);
-//            jsonObject.put("isEmailV", isEmailV);
-//            jsonObject.put("pan", pan);
-//            jsonObject.put("vpppanname", vppPanName);
-//            jsonObject.put("isBankV", isBankV);
-//            jsonObject.put("bankaccno", accNo);
-//            jsonObject.put("Ifsc", ifsc);
-//            jsonObject.put("vppbankname", vppBankName);
-//            jsonObject.put("houseNum", edtHouseNo.getText().toString().toUpperCase().trim());
-//            jsonObject.put("area", edtArea.getText().toString().toUpperCase().trim());
-//            jsonObject.put("city", city);
-//            jsonObject.put("pin", edtPin.getText().toString().toUpperCase().trim());
-//            jsonObject.put("state", state_str);
-//            //jsonObject.put("dob", DTToN(dd+"-"+MMM+"-"+yy));
-//            jsonObject.put("dob", DTToN(Dob));
-//            jsonObject.put("prof", profession);
-//            jsonObject.put("landmuserark", edtlandmark.getText().toString().toUpperCase().trim());
-//            jsonObject.put("regpegno", 4);
-//            Log.e("sendData: ", jsonObject.toString());
-//
-//            data = jsonObject.toString().getBytes();
-////
-////            data1="{\"area\":\"SINDI RAILWAY\",\"vppbankname\":\"POONAM GAUTAM TELANG\",\"city\":\"WARDHA\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"7499535233\",\"isBankV\":1,\"bankaccno\":\"3147557888\",\"prof\":\"\",\"Ifsc\":\"KKBK0001839\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"WARDHA\",\"pin\":\"442105\",\"dob\":446169600,\"name\":\"KUMARI POONAM GAUTAM TELANG\",\"state\":\"MADHYA PRADESH\",\"pan\":\"BNFPT4961C\",\"vpppanname\":\"KUMARI POONAM GAUTAM TELANG\",\"email\":\"telangpunam333@gmail.com\",\"houseNum\":\"KANDHALI RD,AT POST SINDIRAILWAY TAH SELU\"}".getBytes();
-//            new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-//        } catch (JSONException e) {
-////            e.printStackTrace();
-//            FirebaseCrashlytics.getInstance().recordException(e);
-//            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
-//        }
-
         try {
-//            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("imei", "dfsafd");
+            jsonObject.put("imei", imei);
             //  jsonObject.put("ip","1234566666");
-            jsonObject.put("ip", "dfsf");
-            jsonObject.put("name", "Dummy");
-            jsonObject.put("ref", "dfsf");
-            jsonObject.put("refCode", "dfsf");
-            jsonObject.put("mobile", "9890871432");
-            jsonObject.put("email", "tumma9867328538@gmail.com");
-            jsonObject.put("isMobileV", "0");
-            jsonObject.put("isEmailV", "1");
-            jsonObject.put("pan", "aaaaaaa");
-            jsonObject.put("vpppanname", "shiva");
-            jsonObject.put("isBankV", "5345345435");
-            jsonObject.put("bankaccno", "423423342");
-            jsonObject.put("Ifsc", "shiva");
-            jsonObject.put("vppbankname", "shiva");
-            jsonObject.put("houseNum", "dfsf");
-            jsonObject.put("area", "dfsf");
-            jsonObject.put("city", "mumbai");
-            jsonObject.put("pin", "dfsf");
-            jsonObject.put("state", "maharashtra");
+            jsonObject.put("ip", ip);
+            jsonObject.put("name", vppPanName);
+            jsonObject.put("ref", ref);
+            jsonObject.put("refCode", refCode);
+            jsonObject.put("mobile", mobile);
+            jsonObject.put("email", email);
+            jsonObject.put("isMobileV", isMobileV);
+            jsonObject.put("isEmailV", isEmailV);
+            jsonObject.put("pan", pan);
+            jsonObject.put("vpppanname", vppPanName);
+            jsonObject.put("isBankV", isBankV);
+            jsonObject.put("bankaccno", accNo);
+            jsonObject.put("Ifsc", ifsc);
+            jsonObject.put("vppbankname", vppBankName);
+            jsonObject.put("houseNum", edtHouseNo.getText().toString().toUpperCase().trim());
+            jsonObject.put("area", edtArea.getText().toString().toUpperCase().trim());
+            jsonObject.put("city", city);
+            jsonObject.put("pin", edtPin.getText().toString().toUpperCase().trim());
+            jsonObject.put("state", state_str);
             //jsonObject.put("dob", DTToN(dd+"-"+MMM+"-"+yy));
             jsonObject.put("dob", DTToN(Dob));
             jsonObject.put("prof", profession);
-            jsonObject.put("landmuserark", "dfsf");
+            jsonObject.put("landmuserark", edtlandmark.getText().toString().toUpperCase().trim());
             jsonObject.put("regpegno", 4);
+            Log.e("sendData: ", jsonObject.toString());
 
             data = jsonObject.toString().getBytes();
-            Log.e("sendData: ", jsonObject.toString());
+//
+//            data1="{\"area\":\"SINDI RAILWAY\",\"vppbankname\":\"POONAM GAUTAM TELANG\",\"city\":\"WARDHA\",\"ip\":\"12345\",\"regpegno\":4,\"mobile\":\"7499535233\",\"isBankV\":1,\"bankaccno\":\"3147557888\",\"prof\":\"\",\"Ifsc\":\"KKBK0001839\",\"isEmailV\":\"1\",\"isMobileV\":\"1\",\"landmuserark\":\"WARDHA\",\"pin\":\"442105\",\"dob\":446169600,\"name\":\"KUMARI POONAM GAUTAM TELANG\",\"state\":\"MADHYA PRADESH\",\"pan\":\"BNFPT4961C\",\"vpppanname\":\"KUMARI POONAM GAUTAM TELANG\",\"email\":\"telangpunam333@gmail.com\",\"houseNum\":\"KANDHALI RD,AT POST SINDIRAILWAY TAH SELU\"}".getBytes();
             new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         } catch (JSONException e) {
 //            e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
             AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
         }
+
+//        try {
+////            JSONObject jsonObject = new JSONObject();
+//            jsonObject.put("imei", "dfsafd");
+//            //  jsonObject.put("ip","1234566666");
+//            jsonObject.put("ip", "dfsf");
+//            jsonObject.put("name", "Dummy");
+//            jsonObject.put("ref", "dfsf");
+//            jsonObject.put("refCode", "dfsf");
+//            jsonObject.put("mobile", "9890871432");
+//            jsonObject.put("email", "tumma9867328538@gmail.com");
+//            jsonObject.put("isMobileV", "0");
+//            jsonObject.put("isEmailV", "1");
+//            jsonObject.put("pan", "aaaaaaa");
+//            jsonObject.put("vpppanname", "shiva");
+//            jsonObject.put("isBankV", "5345345435");
+//            jsonObject.put("bankaccno", "423423342");
+//            jsonObject.put("Ifsc", "shiva");
+//            jsonObject.put("vppbankname", "shiva");
+//            jsonObject.put("houseNum", "dfsf");
+//            jsonObject.put("area", "dfsf");
+//            jsonObject.put("city", "mumbai");
+//            jsonObject.put("pin", "dfsf");
+//            jsonObject.put("state", "maharashtra");
+//            //jsonObject.put("dob", DTToN(dd+"-"+MMM+"-"+yy));
+//            jsonObject.put("dob", DTToN(Dob));
+//            jsonObject.put("prof", profession);
+//            jsonObject.put("landmuserark", "dfsf");
+//            jsonObject.put("regpegno", 4);
+//
+//            data = jsonObject.toString().getBytes();
+//            Log.e("sendData: ", jsonObject.toString());
+//            new SendTOServer(this, this, Const.MSGSIGNUP2, data, connectionProcess).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+//        } catch (JSONException e) {
+////            e.printStackTrace();
+//            FirebaseCrashlytics.getInstance().recordException(e);
+//            AlertDialogClass.ShowMsg(SignupScreen2.this, e.getMessage());
+//        }
 
 
     }

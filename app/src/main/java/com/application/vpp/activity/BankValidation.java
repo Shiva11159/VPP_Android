@@ -666,7 +666,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
 
                         String data = (String) msg.obj;
                         Log.d("Message", "handleMessagePan: " + data);
-                        Toast.makeText(BankValidation.this, "Name Update :" + data, Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(BankValidation.this, "Name Update :" + data, Toast.LENGTH_SHORT).show();
 
                         JSONObject jsonObject = null;
                         jsonObject = new JSONObject(data);
@@ -696,7 +696,7 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                 case Const.MSGBANKVERIFICATION: {
                     String data = (String) msg.obj;
                     Log.d("Message", "handleMessagePan: " + data);
-                    Toast.makeText(BankValidation.this, "verification :" + data, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(BankValidation.this, "verification :" + data, Toast.LENGTH_SHORT).show();
                     Log.e("data", data);
                     JSONObject jsonObject = null;
 
@@ -813,7 +813,6 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                             alert(jsonObject.getString("mesage"), 0);
 
                         }
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                         AlertDialogClass.PopupWindowDismiss();
@@ -821,7 +820,6 @@ public class BankValidation extends AppCompatActivity implements View.OnClickLis
                         Log.e("onResponse: ", "four");
 
                     }
-
                 }
                 break;
             }

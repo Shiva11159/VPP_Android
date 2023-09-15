@@ -29,13 +29,12 @@
                     android:layout_height="wrap_content"
                     android:layout_column="0"
                     android:fontFamily="@font/lreg"
-                    android:lines="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:paddingLeft="2dp"
+                    android:gravity="left"
+                    android:paddingLeft="5dp"
+                    android:maxWidth="300dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="11dp"
-                    android:text="21 AUG 1234567999"
+                    android:text=""
                     android:textAllCaps="true"
                     android:textColor="@color/black"
                     android:textSize="9dp" />
@@ -53,7 +52,6 @@
                 android:gravity="center"
                 android:lines="1"
                 android:padding="10dp"
-                android:text="HELLO THERE "
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
@@ -68,7 +66,6 @@
                 android:gravity="center"
                 android:lines="1"
                 android:padding="10dp"
-                android:text="HELLO THERE "
                 android:textAllCaps="true"
                 android:textColor="@color/colorAccent"
                 android:textSize="10dp" />
@@ -83,7 +80,6 @@
                 android:gravity="center"
                 android:lines="1"
                 android:padding="10dp"
-                android:text="HELLO THERE "
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
@@ -98,11 +94,10 @@
                 android:gravity="center"
                 android:lines="1"
                 android:padding="10dp"
-                android:text="HELLO THERE "
                 android:textAllCaps="true"
                 android:textColor="@color/black"
                 android:textSize="10dp" />
+
         </TableRow>
     </TableLayout>
-
 </LinearLayout>
